@@ -1,0 +1,470 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-obsidian: #050506;
+  --color-ink: #0a0a0c;
+  --color-charcoal: #121215;
+  --color-graphite: #1b1b20;
+  --color-gold: #e2a84b;
+  --color-amber: #f5c878;
+  --color-ember: #b9772a;
+  --color-hud: #5fe3f5;
+  --color-bone: #f3efe8;
+  --color-mist: #a6a29b;
+
+  --font-sans: 'Manrope Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-serif: 'Instrument Serif', 'Iowan Old Style', Georgia, serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --ease-cine: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  html {
+    background: var(--color-obsidian);
+    color: var(--color-bone);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    font-family: var(--font-sans);
+    background: var(--color-obsidian);
+    overflow-x: hidden;
+  }
+  ::selection {
+    background: var(--color-gold);
+    color: var(--color-obsidian);
+  }
+  :focus-visible {
+    outline: 1px solid var(--color-hud);
+    outline-offset: 3px;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+@layer components {
+  .container-x {
+    width: 100%;
+    max-width: 1600px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 640px) {
+    .container-x {
+      padding-inline: 2rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .container-x {
+      padding-inline: 3.5rem;
+    }
+  }
+
+  .section {
+    position: relative;
+    padding-block: clamp(5rem, 14vw, 13rem);
+  }
+
+  /* Type scale: huge, tight, restrained */
+  .display-xl {
+    font-size: clamp(3.25rem, 13vw, 13rem);
+    line-height: 0.88;
+    letter-spacing: -0.05em;
+    font-weight: 600;
+  }
+  .display-lg {
+    font-size: clamp(2.6rem, 8vw, 7.5rem);
+    line-height: 0.94;
+    letter-spacing: -0.045em;
+    font-weight: 600;
+  }
+  .display-md {
+    font-size: clamp(2rem, 4.6vw, 4.25rem);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    font-weight: 500;
+  }
+  .lede {
+    font-size: clamp(1.125rem, 1.6vw, 1.5rem);
+    line-height: 1.5;
+    color: var(--color-mist);
+  }
+  .accent {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    color: var(--color-gold);
+  }
+
+  /* HUD detail */
+  .hud-label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--color-hud) 80%, transparent);
+  }
+  .hud-line {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in srgb, var(--color-hud) 55%, transparent) 20%,
+      color-mix(in srgb, var(--color-hud) 12%, transparent) 80%,
+      transparent
+    );
+  }
+  .hud-corner {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-color: color-mix(in srgb, var(--color-hud) 70%, transparent);
+    pointer-events: none;
+  }
+
+  /* Glass */
+  .glass {
+    background: linear-gradient(160deg, rgb(255 255 255 / 0.06), rgb(255 255 255 / 0.015));
+    border: 1px solid rgb(255 255 255 / 0.09);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.07),
+      0 30px 80px -40px rgb(0 0 0 / 0.9);
+  }
+  .glow-border {
+    position: relative;
+  }
+  .glow-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      140deg,
+      color-mix(in srgb, var(--color-gold) 75%, transparent),
+      transparent 35%,
+      transparent 65%,
+      color-mix(in srgb, var(--color-hud) 55%, transparent)
+    );
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    -webkit-mask-composite: xor;
+    pointer-events: none;
+    opacity: 0.55;
+    transition: opacity 0.5s var(--ease-cine);
+  }
+  .glow-border:hover::before {
+    opacity: 1;
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    min-height: 3.25rem;
+    padding: 0.875rem 1.75rem;
+    border-radius: 999px;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      background-color 0.4s var(--ease-cine),
+      box-shadow 0.4s var(--ease-cine),
+      border-color 0.4s var(--ease-cine),
+      color 0.4s var(--ease-cine);
+  }
+  .btn-primary {
+    background: var(--color-gold);
+    color: var(--color-obsidian);
+    box-shadow: 0 0 0 1px rgb(245 200 120 / 0.5), 0 10px 40px -10px rgb(226 168 75 / 0.55);
+  }
+  .btn-primary:hover {
+    background: var(--color-amber);
+    box-shadow: 0 0 0 1px rgb(245 200 120 / 0.8), 0 14px 60px -8px rgb(226 168 75 / 0.8);
+  }
+  .btn-ghost {
+    color: var(--color-bone);
+    border: 1px solid rgb(255 255 255 / 0.16);
+    background: rgb(255 255 255 / 0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .btn-ghost:hover {
+    border-color: color-mix(in srgb, var(--color-gold) 70%, transparent);
+    color: var(--color-amber);
+  }
+  .btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  /* Forms */
+  .field label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-mist);
+  }
+  .input {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border-radius: 0.75rem;
+    background: rgb(255 255 255 / 0.035);
+    border: 1px solid rgb(255 255 255 / 0.12);
+    color: var(--color-bone);
+    font-size: 1rem;
+    transition:
+      border-color 0.3s,
+      box-shadow 0.3s;
+  }
+  .input::placeholder {
+    color: rgb(166 162 155 / 0.55);
+  }
+  .input:focus {
+    outline: none;
+    border-color: color-mix(in srgb, var(--color-gold) 80%, transparent);
+    box-shadow: 0 0 0 4px rgb(226 168 75 / 0.12);
+  }
+  select.input option {
+    background: var(--color-charcoal);
+    color: var(--color-bone);
+  }
+}
+
+/* ───────────────────────── Atmosphere ─────────────────────────
+   Fog is always composited with screen/lighten so it glows on the dark
+   base instead of greying it out. Never switch these to normal blending. */
+
+@keyframes fog-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(var(--drift, 100vw), 0, 0);
+  }
+}
+@keyframes bleed-breathe {
+  0%,
+  100% {
+    opacity: 0.75;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes push-in {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.12);
+  }
+}
+@keyframes hud-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes hud-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+
+.fog {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  overflow: hidden;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 2.5s ease;
+}
+.fog.is-ready {
+  opacity: 1;
+}
+/* Layer 1: static base haze */
+.fog-haze {
+  position: absolute;
+  inset: 0;
+  background-image: var(--fog-tex);
+  background-size: 160vw 160vh;
+  background-position: 30% 60%;
+  mix-blend-mode: screen;
+  opacity: 0.04;
+}
+/* Layer 2: drifting plumes, denser low in the frame */
+.fog-plumes {
+  position: absolute;
+  inset: 0;
+  mix-blend-mode: screen;
+  -webkit-mask-image: linear-gradient(to top, #000 0%, rgb(0 0 0 / 0.5) 45%, rgb(0 0 0 / 0.12) 100%);
+  mask-image: linear-gradient(to top, #000 0%, rgb(0 0 0 / 0.5) 45%, rgb(0 0 0 / 0.12) 100%);
+}
+.fog-lag {
+  position: absolute;
+  left: 0;
+  top: -10vh;
+  width: 100%;
+  height: calc(120vh + var(--fog-tile-h, 100vh));
+  transform: translate3d(var(--fog-x, 0px), calc(var(--fog-y, 0px) - var(--fog-scroll, 0px)), 0);
+  will-change: transform;
+}
+.fog-plume {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  background-image: var(--fog-tex);
+  background-repeat: repeat;
+  mix-blend-mode: screen;
+  will-change: transform;
+  animation: fog-drift linear infinite;
+}
+.fog-plume-a {
+  --drift: 110vw;
+  left: calc(-110vw - 40px);
+  width: calc(220vw + 80px);
+  background-size: 110vw var(--fog-tile-h, 100vh);
+  opacity: 0.07;
+  animation-duration: 52s;
+}
+.fog-plume-b {
+  --drift: 170vw;
+  display: none;
+  left: calc(-170vw - 40px);
+  width: calc(280vw + 80px);
+  background-size: 170vw var(--fog-tile-h, 100vh);
+  background-position: 40vw 30vh;
+  opacity: 0.08;
+  animation-duration: 78s;
+}
+@media (min-width: 768px) {
+  .fog-haze {
+    opacity: 0.07;
+  }
+  .fog-plume-a {
+    opacity: 0.11;
+  }
+  .fog-plume-b {
+    display: block;
+  }
+}
+
+/* Section-local fog bank (hero): thick at the floor, gone by the top */
+.fog-bank {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 75%;
+  overflow: hidden;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  -webkit-mask-image: linear-gradient(to top, #000 5%, rgb(0 0 0 / 0.35) 55%, transparent 100%);
+  mask-image: linear-gradient(to top, #000 5%, rgb(0 0 0 / 0.35) 55%, transparent 100%);
+}
+.fog-bank > div {
+  --drift: 130vw;
+  position: absolute;
+  top: 0;
+  left: -130vw;
+  width: 260vw;
+  height: 100%;
+  background-image: var(--fog-tex);
+  background-size: 130vw 100%;
+  opacity: 0.2;
+  will-change: transform;
+  animation: fog-drift 64s linear infinite;
+}
+@media (min-width: 768px) {
+  .fog-bank > div {
+    opacity: 0.3;
+  }
+}
+
+/* Layer 3: gold-amber light bleeding through the fog */
+.light-bleed {
+  position: absolute;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  background: radial-gradient(
+    closest-side,
+    rgb(245 200 120 / 0.34),
+    rgb(226 168 75 / 0.16) 45%,
+    transparent 100%
+  );
+  animation: bleed-breathe 14s ease-in-out infinite;
+}
+
+/* Grain + vignette: one fixed layer */
+.atmos {
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at center, transparent 52%, rgb(0 0 0 / 0.5) 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .13 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.push-in {
+  animation: push-in 30s cubic-bezier(0.2, 0.6, 0.2, 1) forwards;
+  will-change: transform;
+}
+.hud-spin {
+  transform-origin: center;
+  animation: hud-spin 24s linear infinite;
+}
+.hud-pulse {
+  animation: hud-pulse 1.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fog-plume,
+  .fog-bank > div,
+  .light-bleed,
+  .push-in,
+  .hud-spin,
+  .hud-pulse {
+    animation: none !important;
+  }
+  .fog-lag {
+    transform: none;
+  }
+}
