@@ -1,8 +1,7 @@
-import { useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { ProductionCard } from '../components/cards'
 import { ClosingCTA, PageHeader } from '../components/ui'
-import { FORMATS, productions } from '../data/productions'
+import { productions } from '../data/productions'
 
 export function FilterBar({ label, options, value, onChange, counts }) {
   return (
@@ -31,13 +30,6 @@ export function FilterBar({ label, options, value, onChange, counts }) {
 }
 
 export default function Productions() {
-  const [filter, setFilter] = useState('All')
-  const options = ['All', ...FORMATS]
-  const counts = Object.fromEntries(
-    options.map((o) => [o, o === 'All' ? productions.length : productions.filter((p) => p.format === o).length]),
-  )
-  const shown = filter === 'All' ? productions : productions.filter((p) => p.format === filter)
-
   return (
     <>
       <title>Productions — BOA Network</title>
@@ -54,26 +46,18 @@ export default function Productions() {
       />
 
       <section className="container-x pb-24 sm:pb-40">
-        <FilterBar label="Filter by format" options={options} value={filter} onChange={setFilter} counts={counts} />
-        <p className="sr-only" aria-live="polite">
-          Showing {shown.length} productions
-        </p>
-        <motion.div layout className="mt-10 grid gap-6 sm:mt-14 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-          <AnimatePresence mode="popLayout">
-            {shown.map((p) => (
-              <motion.div
-                key={p.slug}
-                layout
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.96 }}
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <ProductionCard production={p} />
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </motion.div>
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+          {productions.map((p, i) => (
+            <motion.div
+              key={p.slug}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <ProductionCard production={p} />
+            </motion.div>
+          ))}
+        </div>
       </section>
 
       <ClosingCTA

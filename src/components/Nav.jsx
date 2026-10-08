@@ -1,14 +1,18 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
-import { nav } from '../data/site'
+import { nav, site } from '../data/site'
 import { MagneticButton } from './ui'
 
+// Stacked lockup. Both lines are blocks with their own line height, so the
+// subtitle can never ride up into the logo at any breakpoint.
 export function Wordmark({ className = '' }) {
   return (
-    <span className={`inline-flex items-baseline gap-2 ${className}`}>
-      <span className="text-2xl font-semibold tracking-[-0.06em]">BOA</span>
-      <span className="hud-label !text-[0.5625rem] !text-gold">Network</span>
+    <span className={`inline-flex flex-col items-start gap-1.5 whitespace-nowrap ${className}`}>
+      <span className="block text-2xl font-semibold leading-none tracking-[-0.06em] sm:text-[1.75rem]">BOA</span>
+      <span className="block font-mono text-[0.5rem] uppercase leading-none tracking-[0.2em] text-gold sm:text-[0.5625rem]">
+        {site.longName}
+      </span>
     </span>
   )
 }

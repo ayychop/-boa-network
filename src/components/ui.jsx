@@ -70,7 +70,7 @@ export function Arrow({ className = '' }) {
   )
 }
 
-/** Four thin cyan corner ticks around the parent (parent must be relative). */
+/** Four thin off-white corner ticks around the parent (parent must be relative). */
 export function HudCorners({ inset = 'inset-3' }) {
   return (
     <div aria-hidden="true" className={`pointer-events-none absolute ${inset}`}>

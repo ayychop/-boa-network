@@ -1,9 +1,9 @@
-// PLACEHOLDER slate — swap for real productions.
-// image:  poster (2:3)        e.g. '/media/salt-and-ember-poster.jpg'
-// still:  wide still (2.39:1) e.g. '/media/salt-and-ember-still.jpg'
+// The slate. Only `slug` and `title` are required, everything else is optional
+// and the cards hide whatever is missing.
+// image:  poster (2:3)        e.g. '/media/mind-states-uk-poster.jpg'
+// still:  wide still (2.39:1) e.g. '/media/mind-states-uk-still.jpg'
 // Leave either as null to keep the generated placeholder art.
-
-export const FORMATS = ['Film', 'Series', 'TV']
+// video:  { title, url } YouTube embed, plays in place of the wide still.
 
 export const STATUS = {
   development: 'In Development',
@@ -12,125 +12,45 @@ export const STATUS = {
   released: 'Released',
 }
 
+export const productionMeta = (p) => [p.type, p.year].filter(Boolean).join(' · ')
+
 export const productions = [
   {
-    slug: 'salt-and-ember',
-    title: 'Salt & Ember',
-    format: 'Film',
-    genre: 'Drama',
-    year: '2027',
-    status: 'production',
+    slug: 'mind-states-uk',
+    title: 'Mind States UK',
+    type: 'Series - Crime/Drama/Thriller',
+    year: '2026',
     featured: true,
     tone: 'amber',
     image: null,
     still: null,
+    video: {
+      title: 'Mind States UK - Episode 1',
+      url: 'https://www.youtube-nocookie.com/embed/SnQglPC9S2M',
+    },
     logline:
-      'A night-shift welder on the Tyne has one weekend to get to a London audition she was never supposed to hear about.',
+      'Five friends navigate daily life in Northwest London, juggling pressures from the streets, financial struggles, and differing aspirations for the future. Through flashbacks and personal reflections, Joe examines how their environment shapes his mindset and choices.',
   },
   {
-    slug: 'northern-line',
-    title: 'Northern Line',
-    format: 'Series',
-    genre: 'Crime drama',
-    year: '2027',
-    status: 'development',
-    featured: true,
-    tone: 'teal',
+    slug: 'mind-states-ep2',
+    title: 'Mind States EP2',
+    type: 'Coming Soon',
+    tone: 'bone',
     image: null,
     still: null,
-    logline:
-      'Six strangers on the last tube home witness the same crime. None of them saw the same thing.',
   },
   {
-    slug: 'the-quiet-hours',
-    title: 'The Quiet Hours',
-    format: 'TV',
-    genre: 'Anthology',
-    year: '2026',
-    status: 'post',
-    featured: true,
-    tone: 'indigo',
+    slug: 'coming-soon-1',
+    title: 'Coming Soon',
+    tone: 'smoke',
     image: null,
     still: null,
-    logline:
-      'Five stories set between midnight and dawn, each led by a first-time screen actor.',
   },
   {
-    slug: 'kingsland',
-    title: 'Kingsland',
-    format: 'Series',
-    genre: 'Family saga',
-    year: '2027',
-    status: 'development',
-    tone: 'crimson',
+    slug: 'coming-soon-2',
+    title: 'Coming Soon',
+    tone: 'smoke',
     image: null,
     still: null,
-    logline:
-      'Three generations, one market stall, and the developer who wants the whole road.',
-  },
-  {
-    slug: 'paper-crowns',
-    title: 'Paper Crowns',
-    format: 'Film',
-    genre: 'Coming of age',
-    year: '2026',
-    status: 'released',
-    tone: 'rose',
-    image: null,
-    still: null,
-    logline:
-      'Two sisters enter a pageant they cannot afford with dresses they made themselves.',
-  },
-  {
-    slug: 'afterglow',
-    title: 'Afterglow',
-    format: 'Film',
-    genre: 'Sci-fi romance',
-    year: '2028',
-    status: 'development',
-    tone: 'indigo',
-    image: null,
-    still: null,
-    logline:
-      'When the city loses power for a week, two neighbours finally have time to meet.',
-  },
-  {
-    slug: 'open-call',
-    title: 'Open Call',
-    format: 'TV',
-    genre: 'Documentary',
-    year: '2026',
-    status: 'production',
-    tone: 'amber',
-    image: null,
-    still: null,
-    logline:
-      'Cameras follow a BOA open casting day from the first queue to the final callback.',
-  },
-  {
-    slug: 'low-tide',
-    title: 'Low Tide',
-    format: 'Film',
-    genre: 'Thriller',
-    year: '2026',
-    status: 'post',
-    tone: 'moss',
-    image: null,
-    still: null,
-    logline:
-      'A cockle picker finds something in the sand that half the coast is looking for.',
-  },
-  {
-    slug: 'borrowed-light',
-    title: 'Borrowed Light',
-    format: 'Series',
-    genre: 'Fashion drama',
-    year: '2027',
-    status: 'development',
-    tone: 'rose',
-    image: null,
-    still: null,
-    logline:
-      'An unsigned model and a broke photographer fake a campaign and accidentally start a movement.',
   },
 ]

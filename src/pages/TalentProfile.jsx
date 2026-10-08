@@ -59,9 +59,9 @@ export default function TalentProfile() {
                     {credits.map((c) => (
                       <li key={c.slug} className="flex flex-wrap items-center justify-between gap-3 py-4">
                         <span className="text-xl font-medium tracking-tight">
-                          {c.title} <span className="ml-2 text-sm text-mist">{c.format}</span>
+                          {c.title} {c.type && <span className="ml-2 text-sm text-mist">{c.type}</span>}
                         </span>
-                        <StatusBadge status={c.status} />
+                        {c.status && <StatusBadge status={c.status} />}
                       </li>
                     ))}
                   </ul>

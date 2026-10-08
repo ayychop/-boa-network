@@ -4,11 +4,11 @@ import { motion } from 'framer-motion'
 import CinematicImage from '../components/CinematicImage'
 import Showreel from '../components/Showreel'
 import { FogBank, LightBleed } from '../components/Fog'
-import { StatusBadge } from '../components/cards'
+import { ProductionCard, StatusBadge } from '../components/cards'
 import { Arrow, ClosingCTA, HudCorners, MagneticButton, Reveal, SectionLabel } from '../components/ui'
 import { useScrollFx } from '../lib/gsap'
 import { founders, site } from '../data/site'
-import { productions } from '../data/productions'
+import { productionMeta, productions } from '../data/productions'
 import { barriers } from '../data/access'
 
 // Swap for a real still, e.g. '/media/hero.jpg'
@@ -16,11 +16,13 @@ const HERO_IMAGE = null
 
 const EASE = [0.16, 1, 0.3, 1]
 const MISSION =
-  'Talent is everywhere. Opportunity is not. BOA Network exists to close that gap — with real roles, on real productions, for people who were never handed a way in.'
+  'Talent is everywhere. Opportunity is not. BOA Network exists to close that gap with real roles, on real productions, for people who were never handed a way in.'
 
 function Hero() {
   const root = useRef(null)
 
+  // The headline is also capped by viewport height (19svh) so that on short
+  // desktop windows the copy stays clear of the fixed header.
   // Scroll continues the slow camera push-in and lets the copy fall away.
   useScrollFx(root, (gsap) => {
     const scrollTrigger = { trigger: root.current, start: 'top top', end: 'bottom top', scrub: true }
@@ -56,7 +58,7 @@ function Hero() {
         >
           {site.longName} — film · series · television
         </motion.p>
-        <h1 className="display-xl">
+        <h1 className="display-xl text-[length:clamp(3.25rem,min(13vw,19svh),13rem)]">
           {['The door', 'is open.'].map((line, i) => (
             <span key={line} className="block overflow-hidden pb-[0.08em]">
               <motion.span
@@ -77,8 +79,8 @@ function Hero() {
           transition={{ duration: 1.3, ease: EASE, delay: 0.75 }}
         >
           <p className="lede max-w-xl !text-bone/80">
-            A UK production company making cinematic film and television — and casting the people the industry keeps
-            overlooking.
+            BOA Networks is a UK production company dedicated to creating cinematic film and television while casting
+            creative talent from all walks of life.
           </p>
           <div className="flex flex-wrap gap-4">
             <MagneticButton to="/contact?form=talent">
@@ -149,9 +151,14 @@ function Reel() {
     <section id="showreel" className="section scroll-mt-10 !pt-0">
       <div className="container-x">
         <SectionLabel index="02">Showreel</SectionLabel>
-        <Reveal>
-          <Showreel />
-        </Reveal>
+        <div className="space-y-16 sm:space-y-24">
+          {site.showreel.map((video) => (
+            <Reveal key={video.url}>
+              <p className="hud-label mb-4 !text-gold sm:mb-5">{video.label}</p>
+              <Showreel url={video.url} title={video.title} />
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   )
@@ -159,6 +166,7 @@ function Reel() {
 
 function Featured() {
   const featured = productions.filter((p) => p.featured)
+  const upcoming = productions.filter((p) => !p.featured)
   return (
     <section className="section relative !pt-0">
       <div className="container-x">
@@ -177,34 +185,61 @@ function Featured() {
         <div className="space-y-16 sm:space-y-28">
           {featured.map((p, i) => (
             <Reveal key={p.slug} as="article">
-              <Link to="/productions" className="group block" aria-label={`${p.title} — view productions`}>
-                <CinematicImage
-                  src={p.still}
-                  alt=""
-                  tone={p.tone}
-                  parallax
-                  label="Still · 2.39:1"
-                  className="rounded-xl sm:rounded-2xl"
+              {p.video && (
+                <div
+                  className="glow-border relative overflow-hidden rounded-xl bg-black sm:rounded-2xl"
+                  style={{ aspectRatio: '2.39 / 1' }}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-t from-obsidian/85 via-transparent to-transparent" />
+                  <iframe
+                    src={p.video.url}
+                    title={p.video.title}
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    loading="lazy"
+                    style={{ width: '100%', height: '100%', border: 0 }}
+                  />
                   <HudCorners inset="inset-3 sm:inset-5" />
-                  <div className="absolute right-4 top-4 sm:right-8 sm:top-8">
-                    <StatusBadge status={p.status} />
-                  </div>
-                </CinematicImage>
+                </div>
+              )}
+              <Link to="/productions" className="group block" aria-label={`${p.title} — view productions`}>
+                {!p.video && (
+                  <CinematicImage
+                    src={p.still}
+                    alt=""
+                    tone={p.tone}
+                    parallax
+                    label="Still · 2.39:1"
+                    className="rounded-xl sm:rounded-2xl"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-t from-obsidian/85 via-transparent to-transparent" />
+                    <HudCorners inset="inset-3 sm:inset-5" />
+                    {p.status && (
+                      <div className="absolute right-4 top-4 sm:right-8 sm:top-8">
+                        <StatusBadge status={p.status} />
+                      </div>
+                    )}
+                  </CinematicImage>
+                )}
                 <div className="mt-6 grid gap-4 sm:mt-8 lg:grid-cols-[auto_1fr_1fr] lg:items-baseline lg:gap-12">
                   <span className="hud-label">0{i + 1}</span>
                   <h3 className="text-4xl font-semibold tracking-[-0.045em] transition-colors duration-500 group-hover:text-gold sm:text-6xl">
                     {p.title}
                   </h3>
                   <div>
-                    <p className="hud-label mb-3 !text-mist">
-                      {p.format} · {p.genre} · {p.year}
-                    </p>
+                    <p className="hud-label mb-3 !text-mist">{productionMeta(p)}</p>
                     <p className="max-w-md text-lg leading-relaxed text-bone/75">{p.logline}</p>
                   </div>
                 </div>
               </Link>
+            </Reveal>
+          ))}
+        </div>
+
+        <div className="mt-16 grid gap-6 sm:mt-28 sm:grid-cols-3 lg:gap-8">
+          {upcoming.map((p, i) => (
+            <Reveal key={p.slug} delay={i * 0.08}>
+              <ProductionCard production={p} />
             </Reveal>
           ))}
         </div>

@@ -3,9 +3,9 @@ import { useScrollFx } from '../lib/gsap'
 
 const TONES = {
   amber: ['#e2a84b', '#3a1f0a'],
-  teal: ['#3fb6c4', '#07242b'],
+  bone: ['#d9d4c8', '#1c1a17'],
   crimson: ['#d1513f', '#2a0a0c'],
-  indigo: ['#6c7be0', '#0c0f2b'],
+  smoke: ['#a6a29b', '#141312'],
   moss: ['#9bb36a', '#141c0c'],
   rose: ['#e08aa0', '#2b0f1a'],
 }

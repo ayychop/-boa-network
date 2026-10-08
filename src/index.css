@@ -8,7 +8,7 @@
   --color-gold: #e2a84b;
   --color-amber: #f5c878;
   --color-ember: #b9772a;
-  --color-hud: #5fe3f5;
+  --color-hud: #d9d4c8;
   --color-bone: #f3efe8;
   --color-mist: #a6a29b;
 
@@ -117,7 +117,7 @@ html.lenis body {
     color: var(--color-gold);
   }
 
-  /* HUD detail */
+  /* Viewfinder detail */
   .hud-label {
     font-family: var(--font-mono);
     font-size: 0.6875rem;
@@ -293,11 +293,6 @@ html.lenis body {
     transform: scale(1.12);
   }
 }
-@keyframes hud-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
 @keyframes hud-pulse {
   0%,
   100% {
@@ -447,10 +442,6 @@ html.lenis body {
   animation: push-in 30s cubic-bezier(0.2, 0.6, 0.2, 1) forwards;
   will-change: transform;
 }
-.hud-spin {
-  transform-origin: center;
-  animation: hud-spin 24s linear infinite;
-}
 .hud-pulse {
   animation: hud-pulse 1.6s ease-in-out infinite;
 }
@@ -460,7 +451,6 @@ html.lenis body {
   .fog-bank > div,
   .light-bleed,
   .push-in,
-  .hud-spin,
   .hud-pulse {
     animation: none !important;
   }

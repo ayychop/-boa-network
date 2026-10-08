@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import CinematicImage from './CinematicImage'
 import { Arrow } from './ui'
-import { STATUS } from '../data/productions'
+import { STATUS, productionMeta } from '../data/productions'
 
 const STATUS_STYLE = {
   development: 'border-white/20 text-bone/80',
@@ -22,6 +22,7 @@ export function StatusBadge({ status }) {
 }
 
 export function ProductionCard({ production: p }) {
+  const meta = productionMeta(p)
   return (
     <article className="group glow-border glass flex h-full flex-col overflow-hidden rounded-2xl">
       <CinematicImage
@@ -33,19 +34,21 @@ export function ProductionCard({ production: p }) {
         className="transition-transform duration-[1.4s] ease-[var(--ease-cine)] group-hover:scale-[1.03]"
       >
         <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/10 to-transparent" />
-        <div className="absolute right-4 top-4">
-          <StatusBadge status={p.status} />
-        </div>
+        {p.status && (
+          <div className="absolute right-4 top-4">
+            <StatusBadge status={p.status} />
+          </div>
+        )}
         <h3 className="absolute inset-x-5 bottom-5 text-3xl font-semibold leading-none tracking-[-0.04em] sm:text-4xl">
           {p.title}
         </h3>
       </CinematicImage>
-      <div className="relative flex flex-1 flex-col gap-4 p-5">
-        <p className="hud-label !text-mist">
-          {p.format} · {p.genre} · {p.year}
-        </p>
-        <p className="leading-relaxed text-bone/80">{p.logline}</p>
-      </div>
+      {(meta || p.logline) && (
+        <div className="relative flex flex-1 flex-col gap-4 p-5">
+          {meta && <p className="hud-label !text-mist">{meta}</p>}
+          {p.logline && <p className="leading-relaxed text-bone/80">{p.logline}</p>}
+        </div>
+      )}
     </article>
   )
 }
