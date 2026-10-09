@@ -9,7 +9,7 @@ const principles = [
   },
   {
     title: 'Hold the standard',
-    body: 'Access is not a lower bar. We shoot cinematic, we cast on merit, and we expect first-timers to stand next to anyone.',
+    body: 'Access is not a lower bar. We shoot cinematic, we cast on merit, and we expect first timers to stand next to anyone.',
   },
   {
     title: 'Pay respect',
@@ -23,7 +23,7 @@ export default function About() {
       <title>About — BOA Network</title>
       <meta
         name="description"
-        content="The story of BOA Network — Best Of All Networks — founded by Joseph Boat and David O to open the screen industry to overlooked talent."
+        content="The story of BOA Network, Best Of All Networks, founded by Joseph Boat and David O to open the screen industry to overlooked talent."
       />
       <PageHeader
         index="01"
@@ -33,7 +33,7 @@ export default function About() {
             Best of all. <span className="accent">Open to all.</span>
           </>
         }
-        lede="BOA Network — Best Of All Networks — is a UK production company founded by Joseph Boat and David O. We make cinematic films, series and television, and we build every one of them around people the industry has shut out."
+        lede="BOA Network, Best Of All Networks, is a UK production company founded by Joseph Boat and David O. We make cinematic films, series and television, and we build every one of them around people the industry has shut out."
       />
 
       <section className="container-x">
@@ -63,7 +63,7 @@ export default function About() {
             </Reveal>
             <Reveal as="p" className="text-bone">
               BOA Network was built to be the opposite of that. A production company that goes looking for the people
-              everyone else filters out — and then puts them at the centre of the frame.
+              everyone else filters out and then puts them at the centre of the frame.
             </Reveal>
           </div>
         </div>
@@ -98,7 +98,7 @@ export default function About() {
         <div className="container-x">
           <SectionLabel index="04">Why it exists</SectionLabel>
           <Reveal as="h2" className="display-lg max-w-[14ch]">
-            A door-opener, <span className="accent">not a gatekeeper.</span>
+            A door opener, <span className="accent">not a gatekeeper.</span>
           </Reveal>
           <div className="mt-16 grid gap-6 sm:mt-24 md:grid-cols-3">
             {principles.map((p, i) => (

@@ -10,7 +10,7 @@ export default function Footer() {
           <div>
             <p className="hud-label mb-5">{site.longName}</p>
             <p className="max-w-sm text-2xl font-medium leading-tight tracking-tight sm:text-3xl">
-              A door-opener, <span className="accent">not a gatekeeper.</span>
+              A door opener, <span className="accent">not a gatekeeper.</span>
             </p>
           </div>
 

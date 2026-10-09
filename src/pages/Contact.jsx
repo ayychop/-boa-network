@@ -40,7 +40,7 @@ function useFormSubmit(build) {
 
 function FormStatus({ state, to }) {
   const messages = {
-    sent: 'Received. A real person will read this — thank you.',
+    sent: 'Received. A real person will read this. Thank you.',
     mailto: `Your email app should have opened with your message ready to send. If it did not, email us directly at ${to}.`,
     error: `Something went wrong sending that. Please try again, or email ${to}.`,
   }
@@ -128,11 +128,11 @@ function TalentForm({ role }) {
       <Field label="Link to a photo" name="t-photo">
         <input id="t-photo" name="Photo link" type="url" className="input" required placeholder="https://" />
       </Field>
-      <Field label="Link to a self-tape or reel" name="t-tape" optional>
+      <Field label="Link to a self tape or reel" name="t-tape" optional>
         <input id="t-tape" name="Tape link" type="url" className="input" placeholder="https://" />
       </Field>
       <p className="text-sm leading-relaxed text-mist sm:col-span-2">
-        Any link works — Google Drive, iCloud, Instagram, YouTube. A phone photo by a window is fine. No professional
+        Any link works: Google Drive, iCloud, Instagram, YouTube. A phone photo by a window is fine. No professional
         headshots needed.
       </p>
       <Field label="Tell us about you" name="t-about" className="sm:col-span-2">

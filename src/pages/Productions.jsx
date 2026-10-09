@@ -33,7 +33,7 @@ export default function Productions() {
   return (
     <>
       <title>Productions — BOA Network</title>
-      <meta name="description" content="Films, series and television from BOA Network — in development, in production and released." />
+      <meta name="description" content="Films, series and television from BOA Network: in development, in production and released." />
       <PageHeader
         index="02"
         label="Productions"
@@ -42,7 +42,7 @@ export default function Productions() {
             The <span className="accent">slate.</span>
           </>
         }
-        lede="Film, series and television — each one built with roles for talent the industry has not met yet."
+        lede="Film, series and television, each one built with roles for talent the industry has not met yet."
       />
 
       <section className="container-x pb-24 sm:pb-40">

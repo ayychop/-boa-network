@@ -14,7 +14,7 @@ export const pathways = [
     code: 'P-02',
     title: 'No money',
     promise: 'It costs nothing to be seen by us.',
-    body: 'No submission fees, no sign-up fees, no paid headshot packages. A phone self-tape and a photo by a window are enough.',
+    body: 'No submission fees, no sign up fees, no paid headshot packages. A phone self tape and a photo by a window are enough.',
   },
   {
     code: 'P-03',
@@ -33,15 +33,15 @@ export const pathways = [
 export const steps = [
   {
     title: 'Send what you have',
-    body: 'A clear photo and a one-minute self-tape filmed on a phone. No professional kit needed.',
+    body: 'A clear photo and a one minute self tape filmed on a phone. No professional kit needed.',
   },
   {
     title: 'A person watches it',
-    body: 'Every tape is reviewed by our casting team — not filtered by an algorithm or a follower count.',
+    body: 'Every tape is reviewed by our casting team, not filtered by an algorithm or a follower count.',
   },
   {
     title: 'We meet',
-    body: 'If there is a fit, now or later, we invite you to a casting — online or in person.',
+    body: 'If there is a fit, now or later, we invite you to a casting, online or in person.',
   },
   {
     title: 'You work',
@@ -66,7 +66,7 @@ export const castingCalls = [
     type: 'Acting',
     location: 'London',
     closes: '2026-11-28',
-    note: 'Six speaking roles. Self-tape only for the first round.',
+    note: 'Six speaking roles. Self tape only for the first round.',
   },
   {
     id: 'CC-016',
@@ -91,7 +91,7 @@ export const castingCalls = [
 export const faqs = [
   {
     q: 'Do I need an agent or a showreel?',
-    a: 'No. A recent photo and a short self-tape are all we ask for. If you have a reel, send it — if not, it will not count against you.',
+    a: 'No. A recent photo and a short self tape are all we ask for. If you have a reel, send it. If not, it will not count against you.',
   },
   {
     q: 'Does it cost anything to apply?',
@@ -99,10 +99,10 @@ export const faqs = [
   },
   {
     q: 'I have never acted or modelled before. Should I still apply?',
-    a: 'Yes. Several of our roles are written specifically for first-time performers.',
+    a: 'Yes. Several of our roles are written specifically for first time performers.',
   },
   {
     q: 'What if I cannot afford to travel to a casting?',
-    a: 'First rounds are by self-tape so nobody is ruled out by a train fare. Tell us about travel costs on the form and we will talk about it openly.',
+    a: 'First rounds are by self tape so nobody is ruled out by a train fare. Tell us about travel costs on the form and we will talk about it openly.',
   },
 ]

@@ -53,7 +53,7 @@ export default function Access() {
       <title>Access — BOA Network</title>
       <meta
         name="description"
-        content="How BOA Network opens the door: no-clout and no-money pathways, open casting calls, and how to be seen."
+        content="How BOA Network opens the door: pathways that need no clout and no money, open casting calls, and how to be seen."
       />
       <PageHeader
         index="04"
@@ -111,7 +111,7 @@ export default function Access() {
               Open <span className="accent">now.</span>
             </Reveal>
             <Reveal as="p" className="max-w-sm text-mist" delay={0.1}>
-              Free to apply. First rounds are by self-tape, so a train fare never decides who gets seen.
+              Free to apply. First rounds are by self tape, so a train fare never decides who gets seen.
             </Reveal>
           </div>
 

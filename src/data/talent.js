@@ -31,7 +31,7 @@ export const talent = [
     base: 'London',
     tone: 'rose',
     image: null,
-    bio: 'Stage-trained, screen-hungry. Equally at home in a two-hander and a campaign.',
+    bio: 'Trained on stage, hungry for the screen. Equally at home in a two person scene and a campaign.',
     credits: ['paper-crowns', 'borrowed-light'],
   },
   {
@@ -41,7 +41,7 @@ export const talent = [
     base: 'Glasgow',
     tone: 'smoke',
     image: null,
-    bio: 'Self-taught, relentlessly watchable, and the quietest person on any set until the camera rolls.',
+    bio: 'Self taught, relentlessly watchable, and the quietest person on any set until the camera rolls.',
     credits: ['northern-line', 'low-tide'],
   },
   {
@@ -81,7 +81,7 @@ export const talent = [
     base: 'Newcastle',
     tone: 'bone',
     image: null,
-    bio: 'Former apprentice electrician. First screen role came from a self-tape filmed on a borrowed phone.',
+    bio: 'Former apprentice electrician. First screen role came from a self tape filmed on a borrowed phone.',
     credits: ['low-tide', 'the-quiet-hours'],
   },
 ]
