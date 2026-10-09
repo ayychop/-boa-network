@@ -143,7 +143,7 @@ export default function Access() {
                       <dd>{c.type}</dd>
                     </div>
                     <div className="flex gap-2">
-                      <dt className="text-mist">Closes</dt>
+                      <dt className={c.closes ? 'text-mist' : 'sr-only'}>Closes</dt>
                       <dd className="text-gold">{c.closes ? dateFmt.format(new Date(c.closes)) : 'Always open'}</dd>
                     </div>
                   </dl>
