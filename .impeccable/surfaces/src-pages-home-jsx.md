@@ -23,6 +23,6 @@ STORY: the visitor sees a cinematic production company, then understands it open
 
 FIRST VIEWPORT: full-bleed Mind States UK trailer frame, slowly zooming 1.00 to 1.05 over 20s, under fog. "THE DOOR IS OPEN." in Anton at about 22vw across the lower half like a poster tagline, the gold O-lockup logo top left, the gold "Get seen" primary bottom right with the lede, and a bottom edge that dissolves into the next section with no seam.
 
-FORM: label house style (Roc Nation, Def Jam, Apple TV+ editorial), position 1 of 1 (pinned by the brief). Signature interaction: the gold glowing Watch trailer play control opens the trailer in place. Motion grammar: easeInOutExpo entrances; hover = image 1.05x, darken, CTA fades in. seed: none (direction pinned by the brief; concept-seed not run)
+FORM: label house style (Roc Nation, Def Jam, Apple TV+ editorial), position 1 of 1 (pinned by the brief). Signature interaction: the gold glowing Watch trailer play control opens the trailer in place. Motion grammar: easeInOutExpo entrances; hover = image 1.05x, darken, CTA fades in. seed:1a66dce7aefcf7e7 (roll run; the brief-pinned direction beats the roll, so its dealt challengers were not adopted)
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance

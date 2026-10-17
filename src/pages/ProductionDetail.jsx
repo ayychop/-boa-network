@@ -5,7 +5,7 @@ import CinematicImage from '../components/CinematicImage'
 import VideoFacade from '../components/VideoFacade'
 import { StatusBadge } from '../components/cards'
 import { Smoke } from '../components/Fog'
-import { Arrow, ClosingCTA, EASE_EXPO, MagneticButton, Reveal, SectionLabel } from '../components/ui'
+import { Arrow, ClosingCTA, EASE_EXPO, MagneticButton, Reveal } from '../components/ui'
 import { productionMeta, productions } from '../data/productions'
 import { castingCalls } from '../data/access'
 import { Theatre, TrailerButton } from './Productions'
@@ -34,16 +34,12 @@ export default function ProductionDetail() {
           <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/75 to-obsidian/50" />
           <Smoke />
         </div>
-        <div className="container-x relative pb-16 sm:pb-24">
+        <div className="above-fog container-x pb-16 sm:pb-24">
           <Link to="/productions" className="group mb-12 inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.18em] text-bone/80 hover:text-gold">
             <Arrow className="rotate-180 transition-transform duration-500 group-hover:-translate-x-1" />
             All productions
           </Link>
-          <div className="mb-6 flex flex-wrap items-center gap-3">
-            {meta && <span className="text-[0.6875rem] font-bold uppercase tracking-[0.2em] text-gold">{meta}</span>}
-            {p.status && <StatusBadge status={p.status} />}
-          </div>
-          <h1 className="text-[clamp(4rem,14vw,14rem)] leading-[0.84]">
+          <h1 className="text-[clamp(4rem,14vw,14rem)] leading-[0.94]">
             <span className="block overflow-hidden">
               <motion.span
                 className="block"
@@ -55,6 +51,12 @@ export default function ProductionDetail() {
               </motion.span>
             </span>
           </h1>
+          {(meta || p.status) && (
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              {meta && <span className="font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-gold">{meta}</span>}
+              {p.status && <StatusBadge status={p.status} />}
+            </div>
+          )}
           {p.logline && (
             <Reveal as="p" className="mt-8 max-w-2xl text-lg leading-relaxed text-bone/85 sm:text-xl" delay={0.3}>
               {p.logline}
@@ -71,9 +73,8 @@ export default function ProductionDetail() {
       {p.video && (
         <section className="section !pt-8">
           <div className="container-x">
-            <SectionLabel index="01">Watch</SectionLabel>
             <Reveal>
-              <VideoFacade url={p.video.url} title={p.video.title} poster={p.video.poster} />
+              <VideoFacade {...p.video} />
             </Reveal>
           </div>
         </section>
@@ -82,7 +83,9 @@ export default function ProductionDetail() {
       {calls.length > 0 && (
         <section className="section !pt-0">
           <div className="container-x">
-            <SectionLabel index={p.video ? '02' : '01'}>Casting</SectionLabel>
+            <h2 className="display-md mb-10 sm:mb-14">
+              Now <span className="accent">casting.</span>
+            </h2>
             <ul className="border-t border-white/[0.1]">
               {calls.map((c) => (
                 <li key={c.id} className="border-b border-white/[0.1]">
@@ -91,7 +94,7 @@ export default function ProductionDetail() {
                     className="group flex flex-col gap-3 py-8 transition-colors duration-500 hover:bg-white/[0.03] sm:flex-row sm:items-center sm:justify-between sm:px-4"
                   >
                     <div>
-                      <h2 className="text-3xl transition-colors duration-500 group-hover:text-gold sm:text-4xl">{c.role}</h2>
+                      <h3 className="text-3xl transition-colors duration-500 group-hover:text-gold sm:text-4xl">{c.role}</h3>
                       <p className="mt-2 text-mist">
                         {c.location} · {c.type}. {c.note}
                       </p>

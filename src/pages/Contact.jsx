@@ -181,8 +181,6 @@ export default function Contact() {
       <title>Contact — BOA Network</title>
       <meta name="description" content="Contact BOA Network: send a general enquiry, or submit yourself as an actor or model." />
       <PageHeader
-        index="05"
-        label="Contact"
         title={
           <>
             Say <span className="accent">hello.</span>

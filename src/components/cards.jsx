@@ -48,11 +48,11 @@ export function ProductionCard({ production: p, ratio = 'poster', className = ''
         </div>
       )}
       <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7">
-        {meta && <p className="mb-3 text-[0.6875rem] font-bold uppercase tracking-[0.2em] text-gold">{meta}</p>}
-        <h3 className="text-[clamp(2.5rem,5vw,4.5rem)] leading-[0.9]">{p.title}</h3>
+        <h3 className="text-[clamp(2.5rem,5vw,4.5rem)] leading-[0.95]">{p.title}</h3>
+        {meta && meta !== p.title && <p className="mt-3 font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-gold">{meta}</p>}
         <span
           aria-hidden="true"
-          className="mt-5 inline-flex translate-y-3 items-center gap-3 bg-gold px-5 py-3 text-xs font-bold uppercase tracking-[0.16em] text-black opacity-0 transition-[opacity,transform] duration-500 ease-[var(--ease-cine)] group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 [@media(hover:none)]:translate-y-0 [@media(hover:none)]:opacity-100"
+          className="mt-5 inline-flex translate-y-3 items-center gap-3 bg-gold px-5 py-3 text-xs font-bold uppercase tracking-[0.16em] text-black opacity-0 transition-[opacity,transform] duration-500 ease-[var(--ease-cine)] group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 [@media(hover:none)]:translate-y-0 [@media(hover:none)]:opacity-100 [@media(hover:none)]:transition-none"
         >
           View Project <Arrow />
         </span>
@@ -87,8 +87,8 @@ export function TalentPortrait({ person: t, ratio = '4 / 5', priority = false })
 
       <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-4 sm:p-6 lg:p-7">
         <div className="min-w-0">
-          <p className="hud-label mb-2 !text-gold sm:mb-3">{t.discipline}</p>
-          <h2 className="text-[clamp(1.35rem,2.6vw,2.5rem)] font-semibold leading-[0.95] tracking-[-0.04em]">{t.name}</h2>
+          <h2 className="text-[clamp(1.6rem,3vw,2.75rem)] leading-[0.95]">{t.name}</h2>
+          <p className="hud-label mt-2 !text-gold sm:mt-3">{t.discipline}</p>
         </div>
         <span
           aria-hidden="true"

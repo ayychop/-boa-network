@@ -119,25 +119,12 @@ export function HudCorners({ inset = 'inset-3' }) {
   )
 }
 
-export function SectionLabel({ index, children }) {
-  return (
-    <div className="mb-10 flex items-center gap-4 sm:mb-14">
-      <span className="hud-label">{index}</span>
-      <span className="hud-line w-16 sm:w-28" />
-      <span className="hud-label !text-mist">{children}</span>
-    </div>
-  )
-}
-
 /** Shared top-of-page header for the inner pages. */
-export function PageHeader({ index, label, title, lede, children }) {
+export function PageHeader({ title, lede, children }) {
   return (
     <header className="relative overflow-hidden pb-16 pt-40 sm:pb-24 sm:pt-52 lg:pt-64">
       <LightBleed className="-right-[20%] -top-[30%] h-[90vh] w-[90vw] sm:w-[60vw]" />
       <div className="container-x relative">
-        <Reveal y={20}>
-          <SectionLabel index={index}>{label}</SectionLabel>
-        </Reveal>
         <Reveal as="h1" className="display-xl max-w-[14ch]" delay={0.05}>
           {title}
         </Reveal>

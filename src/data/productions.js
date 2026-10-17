@@ -36,6 +36,10 @@ export const productions = [
       title: 'Mind States UK - Episode 1',
       // Episode 1 key art (YouTube thumbnail, letterbox cropped)
       poster: '/media/mind-states-uk-ep1.jpg',
+      // The key art prints the series title low in the frame: keep it whole
+      // when the poster is cropped wider, and skip the overlaid caption.
+      posterHasTitle: true,
+      posterPosition: '50% 88%',
       url: 'https://www.youtube-nocookie.com/embed/SnQglPC9S2M',
     },
     logline:

@@ -131,9 +131,9 @@ function FeaturedHero({ production: p, onPlay }) {
       <Spotlight className="-left-[40%] bottom-[-25%] h-[80%] w-[160vw] opacity-60 sm:-left-[15%] sm:w-[85vw]" />
       <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-[35%] bg-gradient-to-t from-obsidian via-obsidian/80 to-transparent" />
 
-      <div className="container-x relative flex min-h-[100svh] flex-col justify-end pb-14 pt-32 sm:pb-20">
+      <div className="above-fog container-x flex min-h-[100svh] flex-col justify-end pb-14 pt-32 sm:pb-20">
 
-        <h2 id={`title-${p.slug}`} className="text-[clamp(4.5rem,17vw,17rem)] leading-[0.84] text-bone">
+        <h2 id={`title-${p.slug}`} className="text-[clamp(4.5rem,17vw,17rem)] leading-[0.94] text-bone">
           <span className="block overflow-hidden">
             <motion.span
               className="block"
@@ -156,7 +156,7 @@ function FeaturedHero({ production: p, onPlay }) {
             <p className="mb-4 flex flex-wrap items-center gap-3 text-[0.6875rem] font-bold uppercase tracking-[0.2em]">
               <span className="text-gold">Featured</span>
               <span aria-hidden="true" className="h-px w-8 bg-gold/60" />
-              {meta && <span className="text-bone/80">{meta}</span>}
+              {meta && <span className="font-mono font-normal tracking-[0.16em] text-bone/80">{meta}</span>}
               {p.status && <StatusBadge status={p.status} />}
             </p>
             {p.logline && <p className="text-lg leading-relaxed text-bone/85 sm:text-xl">{p.logline}</p>}

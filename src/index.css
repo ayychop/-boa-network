@@ -105,7 +105,7 @@ html.lenis body {
   }
   /* Poster tagline: the biggest type on the site */
   .hero-title {
-    line-height: 0.84;
+    line-height: 0.92;
   }
   .hero-accent {
     color: var(--color-gold);
@@ -130,9 +130,10 @@ html.lenis body {
 
   /* Viewfinder detail */
   .hud-label {
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
+    font-weight: 700;
     font-size: 0.6875rem;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     color: color-mix(in srgb, var(--color-hud) 80%, transparent);
   }
@@ -760,6 +761,13 @@ html.lenis body {
   animation: play-halo 2.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
 }
 
+/* Hero copy sits above the fixed fog (z 40) so display type stays flat
+   white and flat gold; only the grain passes over it. */
+.above-fog {
+  position: relative;
+  z-index: 41;
+}
+
 /* Living still: 1.00 to 1.05 over 20s, back and forth, forever */
 @keyframes slow-zoom {
   from { transform: scale(1); }
@@ -790,9 +798,9 @@ html.lenis body {
   flex: none;
 }
 
-/* Vignette, plus film grain that re-rolls a few times a second like a
-   projected print. The grain tile is oversized and only translated in steps,
-   so it never repaints. */
+/* Film grain that re-rolls a few times a second like a projected print. The
+   tile is oversized and only translated in steps, so it never repaints. No
+   vignette: a darkening overlay greys the edges of display type. */
 @keyframes grain-roll {
   0% { transform: translate3d(0, 0, 0); }
   17% { transform: translate3d(-8%, 6%, 0); }
@@ -808,7 +816,6 @@ html.lenis body {
   z-index: 45;
   pointer-events: none;
   overflow: hidden;
-  background: radial-gradient(ellipse at center, transparent 50%, rgb(0 0 0 / 0.6) 100%);
 }
 .atmos::before {
   content: '';

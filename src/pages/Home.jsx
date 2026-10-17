@@ -6,7 +6,7 @@ import Showreel from '../components/Showreel'
 import VideoFacade from '../components/VideoFacade'
 import { FogBank, LightBleed, Smoke, Spotlight } from '../components/Fog'
 import { ProductionCard, StatusBadge } from '../components/cards'
-import { Arrow, ClosingCTA, EASE_EXPO, HudCorners, MagneticButton, Reveal, SectionLabel } from '../components/ui'
+import { Arrow, ClosingCTA, EASE_EXPO, HudCorners, MagneticButton, Reveal } from '../components/ui'
 import { useScrollFx } from '../lib/gsap'
 import { founders, site } from '../data/site'
 import { productionMeta, productions } from '../data/productions'
@@ -65,7 +65,7 @@ function Hero() {
       {/* Last layer before the copy: a long fade into the page so there is no seam */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-[38%] bg-gradient-to-t from-obsidian via-obsidian/80 to-transparent" />
 
-      <div className="hero-copy container-x relative flex h-full flex-col justify-end pb-12 pt-28 sm:pb-16">
+      <div className="hero-copy above-fog container-x flex h-full flex-col justify-end pb-12 pt-28 sm:pb-16">
         <h1 className="hero-title text-[length:clamp(4.5rem,min(19vw,27svh),19rem)]">
           {['The door', 'is open.'].map((line, i) => (
             <span key={line} className="block overflow-hidden">
@@ -131,7 +131,6 @@ function Mission() {
   return (
     <section ref={root} className="section">
       <div className="container-x">
-        <SectionLabel index="01">The mission</SectionLabel>
         <p className="mission-text display-md max-w-[22ch] sm:max-w-[24ch] lg:max-w-[26ch]">
           {MISSION.split(' ').map((word, i) => (
             <span key={i} className="mission-word">
@@ -142,8 +141,7 @@ function Mission() {
 
         <div className="mt-20 grid gap-px overflow-hidden rounded-sm border border-white/[0.08] bg-white/[0.08] sm:mt-28 sm:grid-cols-2 lg:grid-cols-4">
           {barriers.map((b, i) => (
-            <Reveal key={b} delay={i * 0.08} className="bg-obsidian p-6 sm:p-8">
-              <p className="hud-label mb-10 sm:mb-16">Not a barrier · 0{i + 1}</p>
+            <Reveal key={b} delay={i * 0.08} className="bg-obsidian px-6 py-12 sm:px-8 sm:py-20">
               <p className="font-display text-4xl uppercase text-bone/40 line-through decoration-gold decoration-[3px] sm:text-5xl">
                 {b}
               </p>
@@ -165,11 +163,9 @@ function Reel() {
   return (
     <section id="showreel" className="section scroll-mt-10 !pt-0">
       <div className="container-x">
-        <SectionLabel index="02">Showreel</SectionLabel>
         <div className="space-y-16 sm:space-y-24">
           {site.showreel.map((video) => (
             <Reveal key={video.url}>
-              <p className="hud-label mb-4 !text-gold sm:mb-5">{video.label}</p>
               <Showreel url={video.url} title={video.title} poster={video.poster} />
             </Reveal>
           ))}
@@ -185,7 +181,6 @@ function Featured() {
   return (
     <section className="section relative !pt-0">
       <div className="container-x">
-        <SectionLabel index="03">Featured productions</SectionLabel>
         <div className="mb-14 flex flex-col gap-6 sm:mb-20 lg:flex-row lg:items-end lg:justify-between">
           <Reveal as="h2" className="display-lg max-w-[12ch]">
             Stories worth <span className="accent">the big screen.</span>
@@ -198,10 +193,10 @@ function Featured() {
         </div>
 
         <div className="space-y-16 sm:space-y-28">
-          {featured.map((p, i) => (
+          {featured.map((p) => (
             <Reveal key={p.slug} as="article">
               {p.video && (
-                <VideoFacade url={p.video.url} title={p.video.title} poster={p.video.poster} ratio="2.39 / 1" />
+                <VideoFacade {...p.video} ratio="2.39 / 1" />
               )}
               <Link to="/productions" className="group block" aria-label={`${p.title} — view productions`}>
                 {!p.video && (
@@ -222,13 +217,12 @@ function Featured() {
                     )}
                   </CinematicImage>
                 )}
-                <div className="mt-6 grid gap-4 sm:mt-8 lg:grid-cols-[auto_1fr_1fr] lg:items-baseline lg:gap-12">
-                  <span className="hud-label">0{i + 1}</span>
-                  <h3 className="text-4xl font-semibold tracking-[-0.045em] transition-colors duration-500 group-hover:text-gold sm:text-6xl">
+                <div className="mt-6 grid gap-4 sm:mt-8 lg:grid-cols-[1fr_1fr] lg:items-baseline lg:gap-12">
+                  <h3 className="text-5xl transition-colors duration-500 group-hover:text-gold sm:text-7xl">
                     {p.title}
                   </h3>
                   <div>
-                    <p className="hud-label mb-3 !text-mist">{productionMeta(p)}</p>
+                    <p className="mb-3 font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-mist">{productionMeta(p)}</p>
                     <p className="max-w-md text-lg leading-relaxed text-bone/75">{p.logline}</p>
                   </div>
                 </div>
@@ -254,7 +248,6 @@ function Founders() {
     <section className="section relative overflow-hidden border-y border-white/[0.07] bg-ink">
       <LightBleed className="-left-[30%] top-[10%] h-[80vh] w-[90vw] sm:w-[55vw]" />
       <div className="container-x relative">
-        <SectionLabel index="04">The founders</SectionLabel>
         <div className="grid gap-12 md:grid-cols-2 lg:gap-20">
           {founders.map((f, i) => (
             <Reveal key={f.name} delay={i * 0.12} className="grid grid-cols-[minmax(0,7.5rem)_1fr] gap-6 sm:grid-cols-[minmax(0,11rem)_1fr] sm:gap-8">

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { LightBleed } from '../components/Fog'
-import { Arrow, ClosingCTA, MagneticButton, PageHeader, Reveal, SectionLabel } from '../components/ui'
+import { Arrow, ClosingCTA, MagneticButton, PageHeader, Reveal } from '../components/ui'
 import { castingCalls, faqs, pathways, steps } from '../data/access'
 
 const dateFmt = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
@@ -60,8 +60,6 @@ export default function Access() {
         content="How BOA Network opens the door: pathways that need no clout and no money, open casting calls, and how to be seen."
       />
       <PageHeader
-        index="04"
-        label="Access"
         title={
           <>
             No clout. No money. <span className="accent">No problem.</span>
@@ -71,14 +69,9 @@ export default function Access() {
       />
 
       <section className="container-x pb-28 sm:pb-48">
-        <SectionLabel index="01">Pathways</SectionLabel>
         <div className="grid gap-5 md:grid-cols-2 lg:gap-8">
           {pathways.map((p, i) => (
-            <Reveal key={p.code} delay={(i % 2) * 0.1} className="glass glow-border rounded-sm p-7 sm:p-12 lg:p-14">
-              <div className="mb-16 flex items-center justify-between sm:mb-28">
-                <span className="hud-label">{p.code}</span>
-                <span className="hud-label !text-mist">Pathway</span>
-              </div>
+            <Reveal key={p.code} delay={(i % 2) * 0.1} className="glass glow-border rounded-sm p-7 pt-24 sm:p-12 sm:pt-40 lg:p-14 lg:pt-44">
               <h2 className="text-5xl font-semibold tracking-[-0.05em] sm:text-6xl">{p.title}</h2>
               <p className="accent mt-4 text-2xl leading-snug sm:text-3xl">{p.promise}</p>
               <p className="mt-5 max-w-lg leading-relaxed text-mist">{p.body}</p>
@@ -90,7 +83,6 @@ export default function Access() {
       <section className="section relative overflow-hidden border-y border-white/[0.07] bg-ink">
         <LightBleed className="-right-[30%] top-0 h-[90vh] w-[90vw] sm:w-[55vw]" />
         <div className="container-x relative">
-          <SectionLabel index="02">How to be seen</SectionLabel>
           <Reveal as="h2" className="display-lg max-w-[12ch]">
             Four steps. <span className="accent">No secret handshake.</span>
           </Reveal>
@@ -98,7 +90,7 @@ export default function Access() {
             {steps.map((s, i) => (
               <Reveal as="li" key={s.title} delay={i * 0.08} className="relative border-t border-hud/25 pt-6">
                 <span className="absolute -top-px left-0 h-px w-10 bg-gold" />
-                <p className="font-mono text-sm text-gold">0{i + 1}</p>
+                <p className="font-display text-3xl leading-none text-gold">0{i + 1}</p>
                 <h3 className="mt-6 text-2xl font-semibold tracking-[-0.03em]">{s.title}</h3>
                 <p className="mt-3 leading-relaxed text-mist">{s.body}</p>
               </Reveal>
@@ -109,7 +101,6 @@ export default function Access() {
 
       <section className="section">
         <div className="container-x">
-          <SectionLabel index="03">Casting calls</SectionLabel>
           <div className="mb-12 flex flex-col gap-6 sm:mb-16 lg:flex-row lg:items-end lg:justify-between">
             <Reveal as="h2" className="display-lg">
               Open <span className="accent">now.</span>
@@ -126,7 +117,7 @@ export default function Access() {
                   to={`/contact?form=talent&role=${encodeURIComponent(`${c.id} — ${c.role} (${c.production})`)}`}
                   className="group grid gap-5 py-9 transition-colors duration-500 hover:bg-white/[0.025] sm:px-6 sm:py-10 lg:grid-cols-[6rem_1.5fr_1fr_auto] lg:items-center lg:gap-10"
                 >
-                  <span className="hud-label">{c.id}</span>
+                  <span className="font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-mist">{c.id}</span>
                   <div>
                     <h3 className="text-2xl font-semibold tracking-[-0.03em] transition-colors duration-500 group-hover:text-gold sm:text-3xl">
                       {c.role}
@@ -165,7 +156,6 @@ export default function Access() {
       <section className="section !pt-0">
         <div className="container-x grid gap-12 lg:grid-cols-[1fr_1.5fr] lg:gap-24">
           <div>
-            <SectionLabel index="04">Straight answers</SectionLabel>
             <Reveal as="h2" className="display-md">
               Things people are <span className="accent">afraid to ask.</span>
             </Reveal>

@@ -42,11 +42,11 @@ export default function TalentProfile() {
             </Reveal>
 
             <div className="flex flex-col justify-end">
-              <Reveal as="p" className="hud-label mb-5" y={16}>
-                {person.discipline} · {person.base}
-              </Reveal>
               <Reveal as="h1" className="display-lg" delay={0.05}>
                 {person.name}
+              </Reveal>
+              <Reveal as="p" className="hud-label mt-6" y={16}>
+                {person.discipline} · {person.base}
               </Reveal>
               <Reveal as="p" className="lede mt-8 max-w-xl" delay={0.12}>
                 {person.bio}

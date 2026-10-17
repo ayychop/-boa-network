@@ -9,7 +9,6 @@ export default function Footer() {
       <div className="container-x py-16 sm:py-24">
         <div className="grid gap-14 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
-            <p className="hud-label mb-5">{site.longName}</p>
             <p className="max-w-sm font-display text-3xl uppercase leading-none sm:text-4xl">
               A door opener, <span className="accent">not a gatekeeper.</span>
             </p>
