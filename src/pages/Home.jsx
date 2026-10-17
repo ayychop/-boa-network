@@ -8,6 +8,7 @@ import { FogBank, LightBleed, Smoke, Spotlight } from '../components/Fog'
 import { ProductionCard, StatusBadge } from '../components/cards'
 import { Arrow, ClosingCTA, EASE_EXPO, HudCorners, MagneticButton, Reveal } from '../components/ui'
 import { useScrollFx } from '../lib/gsap'
+import { useIntroPhase } from '../lib/intro'
 import { founders, site } from '../data/site'
 import { productionMeta, productions } from '../data/productions'
 import { barriers } from '../data/access'
@@ -16,11 +17,27 @@ import { barriers } from '../data/access'
 const HERO_IMAGE = '/media/mind-states-uk-still.jpg'
 
 const EASE = EASE_EXPO
+
+// The tagline, set as two lines with the key word in gold italic.
+const TAGLINE = [
+  { key: 'door', content: 'The door' },
+  {
+    key: 'open',
+    content: (
+      <>
+        is <em className="hero-accent">open.</em>
+      </>
+    ),
+  },
+]
 const MISSION =
   'Talent is everywhere. Opportunity is not. BOA Network exists to close that gap with real roles, on real productions, for people who were never handed a way in.'
 
 function Hero() {
   const root = useRef(null)
+  // Entrances wait for the loader's iris, so they play into the reveal
+  // instead of finishing unseen behind it.
+  const go = useIntroPhase() !== 'pending'
 
   // Scroll carries the camera further in and lets the tagline fall away.
   useScrollFx(root, (gsap) => {
@@ -34,7 +51,7 @@ function Hero() {
       <motion.div
         className="hero-media absolute inset-0 will-change-transform"
         initial={{ opacity: 0, scale: 1.08 }}
-        animate={{ opacity: 1, scale: 1 }}
+        animate={go ? { opacity: 1, scale: 1 } : undefined}
         transition={{ duration: 2.4, ease: EASE }}
       >
         <div className="slow-zoom absolute inset-0">
@@ -57,7 +74,7 @@ function Hero() {
         aria-hidden="true"
         className="absolute inset-0"
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+        animate={go ? { opacity: 1 } : undefined}
         transition={{ duration: 2.4, ease: EASE, delay: 0.3 }}
       >
         <Spotlight className="-left-[40%] bottom-[-25%] h-[80%] w-[160vw] opacity-70 sm:-left-[15%] sm:w-[90vw]" />
@@ -66,16 +83,16 @@ function Hero() {
       <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-[38%] bg-gradient-to-t from-obsidian via-obsidian/80 to-transparent" />
 
       <div className="hero-copy above-fog container-x flex h-full flex-col justify-end pb-12 pt-28 sm:pb-16">
-        <h1 className="hero-title text-[length:clamp(4.5rem,min(19vw,27svh),19rem)]">
-          {['The door', 'is open.'].map((line, i) => (
-            <span key={line} className="block overflow-hidden">
+        <h1 className="hero-title text-[length:clamp(3.5rem,min(12.5vw,19svh),10.5rem)]">
+          {TAGLINE.map((line, i) => (
+            <span key={line.key} className="block overflow-hidden pb-[0.08em]">
               <motion.span
-                className={`block ${i === 1 ? 'hero-accent' : ''}`}
-                initial={{ y: '105%' }}
-                animate={{ y: 0 }}
-                transition={{ duration: 1.5, ease: EASE, delay: 0.45 + i * 0.14 }}
+                className="block"
+                initial={{ y: '110%' }}
+                animate={go ? { y: 0 } : undefined}
+                transition={{ duration: 1.5, ease: EASE, delay: 0.25 + i * 0.14 }}
               >
-                {line}
+                {line.content}
               </motion.span>
             </span>
           ))}
@@ -83,8 +100,8 @@ function Hero() {
         <motion.div
           className="mt-8 flex flex-col gap-8 sm:mt-10 lg:flex-row lg:items-end lg:justify-between"
           initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.4, ease: EASE, delay: 1 }}
+          animate={go ? { opacity: 1, y: 0 } : undefined}
+          transition={{ duration: 1.4, ease: EASE, delay: 0.75 }}
         >
           <div className="max-w-lg">
             <p className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[0.6875rem] font-bold uppercase tracking-[0.24em] text-gold">
@@ -142,7 +159,7 @@ function Mission() {
         <div className="mt-20 grid gap-px overflow-hidden rounded-sm border border-white/[0.08] bg-white/[0.08] sm:mt-28 sm:grid-cols-2 lg:grid-cols-4">
           {barriers.map((b, i) => (
             <Reveal key={b} delay={i * 0.08} className="bg-obsidian px-6 py-12 sm:px-8 sm:py-20">
-              <p className="font-display text-4xl uppercase text-bone/40 line-through decoration-gold decoration-[3px] sm:text-5xl">
+              <p className="font-display text-4xl italic text-bone/45 line-through decoration-gold decoration-2 sm:text-5xl">
                 {b}
               </p>
             </Reveal>
@@ -231,12 +248,20 @@ function Featured() {
           ))}
         </div>
 
-        <div className="mt-16 grid gap-6 sm:mt-28 sm:grid-cols-3 lg:gap-8">
-          {upcoming.map((p, i) => (
-            <Reveal key={p.slug} delay={i * 0.08}>
-              <ProductionCard production={p} />
-            </Reveal>
-          ))}
+        <div className="mt-16 grid gap-6 sm:mt-28 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+          {upcoming.map((p, i) => {
+            // With an odd count, the last tile spans both columns below lg.
+            const wide = upcoming.length % 2 === 1 && i === upcoming.length - 1
+            return (
+              <Reveal key={p.slug} delay={i * 0.08} className={wide ? 'sm:col-span-2 lg:col-span-1' : ''}>
+                <ProductionCard
+                  production={p}
+                  ratio="fill"
+                  imageClassName={wide ? 'aspect-[2/3] sm:max-lg:aspect-[16/8]' : 'aspect-[2/3]'}
+                />
+              </Reveal>
+            )
+          })}
         </div>
       </div>
     </section>
@@ -248,7 +273,7 @@ function Founders() {
     <section className="section relative overflow-hidden border-y border-white/[0.07] bg-ink">
       <LightBleed className="-left-[30%] top-[10%] h-[80vh] w-[90vw] sm:w-[55vw]" />
       <div className="container-x relative">
-        <div className="grid gap-12 md:grid-cols-2 lg:gap-20">
+        <div className="grid gap-12 lg:grid-cols-2 lg:gap-20">
           {founders.map((f, i) => (
             <Reveal key={f.name} delay={i * 0.12} className="grid grid-cols-[minmax(0,7.5rem)_1fr] gap-6 sm:grid-cols-[minmax(0,11rem)_1fr] sm:gap-8">
               <CinematicImage
@@ -260,7 +285,7 @@ function Founders() {
                 className="rounded-sm"
               />
               <div className="flex flex-col justify-between gap-6">
-                <p className="text-2xl font-medium leading-tight tracking-[-0.03em] sm:text-3xl lg:text-4xl">
+                <p className="font-display text-3xl italic leading-tight sm:text-4xl lg:text-[2.75rem]">
                   “{f.line}”
                 </p>
                 <div>

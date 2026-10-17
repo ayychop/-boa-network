@@ -1,13 +1,24 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import PlayMark from './PlayMark'
 import { EASE_EXPO } from './ui'
 
 /**
- * A YouTube embed that starts as its poster frame with the gold play disc.
- * The iframe only loads (and autoplays) once someone asks for it, so the page
- * stays light and always shows the frame instead of an empty black player.
+ * A YouTube embed staged like a screening: the poster frame between thin
+ * letterbox bars, the premiere play mark, and a serif title card. The iframe
+ * only loads (and autoplays) once someone asks for it, so the page stays light
+ * and always shows the frame instead of an empty black player.
  */
-export default function VideoFacade({ url, title, poster, posterHasTitle = false, posterPosition = '50% 50%', ratio = '16 / 9', className = '', children }) {
+export default function VideoFacade({
+  url,
+  title,
+  poster,
+  posterHasTitle = false,
+  posterPosition = '50% 50%',
+  ratio = '16 / 9',
+  className = '',
+  children,
+}) {
   const [playing, setPlaying] = useState(false)
   return (
     <div className={`group relative overflow-hidden rounded-sm bg-black ${className}`} style={{ aspectRatio: ratio }}>
@@ -18,8 +29,8 @@ export default function VideoFacade({ url, title, poster, posterHasTitle = false
             type="button"
             onClick={() => setPlaying(true)}
             aria-label={`Play ${title}`}
-            className="absolute inset-0 z-10 block h-full w-full cursor-pointer text-left"
-            exit={{ opacity: 0, transition: { duration: 0.5 } }}
+            className="absolute inset-0 z-10 block h-full w-full cursor-pointer text-left outline-none focus-visible:outline focus-visible:outline-1 focus-visible:-outline-offset-4 focus-visible:outline-gold"
+            exit={{ opacity: 0, transition: { duration: 0.6 } }}
           >
             {poster && (
               <img
@@ -28,32 +39,28 @@ export default function VideoFacade({ url, title, poster, posterHasTitle = false
                 loading="lazy"
                 decoding="async"
                 style={{ objectPosition: posterPosition }}
-                className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.2s] ease-[var(--ease-cine)] group-hover:scale-105"
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.6s] ease-[var(--ease-cine)] group-hover:scale-[1.03]"
               />
             )}
-            <span className="absolute inset-0 bg-black/35 transition-colors duration-700 group-hover:bg-black/50" />
-            {/* A poster that prints its own title keeps the disc off it on small
+            <span className="absolute inset-0 bg-black/30 transition-colors duration-700 group-hover:bg-black/45" />
+            {/* Letterbox bars: the frame is presented, not just embedded */}
+            <span aria-hidden="true" className="absolute inset-x-0 top-0 h-[6%] bg-black" />
+            <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-[6%] bg-black" />
+
+            {/* A poster that prints its own title keeps the mark off it on small
                 screens: smaller, in the corner. Centred once there is room. */}
             <span
               className={
                 posterHasTitle
-                  ? 'absolute right-3 top-3 sm:inset-0 sm:grid sm:place-items-center'
+                  ? 'absolute right-3 top-[calc(6%+0.75rem)] sm:inset-0 sm:grid sm:place-items-center'
                   : 'absolute inset-0 grid place-items-center'
               }
             >
-              <span
-                className={`relative grid place-items-center sm:h-28 sm:w-28 ${posterHasTitle ? 'h-14 w-14' : 'h-20 w-20'}`}
-              >
-                <span aria-hidden="true" className="play-halo absolute inset-0 rounded-full bg-gold/40" />
-                <span className="relative grid h-full w-full place-items-center rounded-full bg-gold text-black shadow-[0_0_50px_-6px_rgb(232_179_26/0.9),0_0_120px_-20px_rgb(232_179_26/0.7)] transition-[transform,background-color] duration-500 ease-[var(--ease-cine)] group-hover:scale-110 group-hover:bg-amber">
-                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className={`ml-1 sm:h-9 sm:w-9 ${posterHasTitle ? 'h-5 w-5' : 'h-7 w-7'}`}>
-                    <path d="M7 4.5v15a.6.6 0 0 0 .9.5l12-7.5a.6.6 0 0 0 0-1l-12-7.5a.6.6 0 0 0-.9.5z" />
-                  </svg>
-                </span>
-              </span>
+              <PlayMark size={posterHasTitle ? 'sm' : 'lg'} className={posterHasTitle ? 'sm:h-24 sm:w-24' : ''} />
             </span>
+
             {!posterHasTitle && (
-              <span className="absolute inset-x-5 bottom-4 text-[0.6875rem] font-bold uppercase tracking-[0.2em] text-bone sm:inset-x-8 sm:bottom-7">
+              <span className="absolute inset-x-5 bottom-[calc(6%+0.75rem)] font-display text-lg italic text-bone sm:inset-x-8 sm:bottom-[calc(6%+1.75rem)] sm:text-3xl">
                 {title}
               </span>
             )}

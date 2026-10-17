@@ -90,7 +90,7 @@ export default function Access() {
             {steps.map((s, i) => (
               <Reveal as="li" key={s.title} delay={i * 0.08} className="relative border-t border-hud/25 pt-6">
                 <span className="absolute -top-px left-0 h-px w-10 bg-gold" />
-                <p className="font-display text-3xl leading-none text-gold">0{i + 1}</p>
+                <p className="font-display text-4xl italic leading-none text-gold">0{i + 1}</p>
                 <h3 className="mt-6 text-2xl font-semibold tracking-[-0.03em]">{s.title}</h3>
                 <p className="mt-3 leading-relaxed text-mist">{s.body}</p>
               </Reveal>
@@ -142,7 +142,7 @@ export default function Access() {
                       <dd className="text-gold">{c.closes ? dateFmt.format(new Date(c.closes)) : 'Always open'}</dd>
                     </div>
                   </dl>
-                  <span className="relative inline-flex w-fit items-center gap-3 overflow-hidden rounded-full border border-gold/50 px-5 py-2.5 text-sm font-semibold text-gold transition-[color,border-color,box-shadow] duration-500 ease-[var(--ease-cine)] before:absolute before:inset-0 before:-z-10 before:bg-gold before:[clip-path:inset(100%_0_0_0)] before:transition-[clip-path] before:duration-500 before:ease-[var(--ease-cine)] group-hover:border-gold group-hover:text-obsidian group-hover:shadow-[0_12px_40px_-14px_rgb(226_168_75/0.8)] group-hover:before:[clip-path:inset(0_0_0_0)] isolate">
+                  <span className="relative inline-flex w-fit items-center gap-3 overflow-hidden rounded-full border border-gold/50 px-5 py-2.5 text-sm font-semibold text-gold transition-[color,border-color,box-shadow] duration-500 ease-[var(--ease-cine)] before:absolute before:inset-0 before:-z-10 before:bg-gold before:[clip-path:inset(100%_0_0_0)] before:transition-[clip-path] before:duration-500 before:ease-[var(--ease-cine)] group-hover:border-gold group-hover:text-obsidian group-hover:before:[clip-path:inset(0_0_0_0)] isolate">
                     Apply
                     <Arrow className="transition-transform duration-500 group-hover:translate-x-1" />
                   </span>

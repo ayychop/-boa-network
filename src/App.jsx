@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
 import { MotionConfig, motion } from 'framer-motion'
 import SmoothScroll from './components/SmoothScroll'
 import Loader from './components/Loader'
-import Fog from './components/Fog'
+import Fog, { Grain } from './components/Fog'
 import Nav from './components/Nav'
 import Footer from './components/Footer'
 import Home from './pages/Home'
@@ -62,7 +62,7 @@ export default function App() {
         <Footer />
         {/* Atmosphere sits above content, below the nav. */}
         <Fog />
-        <div className="atmos" aria-hidden="true" />
+        <Grain />
       </BrowserRouter>
     </MotionConfig>
   )

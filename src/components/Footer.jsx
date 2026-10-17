@@ -9,7 +9,7 @@ export default function Footer() {
       <div className="container-x py-16 sm:py-24">
         <div className="grid gap-14 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
-            <p className="max-w-sm font-display text-3xl uppercase leading-none sm:text-4xl">
+            <p className="max-w-sm font-display text-3xl leading-tight sm:text-4xl">
               A door opener, <span className="accent">not a gatekeeper.</span>
             </p>
           </div>
@@ -60,9 +60,9 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* The lockup at full width closes every page */}
+        {/* The lockup signs off every page, at signature size */}
         <div aria-hidden="true" className="mt-20 select-none sm:mt-28">
-          <Logo title="" className="w-full" />
+          <Logo title="" className="w-[min(100%,22rem)]" />
         </div>
 
         <div className="mt-10 flex flex-col gap-3 border-t border-white/[0.07] pt-6 text-xs text-mist sm:flex-row sm:items-center sm:justify-between">

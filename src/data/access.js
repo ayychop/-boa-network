@@ -52,7 +52,7 @@ export const steps = [
 export const castingCalls = [
   {
     id: 'CC-014',
-    role: 'Lead — "Dee", 20s',
+    role: 'Lead — “Dee”, 20s',
     production: 'Mind States UK',
     type: 'Acting',
     location: 'Newcastle / London',

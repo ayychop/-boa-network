@@ -25,7 +25,7 @@ export function StatusBadge({ status }) {
  * Production tile for the slate. The frame is the whole tile: on hover the
  * image pushes in to 1.05x, the frame darkens, and "View Project" fades up.
  */
-export function ProductionCard({ production: p, ratio = 'poster', className = '' }) {
+export function ProductionCard({ production: p, ratio = 'poster', imageClassName = '', className = '' }) {
   const meta = productionMeta(p)
   return (
     <Link
@@ -38,7 +38,7 @@ export function ProductionCard({ production: p, ratio = 'poster', className = ''
         alt=""
         ratio={ratio}
         tone={p.tone}
-        className="transition-transform duration-[1.1s] ease-[var(--ease-cine)] will-change-transform group-hover:scale-105 group-focus-visible:scale-105"
+        className={`transition-transform duration-[1.1s] ease-[var(--ease-cine)] will-change-transform group-hover:scale-105 group-focus-visible:scale-105 ${imageClassName}`}
       />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 via-45% to-transparent" />
       <div className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-700 ease-[var(--ease-cine)] group-hover:bg-black/45 group-focus-visible:bg-black/45" />
@@ -48,11 +48,19 @@ export function ProductionCard({ production: p, ratio = 'poster', className = ''
         </div>
       )}
       <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7">
-        <h3 className="text-[clamp(2.5rem,5vw,4.5rem)] leading-[0.95]">{p.title}</h3>
+        <h3 className="text-[clamp(2.25rem,4vw,3.5rem)] leading-none">{p.title}</h3>
         {meta && meta !== p.title && <p className="mt-3 font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-gold">{meta}</p>}
+        {/* Pointer devices: the button fades up on hover. */}
         <span
           aria-hidden="true"
-          className="mt-5 inline-flex translate-y-3 items-center gap-3 bg-gold px-5 py-3 text-xs font-bold uppercase tracking-[0.16em] text-black opacity-0 transition-[opacity,transform] duration-500 ease-[var(--ease-cine)] group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 [@media(hover:none)]:translate-y-0 [@media(hover:none)]:opacity-100 [@media(hover:none)]:transition-none"
+          className="mt-5 inline-flex translate-y-3 items-center gap-3 whitespace-nowrap bg-gold px-5 py-3 text-xs font-bold uppercase tracking-[0.16em] text-black opacity-0 transition-[opacity,transform] duration-500 ease-[var(--ease-cine)] group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 [@media(hover:none)]:hidden"
+        >
+          View Project <Arrow />
+        </span>
+        {/* Touch devices: always shown, never animated or faded. */}
+        <span
+          aria-hidden="true"
+          className="mt-5 hidden items-center gap-3 whitespace-nowrap bg-gold px-5 py-3 text-xs font-bold uppercase tracking-[0.16em] text-black [@media(hover:none)]:inline-flex"
         >
           View Project <Arrow />
         </span>
@@ -87,12 +95,12 @@ export function TalentPortrait({ person: t, ratio = '4 / 5', priority = false })
 
       <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-4 sm:p-6 lg:p-7">
         <div className="min-w-0">
-          <h2 className="text-[clamp(1.6rem,3vw,2.75rem)] leading-[0.95]">{t.name}</h2>
+          <h2 className="text-[clamp(1.6rem,2.8vw,2.6rem)] leading-none">{t.name}</h2>
           <p className="hud-label mt-2 !text-gold sm:mt-3">{t.discipline}</p>
         </div>
         <span
           aria-hidden="true"
-          className="hidden shrink-0 translate-y-3 items-center gap-2 rounded-full border border-gold bg-gold px-4 py-2.5 text-sm font-semibold text-obsidian opacity-0 shadow-[0_12px_40px_-12px_rgb(226_168_75/0.8)] transition-[opacity,transform] duration-600 ease-[var(--ease-cine)] group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 sm:inline-flex [@media(hover:none)]:hidden"
+          className="hidden shrink-0 translate-y-3 items-center gap-2 rounded-full border border-gold bg-gold px-4 py-2.5 text-sm font-semibold text-obsidian opacity-0 transition-[opacity,transform] duration-600 ease-[var(--ease-cine)] group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 sm:inline-flex [@media(hover:none)]:hidden"
         >
           View Profile <Arrow />
         </span>

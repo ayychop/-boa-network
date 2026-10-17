@@ -206,7 +206,7 @@ export default function Contact() {
                     onClick={() => select(t.id)}
                     className={`rounded-sm border p-6 text-left transition-[border-color,background-color,box-shadow,transform] duration-500 ease-[var(--ease-cine)] active:scale-[0.98] ${
                       on
-                        ? 'border-gold/70 bg-gold/[0.07] shadow-[0_20px_60px_-30px_rgb(226_168_75/0.6)]'
+                        ? 'border-gold/70 bg-gold/[0.07] shadow-[0_20px_60px_-30px_rgb(0_0_0/0.9)]'
                         : 'border-white/10 hover:-translate-y-0.5 hover:border-gold/40 hover:bg-white/[0.03]'
                     }`}
                   >

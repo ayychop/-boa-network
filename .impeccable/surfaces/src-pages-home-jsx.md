@@ -15,14 +15,14 @@ Constraints: keep all copy and business info; the official logo is traced from p
 
 ## Direction contract
 
-THESIS: BOA as a label, not a startup. A record label or premium streamer's house style, where the slate is the hero, set in poster-scale condensed caps over real footage. It refuses the soft gradient, serif-italic "tasteful startup" hero the site had.
+THESIS: BOA as a prestige screen studio (A24, Apple TV+): elegance and restraint over volume, real footage behind quiet high-contrast serif type. It refuses both the soft serif-italic startup hero and the shouting block-caps label look of the previous pass.
 
-OWN-WORLD: #0A0A0A ground, #E8B31A gold for the logo, primary actions and single accents, stark white text, white at 70% for secondary. Anton caps for display (tight, uppercase, poster tracking), Manrope for body, JetBrains Mono only for production metadata. Heavy drifting fog, film grain over everything, hard edges, no glass cards.
+OWN-WORLD: #0A0A0A ground, #E8B31A gold for the logo, primary actions and italic accent words, stark white type, white at 70% for secondary. Cormorant Garamond 500 (with a 500 italic) for every headline, at restrained sizes with generous air; Manrope for body, plus tracked caps for small labels and buttons; JetBrains Mono only for production metadata. Fog and grain stay, lighter on touch screens. Hard 2px corners. Play controls are a hairline gold ring, staged like a screening.
 
 STORY: the visitor sees a cinematic production company, then understands it opens doors to people like them, then presses Get seen or Watch trailer.
 
-FIRST VIEWPORT: full-bleed Mind States UK trailer frame, slowly zooming 1.00 to 1.05 over 20s, under fog. "THE DOOR IS OPEN." in Anton at about 22vw across the lower half like a poster tagline, the gold O-lockup logo top left, the gold "Get seen" primary bottom right with the lede, and a bottom edge that dissolves into the next section with no seam.
+FIRST VIEWPORT: full-bleed Mind States UK trailer frame, slowly zooming 1.00 to 1.05 over 20s, under fog. "The door / is open." in Cormorant at about 10vw (max 10.5rem) in the lower half, with "open." in gold italic. The gold logo top left, the metadata line and lede below the headline, and Get seen plus Watch the reel bottom right. The bottom edge dissolves into the next section. Entrances play as the loader's iris opens; atmosphere mounts after the loader is gone.
 
-FORM: label house style (Roc Nation, Def Jam, Apple TV+ editorial), position 1 of 1 (pinned by the brief). Signature interaction: the gold glowing Watch trailer play control opens the trailer in place. Motion grammar: easeInOutExpo entrances; hover = image 1.05x, darken, CTA fades in. seed:1a66dce7aefcf7e7 (roll run; the brief-pinned direction beats the roll, so its dealt challengers were not adopted)
+FORM: prestige studio editorial (A24, Apple TV+), position 1 of 1 (pinned by the brief; replaces the earlier label house style). Signature interaction: the hairline gold play ring fills with gold on hover and opens the trailer in a theatre. Motion grammar: easeInOutExpo entrances; hover = image 1.05x, darken, CTA fades in. seed:1a66dce7aefcf7e7 (roll run; the brief-pinned direction beats the roll, so its dealt challengers were not adopted)
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance

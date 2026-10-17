@@ -3,20 +3,14 @@ import { AnimatePresence, motion } from 'framer-motion'
 import CinematicImage from '../components/CinematicImage'
 import { ProductionCard, StatusBadge } from '../components/cards'
 import { FogBank, Smoke, Spotlight } from '../components/Fog'
+import PlayMark from '../components/PlayMark'
 import { lockScroll } from '../components/SmoothScroll'
 import { Arrow, ClosingCTA, EASE_EXPO, MagneticButton, Reveal } from '../components/ui'
 import { productionMeta, productions } from '../data/productions'
+import { useIntroPhase } from '../lib/intro'
 
 // Re-exported for anything still importing it from here.
 export { FilterBar } from '../components/ui'
-
-export function PlayIcon({ className = '' }) {
-  return (
-    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true" className={className}>
-      <path d="M7 4.5v15a.6.6 0 0 0 .9.5l12-7.5a.6.6 0 0 0 0-1l-12-7.5a.6.6 0 0 0-.9.5z" />
-    </svg>
-  )
-}
 
 /** Full-screen theatre for a YouTube embed. Escape, the close button or the backdrop dismiss it. */
 export function Theatre({ video, onClose }) {
@@ -71,7 +65,7 @@ export function Theatre({ video, onClose }) {
                 </svg>
               </button>
             </div>
-            <div className="relative aspect-video overflow-hidden rounded-sm bg-black shadow-[0_40px_120px_-30px_rgb(232_179_26/0.35)]">
+            <div className="relative aspect-video overflow-hidden rounded-sm bg-black shadow-[0_40px_120px_-30px_rgb(0_0_0/0.9)]">
               <iframe
                 src={`${video.url}?autoplay=1&rel=0`}
                 title={video.title}
@@ -88,22 +82,17 @@ export function Theatre({ video, onClose }) {
   )
 }
 
-/** The gold play control: a disc that glows and breathes, with its label beside it. */
-export function TrailerButton({ onClick, label = 'Watch Trailer' }) {
+/** Watch-the-trailer control: the premiere play mark with a serif italic invitation. */
+export function TrailerButton({ onClick, label = 'Watch the trailer' }) {
   return (
     <motion.button
       type="button"
       onClick={onClick}
-      whileTap={{ scale: 0.96 }}
-      className="group inline-flex items-center gap-5 text-left"
+      whileTap={{ scale: 0.97 }}
+      className="group inline-flex items-center gap-5 text-left outline-none"
     >
-      <span className="relative grid h-20 w-20 shrink-0 place-items-center sm:h-24 sm:w-24">
-        <span aria-hidden="true" className="play-halo absolute inset-0 rounded-full bg-gold/40" />
-        <span className="relative grid h-full w-full place-items-center rounded-full bg-gold text-black shadow-[0_0_50px_-6px_rgb(232_179_26/0.9),0_0_120px_-20px_rgb(232_179_26/0.7)] transition-[transform,box-shadow,background-color] duration-500 ease-[var(--ease-cine)] group-hover:scale-110 group-hover:bg-amber group-hover:shadow-[0_0_70px_0_rgb(232_179_26/1),0_0_160px_-10px_rgb(232_179_26/0.8)]">
-          <PlayIcon className="ml-1 h-7 w-7 sm:h-8 sm:w-8" />
-        </span>
-      </span>
-      <span className="text-sm font-bold uppercase tracking-[0.2em] text-bone transition-colors duration-300 group-hover:text-gold">
+      <PlayMark size="md" />
+      <span className="font-display text-2xl italic text-bone transition-colors duration-500 group-hover:text-gold sm:text-[1.75rem]">
         {label}
       </span>
     </motion.button>
@@ -112,12 +101,13 @@ export function TrailerButton({ onClick, label = 'Watch Trailer' }) {
 
 function FeaturedHero({ production: p, onPlay }) {
   const meta = productionMeta(p)
+  const go = useIntroPhase() !== 'pending'
   return (
     <section aria-labelledby={`title-${p.slug}`} className="relative min-h-[100svh] overflow-hidden bg-obsidian">
       <motion.div
         className="absolute inset-0"
         initial={{ opacity: 0, scale: 1.08 }}
-        animate={{ opacity: 1, scale: 1 }}
+        animate={go ? { opacity: 1, scale: 1 } : undefined}
         transition={{ duration: 2.2, ease: EASE_EXPO }}
       >
         <div className="slow-zoom absolute inset-0">
@@ -133,13 +123,13 @@ function FeaturedHero({ production: p, onPlay }) {
 
       <div className="above-fog container-x flex min-h-[100svh] flex-col justify-end pb-14 pt-32 sm:pb-20">
 
-        <h2 id={`title-${p.slug}`} className="text-[clamp(4.5rem,17vw,17rem)] leading-[0.94] text-bone">
-          <span className="block overflow-hidden">
+        <h2 id={`title-${p.slug}`} className="text-[clamp(3.5rem,11vw,10rem)] leading-[0.98] text-bone">
+          <span className="block overflow-hidden pb-[0.1em]">
             <motion.span
               className="block"
-              initial={{ y: '105%' }}
-              animate={{ y: 0 }}
-              transition={{ duration: 1.5, ease: EASE_EXPO, delay: 0.5 }}
+              initial={{ y: '110%' }}
+              animate={go ? { y: 0 } : undefined}
+              transition={{ duration: 1.5, ease: EASE_EXPO, delay: 0.35 }}
             >
               {p.title}
             </motion.span>
@@ -149,8 +139,8 @@ function FeaturedHero({ production: p, onPlay }) {
         <motion.div
           className="mt-8 grid gap-10 lg:grid-cols-[minmax(0,36rem)_auto] lg:items-end lg:justify-between"
           initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.4, ease: EASE_EXPO, delay: 0.9 }}
+          animate={go ? { opacity: 1, y: 0 } : undefined}
+          transition={{ duration: 1.4, ease: EASE_EXPO, delay: 0.75 }}
         >
           <div>
             <p className="mb-4 flex flex-wrap items-center gap-3 text-[0.6875rem] font-bold uppercase tracking-[0.2em]">

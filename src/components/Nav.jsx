@@ -168,7 +168,7 @@ export default function Nav() {
                         end
                         onClick={() => setOpen(false)}
                         className={({ isActive }) =>
-                          `group flex items-center justify-between py-4 font-display text-[clamp(2.5rem,12vw,3.75rem)] uppercase leading-none transition-colors duration-300 active:text-amber ${
+                          `group flex items-center justify-between py-4 font-display text-[clamp(2.25rem,10vw,3.25rem)] leading-[1.1] transition-colors duration-300 active:text-amber ${
                             isActive ? 'text-gold' : 'text-gold/85 hover:text-gold'
                           }`
                         }

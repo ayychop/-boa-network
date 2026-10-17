@@ -83,7 +83,7 @@ export default function About() {
                 <h3 className="mt-8 text-5xl sm:text-6xl">{f.name}</h3>
                 <p className="hud-label mt-3 !text-gold">{f.role}</p>
                 <p className="mt-6 max-w-lg text-lg leading-relaxed text-bone/75">{f.bio}</p>
-                <p className="accent mt-6 max-w-md text-2xl leading-snug sm:text-3xl">“{f.line}”</p>
+                <p className="accent mt-6 max-w-md font-display text-3xl leading-snug sm:text-4xl">“{f.line}”</p>
               </Reveal>
             ))}
           </div>

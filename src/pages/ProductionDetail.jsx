@@ -39,7 +39,7 @@ export default function ProductionDetail() {
             <Arrow className="rotate-180 transition-transform duration-500 group-hover:-translate-x-1" />
             All productions
           </Link>
-          <h1 className="text-[clamp(4rem,14vw,14rem)] leading-[0.94]">
+          <h1 className="text-[clamp(3.25rem,9vw,8rem)] leading-none">
             <span className="block overflow-hidden">
               <motion.span
                 className="block"
