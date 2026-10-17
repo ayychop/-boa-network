@@ -108,6 +108,11 @@ html.lenis body {
   }
   /* Hero headline: tighter optical setting than display-xl, a lighter weight
      so the serif line carries the drama, and a warm halo so it lifts off the smoke. */
+  /* The hero copy fades and lifts on every scroll frame. On its own layer the
+     headline's large blurred glow is rasterised once instead of per frame. */
+  .hero-copy {
+    will-change: transform, opacity;
+  }
   .hero-title {
     line-height: 0.86;
     letter-spacing: -0.045em;
@@ -613,10 +618,12 @@ html.lenis body {
   overflow: hidden;
   pointer-events: none;
   mix-blend-mode: screen;
+}
+/* The fade rides on the drifting layer itself (it only moves sideways, so the
+   gradient lands in the same place) and is drawn once, not every frame. */
+.fog-bank > div {
   -webkit-mask-image: linear-gradient(to top, #000 5%, rgb(0 0 0 / 0.35) 55%, transparent 100%);
   mask-image: linear-gradient(to top, #000 5%, rgb(0 0 0 / 0.35) 55%, transparent 100%);
-}
-.fog-bank > div {
   --drift: 130vw;
   position: absolute;
   top: 0;
@@ -692,9 +699,8 @@ html.lenis body {
   overflow: hidden;
   pointer-events: none;
   mix-blend-mode: screen;
-  /* thins out at the very bottom so it hands over to the next section */
-  -webkit-mask-image: linear-gradient(to top, transparent, #000 18%);
-  mask-image: linear-gradient(to top, transparent, #000 18%);
+  /* No container mask: the hero's own fade-to-black hands the smoke over to
+     the next section, and a mask here would re-render every drifting frame. */
 }
 .smoke-depth {
   --drift: 140vw;
@@ -865,15 +871,9 @@ html.lenis body {
   }
   /* A mask on a container whose child animates re-rasterises every frame.
      Put the fade on the moving layer itself, where it is drawn once. */
-  .fog-plumes,
-  .smoke,
-  .fog-bank {
+  .fog-plumes {
     -webkit-mask-image: none;
     mask-image: none;
-  }
-  .fog-bank > div {
-    -webkit-mask-image: linear-gradient(to top, #000 5%, rgb(0 0 0 / 0.35) 55%, transparent 100%);
-    mask-image: linear-gradient(to top, #000 5%, rgb(0 0 0 / 0.35) 55%, transparent 100%);
   }
   .fog-haze {
     opacity: 0.04;

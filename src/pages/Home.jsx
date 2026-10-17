@@ -38,7 +38,7 @@ function Hero() {
   })
 
   return (
-    <section ref={root} className="relative h-[100svh] min-h-[640px] overflow-hidden">
+    <section ref={root} className="relative min-h-[100svh] overflow-hidden">
       <div className="hero-media absolute inset-0 will-change-transform">
         <div className="push-in absolute inset-0">
           <CinematicImage src={HERO_IMAGE} alt="" ratio="fill" tone="amber" priority className="h-full w-full" />
@@ -71,14 +71,14 @@ function Hero() {
         <p className="hud-label mt-2 !text-mist">2.39 : 1 · {site.location}</p>
       </div>
 
-      <div className="hero-copy container-x relative flex h-full flex-col justify-end pb-20 sm:pb-24 lg:pb-28">
+      <div className="hero-copy container-x relative flex min-h-[100svh] flex-col justify-end pb-20 pt-36 sm:pb-24 sm:pt-44 lg:pb-28">
         <motion.p
           className="hud-label mb-6 sm:mb-8"
           initial={{ opacity: 0, y: 12 }}
           animate={go ? { opacity: 1, y: 0 } : undefined}
           transition={{ duration: 1.4, ease: EASE, delay: 0.2 }}
         >
-          {site.longName} — film · series · television
+          Film · Series · Television
         </motion.p>
         <h1 className="hero-title text-[length:clamp(3.4rem,min(13.5vw,20svh),13.5rem)]">
           {['The door', 'is open.'].map((line, i) => (

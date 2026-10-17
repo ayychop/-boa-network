@@ -37,6 +37,18 @@ export default function Loader() {
   const [show, setShow] = useState(introWillPlay)
   const [t, setT] = useState(0)
 
+  // Hold the page still behind the iris. The cleanup always restores it,
+  // so the loader can never leave overflow locked on the document.
+  useEffect(() => {
+    if (!show) return
+    const html = document.documentElement
+    const previous = html.style.overflow
+    html.style.overflow = 'hidden'
+    return () => {
+      html.style.overflow = previous
+    }
+  }, [show])
+
   useEffect(() => {
     if (!show) return
     const start = performance.now()

@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 import Lenis from 'lenis'
 import { gsap, ScrollTrigger, prefersReducedMotion } from '../lib/gsap'
+import { useIntroPhase } from '../lib/intro'
 
 let active = null
 
@@ -12,12 +13,16 @@ export function lockScroll(locked) {
 }
 
 // Lenis smooth scroll, driven by GSAP's ticker so ScrollTrigger stays in sync.
+// It starts only once the intro loader has finished and left the DOM, so the
+// first scroll never competes with the iris or inherits its scroll lock.
 export default function SmoothScroll() {
   const { pathname } = useLocation()
   const lenisRef = useRef(null)
+  const ready = useIntroPhase() === 'done'
 
   useEffect(() => {
-    if (prefersReducedMotion()) return
+    if (!ready || prefersReducedMotion()) return
+    window.scrollTo(0, 0)
     const lenis = new Lenis({ duration: 1.15, smoothWheel: true, anchors: true })
     lenisRef.current = lenis
     active = lenis
@@ -31,7 +36,7 @@ export default function SmoothScroll() {
       lenisRef.current = null
       active = null
     }
-  }, [])
+  }, [ready])
 
   // Keep trigger positions right as lazy pages and media change page height.
   useEffect(() => {
