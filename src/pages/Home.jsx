@@ -63,8 +63,8 @@ function Hero() {
       {/* Last atmospheric layer: fade every light and smoke layer into the page below */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-[30%] bg-gradient-to-t from-obsidian via-obsidian/70 to-transparent" />
 
-      <HudCorners inset="inset-x-5 bottom-6 top-24 sm:inset-x-8 sm:top-28 lg:inset-x-14" />
-      <div aria-hidden="true" className="absolute right-5 top-28 hidden text-right sm:right-8 sm:top-36 md:block lg:right-20">
+      <HudCorners inset="inset-x-2 bottom-6 top-28 sm:inset-x-3 sm:top-32 lg:inset-x-5" />
+      <div aria-hidden="true" className="absolute right-5 top-28 hidden text-right sm:right-10 sm:top-48 md:block lg:right-16">
         <p className="hud-label flex items-center justify-end gap-2">
           <span className="hud-pulse h-1.5 w-1.5 rounded-full bg-gold" /> Scene 01 · Take 01
         </p>
@@ -119,38 +119,17 @@ function Hero() {
 }
 
 function Mission() {
-  const root = useRef(null)
-
-  // Words light up as you read down the page.
-  useScrollFx(root, (gsap) => {
-    gsap.fromTo(
-      '.mission-word',
-      { opacity: 0.14 },
-      {
-        opacity: 1,
-        ease: 'none',
-        stagger: 0.08,
-        scrollTrigger: { trigger: '.mission-text', start: 'top 80%', end: 'bottom 45%', scrub: true },
-      },
-    )
-  })
-
   return (
-    <section ref={root} className="section">
+    <section className="section">
       <div className="container-x">
         <SectionLabel index="01">The mission</SectionLabel>
-        <p className="mission-text display-md max-w-[22ch] sm:max-w-[24ch] lg:max-w-[26ch]">
-          {MISSION.split(' ').map((word, i) => (
-            <span key={i} className="mission-word">
-              {word}{' '}
-            </span>
-          ))}
-        </p>
+        {/* Set once, at full strength: no scroll scrub, nothing left dim. */}
+        <p className="mission-statement max-w-[20ch] text-bone">{MISSION}</p>
 
         <div className="mt-20 grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08] sm:mt-28 sm:grid-cols-2 lg:grid-cols-4">
           {barriers.map((b, i) => (
             <Reveal key={b} delay={i * 0.08} className="bg-obsidian p-6 sm:p-8">
-              <p className="hud-label mb-10 sm:mb-16">Not a barrier · 0{i + 1}</p>
+              <p className="hud-label section-label mb-10 sm:mb-16">Not a barrier · 0{i + 1}</p>
               <p className="text-3xl font-semibold tracking-[-0.04em] text-bone/40 line-through decoration-gold decoration-2 sm:text-4xl">
                 {b}
               </p>

@@ -45,9 +45,9 @@ function FeaturedHero({ production: p }) {
         <Spotlight className="-left-[40%] bottom-[-20%] h-[90%] w-[150vw] sm:-left-[15%] sm:w-[80vw]" />
         {/* Last atmospheric layer: fade every light and smoke layer into the page below */}
         <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-[30%] bg-gradient-to-t from-obsidian via-obsidian/70 to-transparent" />
-        <HudCorners inset="inset-x-5 bottom-6 top-24 sm:inset-x-8 sm:top-28 lg:inset-x-14" />
+        <HudCorners inset="inset-x-2 bottom-6 top-28 sm:inset-x-3 sm:top-32 lg:inset-x-5" />
 
-        <div className="container-x relative flex min-h-[min(92svh,60rem)] flex-col justify-end pb-16 pt-36 sm:pb-24">
+        <div className="container-x relative flex min-h-[min(92svh,60rem)] flex-col justify-end pb-16 pt-44 sm:pb-24 sm:pt-52">
           <motion.div
             className="mb-6 flex flex-wrap items-center gap-3 sm:mb-8"
             initial={{ opacity: 0, y: 16 }}

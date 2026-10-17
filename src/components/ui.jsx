@@ -121,10 +121,10 @@ export function HudCorners({ inset = 'inset-3' }) {
 
 export function SectionLabel({ index, children }) {
   return (
-    <div className="mb-10 flex items-center gap-4 sm:mb-14">
-      <span className="hud-label">{index}</span>
-      <span className="hud-line w-16 sm:w-28" />
-      <span className="hud-label !text-mist">{children}</span>
+    <div className="mb-10 flex items-center gap-5 sm:mb-16 sm:gap-6">
+      <span className="hud-label section-label">{index}</span>
+      <span className="hud-line w-16 sm:w-36" />
+      <span className="hud-label section-label !text-hud">{children}</span>
     </div>
   )
 }

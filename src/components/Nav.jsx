@@ -10,8 +10,8 @@ import { EASE_EXPO, MagneticButton } from './ui'
 export function Wordmark({ className = '' }) {
   return (
     <span className={`inline-flex flex-col items-start gap-1.5 whitespace-nowrap ${className}`}>
-      <span className="block text-2xl font-semibold leading-none tracking-[-0.06em] sm:text-[1.75rem]">BOA</span>
-      <span className="block font-mono text-[0.5rem] uppercase leading-none tracking-[0.2em] text-gold sm:text-[0.5625rem]">
+      <span className="block text-[2.125rem] font-semibold leading-none tracking-[-0.06em] sm:text-[2.75rem]">BOA</span>
+      <span className="block font-mono text-[0.625rem] uppercase leading-none tracking-[0.24em] text-gold sm:text-[0.75rem]">
         {site.longName}
       </span>
     </span>
@@ -76,7 +76,7 @@ export default function Nav() {
               : 'border-b border-transparent'
           }`}
         >
-          <div className="container-x flex h-[4.5rem] items-center justify-between sm:h-20">
+          <div className="container-x flex h-20 items-center justify-between sm:h-24">
             <Link to="/" aria-label="BOA Network — home" className="relative z-10">
               <Wordmark />
             </Link>
