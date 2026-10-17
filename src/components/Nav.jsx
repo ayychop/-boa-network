@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { nav, site } from '../data/site'
-import { MagneticButton } from './ui'
+import { lockScroll } from './SmoothScroll'
+import { EASE_EXPO, MagneticButton } from './ui'
 
 // Stacked lockup. Both lines are blocks with their own line height, so the
 // subtitle can never ride up into the logo at any breakpoint.
@@ -21,6 +22,8 @@ export default function Nav() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const { pathname } = useLocation()
+  const toggle = useRef(null)
+  const menu = useRef(null)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -31,14 +34,35 @@ export default function Nav() {
 
   useEffect(() => setOpen(false), [pathname])
 
+  // Close if the viewport grows past the breakpoint where the menu exists.
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1024px)')
+    const onChange = (e) => e.matches && setOpen(false)
+    mq.addEventListener('change', onChange)
+    return () => mq.removeEventListener('change', onChange)
+  }, [])
+
   useEffect(() => {
     if (!open) return
-    const onKey = (e) => e.key === 'Escape' && setOpen(false)
-    document.body.style.overflow = 'hidden'
+    const button = toggle.current
+    lockScroll(true)
+    menu.current?.querySelector('a')?.focus({ preventScroll: true })
+
+    // Keep Tab inside the menu and the toggle while it is open.
+    const onKey = (e) => {
+      if (e.key === 'Escape') return setOpen(false)
+      if (e.key !== 'Tab' || !menu.current) return
+      const items = [button, ...menu.current.querySelectorAll('a')]
+      const i = items.indexOf(document.activeElement)
+      const next = e.shiftKey ? (i <= 0 ? items.length - 1 : i - 1) : (i + 1) % items.length
+      e.preventDefault()
+      items[next].focus()
+    }
     window.addEventListener('keydown', onKey)
     return () => {
-      document.body.style.overflow = ''
+      lockScroll(false)
       window.removeEventListener('keydown', onKey)
+      button?.focus({ preventScroll: true })
     }
   }, [open])
 
@@ -87,16 +111,24 @@ export default function Nav() {
                 Get seen
               </MagneticButton>
               <button
+                ref={toggle}
                 type="button"
                 aria-label={open ? 'Close menu' : 'Open menu'}
                 aria-expanded={open}
                 aria-controls="mobile-menu"
                 onClick={() => setOpen((v) => !v)}
-                className="relative z-10 grid h-11 w-11 place-items-center rounded-full border border-white/15 lg:hidden"
+                className={`relative z-10 grid h-12 w-12 place-items-center rounded-full border transition-[border-color,background-color,transform] duration-500 active:scale-90 lg:hidden ${
+                  open ? 'border-gold/60 bg-gold/10' : 'border-white/15 bg-obsidian/30 backdrop-blur-md'
+                }`}
               >
+                {/* Two lines that meet at their centres to form the cross */}
                 <span className="relative block h-3 w-5">
-                  <span className={`absolute inset-x-0 top-0 h-px bg-bone transition-transform duration-500 ${open ? 'translate-y-[6px] rotate-45' : ''}`} />
-                  <span className={`absolute inset-x-0 bottom-0 h-px bg-bone transition-transform duration-500 ${open ? '-translate-y-[5px] -rotate-45' : ''}`} />
+                  <span
+                    className={`absolute inset-x-0 top-0 h-px origin-center bg-bone transition-transform duration-500 ease-[var(--ease-cine)] ${open ? 'translate-y-[5.5px] rotate-45' : ''}`}
+                  />
+                  <span
+                    className={`absolute bottom-0 right-0 h-px origin-center bg-bone transition-[transform,width] duration-500 ease-[var(--ease-cine)] ${open ? 'w-full -translate-y-[5.5px] -rotate-45' : 'w-3/5'}`}
+                  />
                 </span>
               </button>
             </div>
@@ -107,39 +139,58 @@ export default function Nav() {
       <AnimatePresence>
         {open && (
           <motion.div
+            ref={menu}
             id="mobile-menu"
-            className="fixed inset-0 z-[48] flex flex-col justify-between bg-obsidian/92 px-5 pb-10 pt-28 backdrop-blur-2xl sm:px-8 lg:hidden"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Menu"
+            className="fixed inset-0 z-[48] flex flex-col overflow-y-auto bg-obsidian/95 px-5 pb-[max(2.5rem,env(safe-area-inset-bottom))] pt-28 backdrop-blur-2xl sm:px-8 lg:hidden"
+            initial={{ clipPath: 'inset(0 0 100% 0)' }}
+            animate={{ clipPath: 'inset(0 0 0% 0)' }}
+            exit={{ clipPath: 'inset(0 0 100% 0)', transition: { duration: 0.5, ease: [0.7, 0, 0.84, 0] } }}
+            transition={{ duration: 0.8, ease: EASE_EXPO }}
           >
-            <nav aria-label="Mobile" className="flex flex-col">
+            <div aria-hidden="true" className="spotlight -right-1/3 top-1/4 h-[70vh] w-[110vw] opacity-60" />
+            <nav aria-label="Mobile" className="relative flex flex-col">
               {[{ to: '/', label: 'Home' }, ...nav].map((item, i) => (
-                <motion.div
-                  key={item.to}
-                  initial={{ opacity: 0, y: 24 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.05 + i * 0.05, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                >
-                  <NavLink
-                    to={item.to}
-                    end
-                    className={({ isActive }) =>
-                      `flex items-baseline gap-4 border-b border-white/[0.07] py-4 text-4xl font-semibold tracking-[-0.04em] ${
-                        isActive ? 'text-gold' : 'text-bone'
-                      }`
-                    }
+                <div key={item.to} className="overflow-hidden border-b border-white/[0.07]">
+                  <motion.div
+                    initial={{ y: '110%' }}
+                    animate={{ y: 0 }}
+                    transition={{ delay: 0.25 + i * 0.05, duration: 0.9, ease: EASE_EXPO }}
                   >
-                    <span className="hud-label w-6">0{i}</span>
-                    {item.label}
-                  </NavLink>
-                </motion.div>
+                    <NavLink
+                      to={item.to}
+                      end
+                      onClick={() => setOpen(false)}
+                      className={({ isActive }) =>
+                        `group flex items-baseline gap-4 py-4 text-[clamp(2.25rem,10vw,3.5rem)] font-semibold leading-none tracking-[-0.04em] transition-colors duration-300 active:text-gold ${
+                          isActive ? 'text-gold' : 'text-bone'
+                        }`
+                      }
+                    >
+                      <span className="hud-label w-6 shrink-0">0{i}</span>
+                      <span className="transition-transform duration-500 ease-[var(--ease-cine)] group-hover:translate-x-2">
+                        {item.label}
+                      </span>
+                    </NavLink>
+                  </motion.div>
+                </div>
               ))}
             </nav>
-            <Link to="/contact?form=talent" className="btn btn-primary w-full">
-              Get seen
-            </Link>
+            <motion.div
+              className="relative mt-auto space-y-6 pt-12"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.8, ease: EASE_EXPO }}
+            >
+              <a href={`mailto:${site.email}`} className="hud-label block !text-mist">
+                {site.email}
+              </a>
+              <MagneticButton to="/contact?form=talent" className="w-full" onClick={() => setOpen(false)}>
+                Get seen
+              </MagneticButton>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

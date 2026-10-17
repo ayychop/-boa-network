@@ -17,6 +17,8 @@
   --font-mono: 'JetBrains Mono Variable', ui-monospace, 'SF Mono', Menlo, monospace;
 
   --ease-cine: cubic-bezier(0.16, 1, 0.3, 1);
+  /* easeInOutExpo: every entrance uses this deliberate, held curve */
+  --ease-expo: cubic-bezier(0.87, 0, 0.13, 1);
 }
 
 @layer base {
@@ -37,8 +39,15 @@
     color: var(--color-obsidian);
   }
   :focus-visible {
-    outline: 1px solid var(--color-hud);
+    outline: 1px solid var(--color-gold);
     outline-offset: 3px;
+  }
+  html {
+    scrollbar-color: rgb(226 168 75 / 0.45) var(--color-obsidian);
+    caret-color: var(--color-gold);
+  }
+  a {
+    text-underline-offset: 0.22em;
   }
   h1,
   h2,
@@ -91,6 +100,19 @@ html.lenis body {
     line-height: 0.88;
     letter-spacing: -0.05em;
     font-weight: 600;
+  }
+  /* Hero headline: tighter optical setting than display-xl, a lighter weight
+     so the serif line carries the drama, and a warm halo so it lifts off the smoke. */
+  .hero-title {
+    line-height: 0.86;
+    letter-spacing: -0.045em;
+    font-weight: 500;
+    text-shadow: 0 0 80px rgb(226 168 75 / 0.18), 0 2px 30px rgb(0 0 0 / 0.5);
+  }
+  .hero-accent {
+    letter-spacing: -0.03em;
+    padding-left: 0.04em;
+    text-shadow: 0 0 60px rgb(245 200 120 / 0.45), 0 0 140px rgb(226 168 75 / 0.3);
   }
   .display-lg {
     font-size: clamp(2.6rem, 8vw, 7.5rem);
@@ -183,8 +205,14 @@ html.lenis body {
     opacity: 1;
   }
 
-  /* Buttons */
+  /* Buttons
+     Magnetic shell (framer-motion moves .btn), a label that travels a little
+     further than the shell, and one material response per variant:
+     primary catches a sheen of light, ghost fills with gold from below. */
   .btn {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -197,20 +225,56 @@ html.lenis body {
     letter-spacing: -0.01em;
     white-space: nowrap;
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
     transition:
-      background-color 0.4s var(--ease-cine),
-      box-shadow 0.4s var(--ease-cine),
-      border-color 0.4s var(--ease-cine),
-      color 0.4s var(--ease-cine);
+      background-color 0.5s var(--ease-cine),
+      box-shadow 0.6s var(--ease-cine),
+      border-color 0.5s var(--ease-cine),
+      color 0.5s var(--ease-cine);
+  }
+  .btn-label {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: inherit;
+  }
+  .btn svg {
+    transition: transform 0.6s var(--ease-cine);
+  }
+  .btn:hover svg {
+    transform: translateX(4px);
+  }
+  .btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    border-radius: inherit;
   }
   .btn-primary {
     background: var(--color-gold);
     color: var(--color-obsidian);
-    box-shadow: 0 0 0 1px rgb(245 200 120 / 0.5), 0 10px 40px -10px rgb(226 168 75 / 0.55);
+    box-shadow:
+      0 0 0 1px rgb(245 200 120 / 0.5),
+      0 10px 40px -10px rgb(226 168 75 / 0.55);
+  }
+  .btn-primary::after {
+    background: linear-gradient(105deg, transparent 30%, rgb(255 248 230 / 0.7) 50%, transparent 70%);
+    transform: translateX(-120%);
+    transition: transform 0s;
   }
   .btn-primary:hover {
     background: var(--color-amber);
-    box-shadow: 0 0 0 1px rgb(245 200 120 / 0.8), 0 14px 60px -8px rgb(226 168 75 / 0.8);
+    box-shadow:
+      0 0 0 1px rgb(245 200 120 / 0.9),
+      0 18px 60px -12px rgb(226 168 75 / 0.85),
+      0 0 90px -20px rgb(245 200 120 / 0.6);
+  }
+  .btn-primary:hover::after {
+    transform: translateX(120%);
+    transition: transform 0.9s var(--ease-cine);
   }
   .btn-ghost {
     color: var(--color-bone);
@@ -219,48 +283,190 @@ html.lenis body {
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
   }
+  .btn-ghost::after {
+    background: var(--color-gold);
+    clip-path: inset(100% 0 0 0 round 999px);
+    transition: clip-path 0.55s var(--ease-cine);
+  }
   .btn-ghost:hover {
-    border-color: color-mix(in srgb, var(--color-gold) 70%, transparent);
-    color: var(--color-amber);
+    border-color: var(--color-gold);
+    color: var(--color-obsidian);
+    box-shadow: 0 16px 50px -16px rgb(226 168 75 / 0.7);
+  }
+  .btn-ghost:hover::after {
+    clip-path: inset(0 0 0 0 round 999px);
   }
   .btn:disabled {
     opacity: 0.55;
     cursor: not-allowed;
   }
+  .btn:disabled::after {
+    display: none;
+  }
 
-  /* Forms */
+  /* Small pill controls (filters, tabs) share the same tactile language */
+  .chip {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    border-radius: 999px;
+    border: 1px solid rgb(255 255 255 / 0.15);
+    padding: 0.7rem 1.3rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: rgb(243 239 232 / 0.75);
+    transition:
+      color 0.45s var(--ease-cine),
+      border-color 0.45s var(--ease-cine),
+      transform 0.2s var(--ease-cine);
+  }
+  .chip::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--color-gold);
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.5s var(--ease-cine);
+  }
+  .chip:hover {
+    border-color: rgb(226 168 75 / 0.6);
+    color: var(--color-bone);
+  }
+  .chip:active {
+    transform: scale(0.96);
+  }
+  .chip-fill:hover,
+  .chip-fill:focus-visible {
+    border-color: var(--color-gold);
+    color: var(--color-obsidian);
+  }
+  .chip-fill:hover::after,
+  .chip-fill:focus-visible::after {
+    clip-path: inset(0 0 0 0);
+  }
+  .chip[aria-pressed='true'] {
+    border-color: var(--color-gold);
+    color: var(--color-obsidian);
+  }
+  .chip[aria-pressed='true']::after {
+    clip-path: inset(0 0 0 0);
+  }
+
+  /* Forms: a dark frosted pane per field that lights up gold on focus */
   .field label {
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
     font-family: var(--font-mono);
     font-size: 0.6875rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-mist);
+    transition: color 0.4s var(--ease-cine);
+  }
+  .field:focus-within label {
+    color: var(--color-amber);
   }
   .input {
     width: 100%;
-    padding: 0.9rem 1rem;
-    border-radius: 0.75rem;
-    background: rgb(255 255 255 / 0.035);
-    border: 1px solid rgb(255 255 255 / 0.12);
+    min-height: 3.5rem;
+    padding: 1rem 1.15rem;
+    border-radius: 0.9rem;
+    background: linear-gradient(170deg, rgb(255 255 255 / 0.055), rgb(255 255 255 / 0.015)), rgb(8 8 10 / 0.55);
+    border: 1px solid rgb(255 255 255 / 0.1);
     color: var(--color-bone);
     font-size: 1rem;
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.05),
+      inset 0 -12px 30px -18px rgb(0 0 0 / 0.8);
     transition:
-      border-color 0.3s,
-      box-shadow 0.3s;
+      border-color 0.45s var(--ease-cine),
+      box-shadow 0.6s var(--ease-cine),
+      background-color 0.45s var(--ease-cine);
+  }
+  .input:hover {
+    border-color: rgb(255 255 255 / 0.2);
   }
   .input::placeholder {
-    color: rgb(166 162 155 / 0.55);
+    color: rgb(166 162 155 / 0.85);
   }
   .input:focus {
     outline: none;
-    border-color: color-mix(in srgb, var(--color-gold) 80%, transparent);
-    box-shadow: 0 0 0 4px rgb(226 168 75 / 0.12);
+    border-color: rgb(245 200 120 / 0.85);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.06),
+      0 0 0 4px rgb(226 168 75 / 0.12),
+      0 0 32px -4px rgb(226 168 75 / 0.45),
+      0 18px 40px -24px rgb(226 168 75 / 0.6);
+  }
+  .input:user-invalid {
+    border-color: rgb(252 165 165 / 0.7);
+  }
+  select.input {
+    appearance: none;
+    padding-right: 3rem;
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e2a84b' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"),
+      linear-gradient(170deg, rgb(255 255 255 / 0.055), rgb(255 255 255 / 0.015));
+    background-repeat: no-repeat;
+    background-position:
+      right 1.1rem center,
+      0 0;
+    background-size:
+      1.1rem,
+      100% 100%;
+    background-color: rgb(8 8 10 / 0.55);
   }
   select.input option {
     background: var(--color-charcoal);
     color: var(--color-bone);
+  }
+  .check {
+    appearance: none;
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-top: 0.15rem;
+    border-radius: 0.35rem;
+    border: 1px solid rgb(255 255 255 / 0.25);
+    background: rgb(8 8 10 / 0.55);
+    cursor: pointer;
+    transition:
+      background-color 0.3s var(--ease-cine),
+      border-color 0.3s var(--ease-cine),
+      box-shadow 0.4s var(--ease-cine);
+  }
+  .check::after {
+    content: '';
+    width: 0.6rem;
+    height: 0.35rem;
+    border: solid var(--color-obsidian);
+    border-width: 0 0 2px 2px;
+    transform: translateY(-1px) rotate(-45deg) scale(0);
+    transition: transform 0.3s var(--ease-cine);
+  }
+  .check:checked {
+    background: var(--color-gold);
+    border-color: var(--color-gold);
+    box-shadow: 0 0 20px -4px rgb(226 168 75 / 0.6);
+  }
+  .check:checked::after {
+    transform: translateY(-1px) rotate(-45deg) scale(1);
+  }
+  .check:focus-visible {
+    box-shadow: 0 0 0 4px rgb(226 168 75 / 0.2);
+  }
+
+  /* Massive serif for titles on the slate */
+  .title-serif {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    letter-spacing: -0.025em;
+    line-height: 0.9;
   }
 }
 
@@ -376,7 +582,7 @@ html.lenis body {
     opacity: 0.07;
   }
   .fog-plume-a {
-    opacity: 0.11;
+    opacity: 0.13;
   }
   .fog-plume-b {
     display: block;
@@ -403,13 +609,13 @@ html.lenis body {
   height: 100%;
   background-image: var(--fog-tex);
   background-size: 130vw 100%;
-  opacity: 0.2;
+  opacity: 0.3;
   will-change: transform;
   animation: fog-drift 64s linear infinite;
 }
 @media (min-width: 768px) {
   .fog-bank > div {
-    opacity: 0.3;
+    opacity: 0.45;
   }
 }
 
@@ -425,6 +631,165 @@ html.lenis body {
     transparent 100%
   );
   animation: bleed-breathe 14s ease-in-out infinite;
+}
+
+/* Hero smoke: three depths of the shared fog texture, each on its own wind,
+   plus soft plumes that roll up off the floor. Every layer only moves with
+   transforms, so the volume costs no per-frame paint. */
+@keyframes smoke-roll {
+  0% {
+    transform: translate3d(-6%, 4%, 0) scale(1);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translate3d(4%, -6%, 0) scale(1.18);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(-6%, 4%, 0) scale(1);
+    opacity: 0.55;
+  }
+}
+@keyframes fog-drift-back {
+  from {
+    transform: translate3d(var(--drift, 100vw), 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes spot-breathe {
+  0%,
+  100% {
+    opacity: 0.8;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translate3d(1.5%, -2%, 0) scale(1.06);
+  }
+}
+
+.smoke {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  /* thins out at the very bottom so it hands over to the next section */
+  -webkit-mask-image: linear-gradient(to top, transparent, #000 18%);
+  mask-image: linear-gradient(to top, transparent, #000 18%);
+}
+.smoke-depth {
+  --drift: 140vw;
+  position: absolute;
+  left: -140vw;
+  width: 280vw;
+  background-image: var(--fog-tex);
+  background-repeat: repeat;
+  will-change: transform;
+}
+/* far: big, slow, high in the frame */
+.smoke-far {
+  top: -10%;
+  height: 90%;
+  background-size: 140vw 100%;
+  opacity: 0.11;
+  animation: fog-drift 120s linear infinite;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 40%, #000 70%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 40%, #000 70%, transparent);
+}
+/* mid: crosses the headline against the wind of the far layer */
+.smoke-mid {
+  top: 25%;
+  height: 80%;
+  background-size: 110vw 100%;
+  background-position: 30vw 0;
+  opacity: 0.22;
+  animation: fog-drift-back 86s linear infinite;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 35%, #000 75%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 35%, #000 75%, transparent);
+}
+/* near: thick, low, fast enough to read as moving air */
+.smoke-near {
+  bottom: -8%;
+  height: 60%;
+  background-size: 80vw 100%;
+  opacity: 0.42;
+  animation: fog-drift 54s linear infinite;
+  -webkit-mask-image: linear-gradient(to top, #000 30%, transparent);
+  mask-image: linear-gradient(to top, #000 30%, transparent);
+}
+.smoke-plume {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(255 243 226 / 0.2), rgb(255 243 226 / 0.07) 55%, transparent);
+  will-change: transform, opacity;
+  animation: smoke-roll var(--t, 40s) ease-in-out infinite;
+  animation-delay: var(--d, 0s);
+}
+@media (max-width: 767px) {
+  .smoke-far {
+    display: none;
+  }
+  .smoke-mid {
+    opacity: 0.16;
+  }
+  .smoke-near {
+    opacity: 0.32;
+  }
+}
+
+/* Warm key light behind the headline: a wide soft pool plus a hot core. */
+.spotlight {
+  position: absolute;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  background:
+    radial-gradient(closest-side, rgb(255 214 150 / 0.32), rgb(245 200 120 / 0.12) 40%, transparent 72%),
+    radial-gradient(closest-side, rgb(226 168 75 / 0.35), rgb(185 119 42 / 0.12) 55%, transparent 100%);
+  background-size:
+    55% 55%,
+    100% 100%;
+  background-position: 45% 55%, 0 0;
+  background-repeat: no-repeat;
+  animation: spot-breathe 12s ease-in-out infinite;
+}
+/* Light falling from the rig: a faint cone pointing at the copy */
+.light-cone {
+  position: absolute;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  background: conic-gradient(
+    from 180deg at 50% 0%,
+    transparent 160deg,
+    rgb(245 200 120 / 0.09) 172deg,
+    rgb(255 228 180 / 0.14) 180deg,
+    rgb(245 200 120 / 0.09) 188deg,
+    transparent 200deg
+  );
+  -webkit-mask-image: linear-gradient(to bottom, #000, transparent 85%);
+  mask-image: linear-gradient(to bottom, #000, transparent 85%);
+}
+
+/* Slate rail: posters in a horizontal track that grow on hover */
+.rail {
+  display: flex;
+  gap: clamp(0.75rem, 1.6vw, 1.5rem);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--rail-pad);
+  padding-inline: var(--rail-pad);
+  padding-block: 2.5rem 3rem;
+  scrollbar-width: none;
+}
+.rail::-webkit-scrollbar {
+  display: none;
+}
+.rail > * {
+  scroll-snap-align: start;
+  flex: none;
 }
 
 /* Grain + vignette: one fixed layer */
@@ -449,6 +814,9 @@ html.lenis body {
 @media (prefers-reduced-motion: reduce) {
   .fog-plume,
   .fog-bank > div,
+  .smoke-depth,
+  .smoke-plume,
+  .spotlight,
   .light-bleed,
   .push-in,
   .hud-pulse {
@@ -456,5 +824,8 @@ html.lenis body {
   }
   .fog-lag {
     transform: none;
+  }
+  .btn-primary:hover::after {
+    transition: none;
   }
 }

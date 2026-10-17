@@ -53,31 +53,47 @@ export function ProductionCard({ production: p }) {
   )
 }
 
-export function TalentCard({ person: t }) {
+/**
+ * Editorial portrait: the photograph is the whole tile. Name and discipline sit
+ * on a dark gradient at the bottom left; hover pushes the frame in and brings
+ * up the profile button.
+ */
+export function TalentPortrait({ person: t, ratio = '4 / 5', priority = false }) {
   return (
     <Link
       to={`/talent/${t.slug}`}
-      className="group glow-border relative block overflow-hidden rounded-2xl"
-      aria-label={`${t.name}, ${t.discipline} — view profile`}
+      className="group relative block overflow-hidden bg-charcoal outline-none focus-visible:outline focus-visible:outline-1 focus-visible:-outline-offset-4 focus-visible:outline-gold"
+      aria-label={`${t.name}, ${t.discipline}. View profile`}
     >
       <CinematicImage
         src={t.image}
         alt=""
-        ratio="portrait"
+        ratio={ratio}
         tone={t.tone}
         person
-        label="Headshot · 4:5"
-        className="transition-transform duration-[1.4s] ease-[var(--ease-cine)] group-hover:scale-[1.04]"
+        priority={priority}
+        className="transition-transform duration-[1.2s] ease-[var(--ease-cine)] will-change-transform group-hover:scale-105 group-focus-visible:scale-105"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/20 to-transparent" />
-      <div className="absolute inset-x-0 bottom-0 p-5">
-        <p className="hud-label mb-2">{t.discipline}</p>
-        <div className="flex items-end justify-between gap-3">
-          <h3 className="text-2xl font-semibold leading-none tracking-[-0.035em] sm:text-3xl">{t.name}</h3>
-          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-white/20 text-bone transition-colors duration-500 group-hover:border-gold group-hover:bg-gold group-hover:text-obsidian">
-            <Arrow />
-          </span>
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 via-40% to-transparent" />
+      <div className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-700 group-hover:bg-black/15" />
+
+      <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-4 sm:p-6 lg:p-7">
+        <div className="min-w-0">
+          <p className="hud-label mb-2 !text-gold sm:mb-3">{t.discipline}</p>
+          <h2 className="text-[clamp(1.35rem,2.6vw,2.5rem)] font-semibold leading-[0.95] tracking-[-0.04em]">{t.name}</h2>
         </div>
+        <span
+          aria-hidden="true"
+          className="hidden shrink-0 translate-y-3 items-center gap-2 rounded-full border border-gold bg-gold px-4 py-2.5 text-sm font-semibold text-obsidian opacity-0 shadow-[0_12px_40px_-12px_rgb(226_168_75/0.8)] transition-[opacity,transform] duration-600 ease-[var(--ease-cine)] group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 sm:inline-flex [@media(hover:none)]:hidden"
+        >
+          View Profile <Arrow />
+        </span>
+        <span
+          aria-hidden="true"
+          className="hidden h-10 w-10 shrink-0 place-items-center rounded-full border border-white/25 text-bone [@media(hover:none)]:grid"
+        >
+          <Arrow />
+        </span>
       </div>
     </Link>
   )

@@ -63,7 +63,7 @@ function GeneralForm({ subject }) {
     fields,
   }))
   return (
-    <form onSubmit={onSubmit} className="grid gap-6 sm:grid-cols-2">
+    <form onSubmit={onSubmit} className="grid gap-x-6 gap-y-8 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-10">
       <Honeypot />
       <Field label="Name" name="g-name">
         <input id="g-name" name="Name" className="input" required autoComplete="name" />
@@ -80,7 +80,7 @@ function GeneralForm({ subject }) {
       <Field label="Message" name="g-message" className="sm:col-span-2">
         <textarea id="g-message" name="Message" rows={6} className="input resize-y" required />
       </Field>
-      <div className="flex flex-col gap-5 sm:col-span-2 sm:flex-row sm:items-center">
+      <div className="flex flex-col gap-5 border-t border-white/[0.07] pt-8 sm:col-span-2 sm:flex-row sm:items-center sm:pt-10">
         <MagneticButton type="submit" disabled={state === 'sending'}>
           {state === 'sending' ? 'Sending…' : 'Send enquiry'} <Arrow />
         </MagneticButton>
@@ -98,7 +98,7 @@ function TalentForm({ role }) {
     fields,
   }))
   return (
-    <form onSubmit={onSubmit} className="grid gap-6 sm:grid-cols-2">
+    <form onSubmit={onSubmit} className="grid gap-x-6 gap-y-8 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-10">
       <Honeypot />
       <Field label="Full name" name="t-name">
         <input id="t-name" name="Name" className="input" required autoComplete="name" />
@@ -145,14 +145,14 @@ function TalentForm({ role }) {
           placeholder="Who you are, what you want to do, and anything that has stood in your way."
         />
       </Field>
-      <label className="flex items-start gap-3 text-sm leading-relaxed text-mist sm:col-span-2">
-        <input type="checkbox" name="Consent" value="Yes" required className="mt-1 h-4 w-4 accent-[var(--color-gold)]" />
+      <label className="flex cursor-pointer items-start gap-4 text-sm leading-relaxed text-mist sm:col-span-2">
+        <input type="checkbox" name="Consent" value="Yes" required className="check" />
         <span>
           I am 18 or over (or have a parent or guardian’s permission) and I am happy for BOA Network to keep these
           details to consider me for casting.
         </span>
       </label>
-      <div className="flex flex-col gap-5 sm:col-span-2 sm:flex-row sm:items-center">
+      <div className="flex flex-col gap-5 border-t border-white/[0.07] pt-8 sm:col-span-2 sm:flex-row sm:items-center sm:pt-10">
         <MagneticButton type="submit" disabled={state === 'sending'}>
           {state === 'sending' ? 'Sending…' : 'Submit to casting'} <Arrow />
         </MagneticButton>
@@ -191,8 +191,8 @@ export default function Contact() {
         lede="Two ways in. One for business, one for talent. Both go to a person."
       />
 
-      <section className="container-x pb-28 sm:pb-44">
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,22rem)_1fr] lg:gap-16">
+      <section className="container-x pb-28 sm:pb-48">
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,22rem)_1fr] lg:gap-24">
           <Reveal>
             <div role="tablist" aria-label="Choose a form" className="grid gap-3">
               {TABS.map((t) => {
@@ -206,8 +206,10 @@ export default function Contact() {
                     aria-selected={on}
                     aria-controls={`panel-${t.id}`}
                     onClick={() => select(t.id)}
-                    className={`rounded-2xl border p-6 text-left transition-colors duration-500 ${
-                      on ? 'border-gold/70 bg-gold/[0.07]' : 'border-white/10 hover:border-white/25'
+                    className={`rounded-2xl border p-6 text-left transition-[border-color,background-color,box-shadow,transform] duration-500 ease-[var(--ease-cine)] active:scale-[0.98] ${
+                      on
+                        ? 'border-gold/70 bg-gold/[0.07] shadow-[0_20px_60px_-30px_rgb(226_168_75/0.6)]'
+                        : 'border-white/10 hover:-translate-y-0.5 hover:border-gold/40 hover:bg-white/[0.03]'
                     }`}
                   >
                     <span className={`hud-label ${on ? '!text-gold' : '!text-mist'}`}>{on ? 'Selected' : 'Switch to'}</span>
@@ -237,9 +239,9 @@ export default function Contact() {
               role="tabpanel"
               id={`panel-${active}`}
               aria-labelledby={`tab-${active}`}
-              className="glass glow-border rounded-3xl p-6 sm:p-10 lg:p-12"
+              className="glass glow-border relative overflow-hidden rounded-3xl p-6 sm:p-12 lg:p-16"
             >
-              <h2 className="mb-8 text-3xl font-semibold tracking-[-0.035em] sm:mb-10 sm:text-4xl">
+              <h2 className="mb-10 text-3xl font-semibold tracking-[-0.035em] sm:mb-14 sm:text-5xl">
                 {active === 'talent' ? 'Show us who you are.' : 'What can we do for you?'}
               </h2>
               {active === 'talent' ? (

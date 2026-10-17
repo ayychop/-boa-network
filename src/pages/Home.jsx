@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import CinematicImage from '../components/CinematicImage'
 import Showreel from '../components/Showreel'
-import { FogBank, LightBleed } from '../components/Fog'
+import { FogBank, LightBleed, Smoke, Spotlight } from '../components/Fog'
 import { ProductionCard, StatusBadge } from '../components/cards'
-import { Arrow, ClosingCTA, HudCorners, MagneticButton, Reveal, SectionLabel } from '../components/ui'
+import { Arrow, ClosingCTA, EASE_EXPO, HudCorners, MagneticButton, Reveal, SectionLabel } from '../components/ui'
 import { useScrollFx } from '../lib/gsap'
 import { founders, site } from '../data/site'
 import { productionMeta, productions } from '../data/productions'
@@ -14,7 +14,7 @@ import { barriers } from '../data/access'
 // Swap for a real still, e.g. '/media/hero.jpg'
 const HERO_IMAGE = null
 
-const EASE = [0.16, 1, 0.3, 1]
+const EASE = EASE_EXPO
 const MISSION =
   'Talent is everywhere. Opportunity is not. BOA Network exists to close that gap with real roles, on real productions, for people who were never handed a way in.'
 
@@ -39,7 +39,22 @@ function Hero() {
       </div>
       <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/45 to-obsidian/70" />
       <LightBleed className="-bottom-[35%] right-[-25%] h-[110vh] w-[130vw] sm:right-[-5%] sm:w-[70vw]" />
+      {/* A rig light falls on the copy; the smoke catches it on the way down. */}
+      <div aria-hidden="true" className="light-cone -top-[10%] left-[-30%] h-[120%] w-[130%] sm:left-[-35%] sm:w-[110%]" />
+      <Smoke />
       <FogBank />
+
+      <motion.div
+        aria-hidden="true"
+        className="absolute inset-0"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 2.4, ease: EASE, delay: 0.1 }}
+      >
+        <Spotlight className="-left-[35%] bottom-[-15%] h-[95%] w-[150vw] sm:-left-[12%] sm:bottom-[-12%] sm:w-[85vw] lg:w-[72vw]" />
+      </motion.div>
+      {/* Last atmospheric layer: fade every light and smoke layer into the page below */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-[30%] bg-gradient-to-t from-obsidian via-obsidian/70 to-transparent" />
 
       <HudCorners inset="inset-x-5 bottom-6 top-24 sm:inset-x-8 sm:top-28 lg:inset-x-14" />
       <div aria-hidden="true" className="absolute right-5 top-28 hidden text-right sm:right-8 sm:top-36 md:block lg:right-20">
@@ -51,21 +66,21 @@ function Hero() {
 
       <div className="hero-copy container-x relative flex h-full flex-col justify-end pb-20 sm:pb-24 lg:pb-28">
         <motion.p
-          className="hud-label mb-6"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.4, delay: 0.3 }}
+          className="hud-label mb-6 sm:mb-8"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.4, ease: EASE, delay: 0.2 }}
         >
           {site.longName} — film · series · television
         </motion.p>
-        <h1 className="display-xl text-[length:clamp(3.25rem,min(13vw,19svh),13rem)]">
+        <h1 className="hero-title text-[length:clamp(3.4rem,min(13.5vw,20svh),13.5rem)]">
           {['The door', 'is open.'].map((line, i) => (
-            <span key={line} className="block overflow-hidden pb-[0.08em]">
+            <span key={line} className="block overflow-hidden pb-[0.1em]">
               <motion.span
-                className={`block ${i === 1 ? 'accent !tracking-[-0.04em]' : ''}`}
-                initial={{ y: '105%' }}
-                animate={{ y: 0 }}
-                transition={{ duration: 1.5, ease: EASE, delay: 0.25 + i * 0.14 }}
+                className={`block ${i === 1 ? 'accent hero-accent' : ''}`}
+                initial={{ y: '110%', filter: 'blur(14px)' }}
+                animate={{ y: 0, filter: 'blur(0px)' }}
+                transition={{ duration: 1.6, ease: EASE, delay: 0.3 + i * 0.16 }}
               >
                 {line}
               </motion.span>
@@ -76,7 +91,7 @@ function Hero() {
           className="mt-8 flex flex-col gap-8 sm:mt-10 lg:flex-row lg:items-end lg:justify-between"
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.3, ease: EASE, delay: 0.75 }}
+          transition={{ duration: 1.4, ease: EASE, delay: 0.9 }}
         >
           <p className="lede max-w-xl !text-bone/80">
             BOA Networks is a UK production company dedicated to creating cinematic film and television while casting

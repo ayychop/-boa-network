@@ -16,6 +16,8 @@ const RATIOS = {
   portrait: '4 / 5',
   fill: null, // parent sets the size
 }
+// Any other value is used as a raw CSS aspect-ratio, e.g. '3 / 4'.
+const aspect = (ratio) => (ratio in RATIOS ? RATIOS[ratio] : ratio)
 
 function placeholderArt(tone) {
   const [a, b] = TONES[tone] ?? TONES.amber
@@ -83,7 +85,7 @@ export default function CinematicImage({
     <div
       ref={wrap}
       className={`relative overflow-hidden bg-charcoal ${className}`}
-      style={RATIOS[ratio] ? { aspectRatio: RATIOS[ratio] } : undefined}
+      style={aspect(ratio) ? { aspectRatio: aspect(ratio) } : undefined}
     >
       <div ref={inner} className={`absolute inset-x-0 ${parallax ? '-inset-y-[9%]' : 'inset-y-0'}`}>
         {src ? (

@@ -86,3 +86,32 @@ export function FogBank({ className = '' }) {
     </div>
   )
 }
+
+/**
+ * Volumetric smoke for a full-bleed section: three drifting depths of the fog
+ * texture on opposing winds, and soft plumes rolling up from the floor.
+ */
+const PLUMES = [
+  { className: '-left-[15%] bottom-[-25%] h-[70%] w-[70%]', t: '38s', d: '0s' },
+  { className: 'left-[30%] bottom-[-30%] h-[80%] w-[60%]', t: '46s', d: '-12s' },
+  { className: '-right-[10%] bottom-[-20%] h-[75%] w-[55%]', t: '42s', d: '-24s' },
+  { className: 'left-[5%] top-[20%] h-[55%] w-[45%] hidden md:block', t: '56s', d: '-8s' },
+]
+
+export function Smoke({ className = '' }) {
+  return (
+    <div aria-hidden="true" className={`smoke ${className}`}>
+      <div className="smoke-depth smoke-far" />
+      <div className="smoke-depth smoke-mid" />
+      {PLUMES.map((p) => (
+        <div key={p.className} className={`smoke-plume ${p.className}`} style={{ '--t': p.t, '--d': p.d }} />
+      ))}
+      <div className="smoke-depth smoke-near" />
+    </div>
+  )
+}
+
+/** Warm key light, sized and placed with className. */
+export function Spotlight({ className = '' }) {
+  return <div aria-hidden="true" className={`spotlight ${className}`} />
+}

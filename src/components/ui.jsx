@@ -1,9 +1,12 @@
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { motion, useMotionValue, useSpring } from 'framer-motion'
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import { LightBleed } from './Fog'
 
-const EASE = [0.16, 1, 0.3, 1]
+// easeInOutExpo. Every entrance on the site runs on this curve: it holds,
+// commits, then settles, which reads as deliberate rather than snappy.
+export const EASE_EXPO = [0.87, 0, 0.13, 1]
+const EASE = EASE_EXPO
 
 /** Fade-and-rise on scroll into view. */
 export function Reveal({ as = 'div', delay = 0, y = 44, className = '', children, ...rest }) {
@@ -14,7 +17,7 @@ export function Reveal({ as = 'div', delay = 0, y = 44, className = '', children
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '0px 0px -12% 0px' }}
-      transition={{ duration: 1.1, ease: EASE, delay }}
+      transition={{ duration: 1.2, ease: EASE, delay }}
       {...rest}
     >
       {children}
@@ -24,25 +27,37 @@ export function Reveal({ as = 'div', delay = 0, y = 44, className = '', children
 
 const MotionLink = motion.create(Link)
 
-/** Button that leans toward the cursor. Renders a Link (`to`), <a> (`href`) or <button>. */
-export function MagneticButton({ to, href, variant = 'primary', className = '', children, ...rest }) {
+/**
+ * Pointer pull for any element: returns spring-smoothed x/y and the handlers.
+ * `strength` is how far toward the cursor the element travels.
+ */
+export function useMagnetic(strength = 0.35) {
   const ref = useRef(null)
   const x = useMotionValue(0)
   const y = useMotionValue(0)
-  const spring = { stiffness: 220, damping: 16, mass: 0.4 }
+  const spring = { stiffness: 260, damping: 18, mass: 0.45 }
   const sx = useSpring(x, spring)
   const sy = useSpring(y, spring)
 
   const onPointerMove = (e) => {
     if (e.pointerType !== 'mouse') return
     const r = ref.current.getBoundingClientRect()
-    x.set((e.clientX - (r.left + r.width / 2)) * 0.32)
-    y.set((e.clientY - (r.top + r.height / 2)) * 0.42)
+    x.set((e.clientX - (r.left + r.width / 2)) * strength)
+    y.set((e.clientY - (r.top + r.height / 2)) * strength * 1.3)
   }
-  const reset = () => {
+  const onPointerLeave = () => {
     x.set(0)
     y.set(0)
   }
+  return { ref, x: sx, y: sy, onPointerMove, onPointerLeave }
+}
+
+/** Button that leans toward the cursor. Renders a Link (`to`), <a> (`href`) or <button>. */
+export function MagneticButton({ to, href, variant = 'primary', className = '', children, ...rest }) {
+  const { ref, x, y, onPointerMove, onPointerLeave } = useMagnetic(0.32)
+  // The label travels further than the shell, so the button feels like it has depth.
+  const lx = useTransform(x, (v) => v * 0.45)
+  const ly = useTransform(y, (v) => v * 0.45)
 
   const Comp = to ? MotionLink : href ? motion.a : motion.button
   return (
@@ -50,15 +65,37 @@ export function MagneticButton({ to, href, variant = 'primary', className = '', 
       ref={ref}
       to={to}
       href={href}
-      style={{ x: sx, y: sy }}
-      whileTap={{ scale: 0.97 }}
+      style={{ x, y }}
+      whileTap={{ scale: 0.95 }}
+      transition={{ type: 'spring', stiffness: 500, damping: 26 }}
       onPointerMove={onPointerMove}
-      onPointerLeave={reset}
+      onPointerLeave={onPointerLeave}
       className={`btn ${variant === 'primary' ? 'btn-primary' : 'btn-ghost'} ${className}`}
       {...rest}
     >
-      {children}
+      <motion.span className="btn-label" style={{ x: lx, y: ly }}>
+        {children}
+      </motion.span>
     </Comp>
+  )
+}
+
+/** Pill toggles for filtering a list. */
+export function FilterBar({ label, options, value, onChange, counts }) {
+  return (
+    <div role="group" aria-label={label} className="flex flex-wrap gap-2">
+      {options.map((opt) => {
+        const active = value === opt
+        return (
+          <button key={opt} type="button" aria-pressed={active} onClick={() => onChange(opt)} className="chip">
+            {opt}
+            <span className={`ml-2 font-mono text-xs transition-colors duration-500 ${active ? 'text-obsidian/70' : 'text-mist'}`}>
+              {counts[opt]}
+            </span>
+          </button>
+        )
+      })}
+    </div>
   )
 }
 

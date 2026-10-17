@@ -16,14 +16,18 @@ function Faq({ item, open, onToggle, id }) {
           aria-expanded={open}
           aria-controls={id}
           onClick={onToggle}
-          className="flex w-full items-center justify-between gap-6 py-6 text-left text-xl font-medium tracking-tight sm:text-2xl"
+          className="group flex w-full items-center justify-between gap-6 py-7 text-left text-xl font-medium tracking-tight transition-colors duration-500 hover:text-amber sm:py-8 sm:text-2xl"
         >
           {item.q}
           <span
             aria-hidden="true"
-            className={`grid h-9 w-9 shrink-0 place-items-center rounded-full border border-white/15 text-gold transition-transform duration-500 ${open ? 'rotate-45' : ''}`}
+            className={`grid h-10 w-10 shrink-0 place-items-center rounded-full border transition-[transform,background-color,border-color,color] duration-500 ease-[var(--ease-cine)] group-active:scale-90 ${
+              open ? 'rotate-45 border-gold bg-gold text-obsidian' : 'border-white/15 text-gold group-hover:border-gold/60'
+            }`}
           >
-            +
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+              <path d="M12 5v14M5 12h14" />
+            </svg>
           </span>
         </button>
       </h3>
@@ -34,7 +38,7 @@ function Faq({ item, open, onToggle, id }) {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="overflow-hidden"
           >
             <p className="max-w-2xl pb-7 text-lg leading-relaxed text-mist">{item.a}</p>
@@ -66,12 +70,12 @@ export default function Access() {
         lede="This is the mission in practice. Four pathways in, a list of what we are casting right now, and exactly what happens after you press send."
       />
 
-      <section className="container-x pb-24 sm:pb-40">
+      <section className="container-x pb-28 sm:pb-48">
         <SectionLabel index="01">Pathways</SectionLabel>
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-5 md:grid-cols-2 lg:gap-8">
           {pathways.map((p, i) => (
-            <Reveal key={p.code} delay={(i % 2) * 0.1} className="glass glow-border rounded-2xl p-7 sm:p-10">
-              <div className="mb-16 flex items-center justify-between sm:mb-24">
+            <Reveal key={p.code} delay={(i % 2) * 0.1} className="glass glow-border rounded-2xl p-7 sm:p-12 lg:p-14">
+              <div className="mb-16 flex items-center justify-between sm:mb-28">
                 <span className="hud-label">{p.code}</span>
                 <span className="hud-label !text-mist">Pathway</span>
               </div>
@@ -120,7 +124,7 @@ export default function Access() {
               <Reveal as="li" key={c.id} y={24} className="border-b border-white/[0.08]">
                 <Link
                   to={`/contact?form=talent&role=${encodeURIComponent(`${c.id} — ${c.role} (${c.production})`)}`}
-                  className="group grid gap-4 py-7 transition-colors duration-500 hover:bg-white/[0.025] sm:px-4 lg:grid-cols-[6rem_1.5fr_1fr_auto] lg:items-center lg:gap-8"
+                  className="group grid gap-5 py-9 transition-colors duration-500 hover:bg-white/[0.025] sm:px-6 sm:py-10 lg:grid-cols-[6rem_1.5fr_1fr_auto] lg:items-center lg:gap-10"
                 >
                   <span className="hud-label">{c.id}</span>
                   <div>
@@ -147,9 +151,9 @@ export default function Access() {
                       <dd className="text-gold">{c.closes ? dateFmt.format(new Date(c.closes)) : 'Always open'}</dd>
                     </div>
                   </dl>
-                  <span className="inline-flex items-center gap-3 text-sm font-semibold text-gold">
+                  <span className="relative inline-flex w-fit items-center gap-3 overflow-hidden rounded-full border border-gold/50 px-5 py-2.5 text-sm font-semibold text-gold transition-[color,border-color,box-shadow] duration-500 ease-[var(--ease-cine)] before:absolute before:inset-0 before:-z-10 before:bg-gold before:[clip-path:inset(100%_0_0_0)] before:transition-[clip-path] before:duration-500 before:ease-[var(--ease-cine)] group-hover:border-gold group-hover:text-obsidian group-hover:shadow-[0_12px_40px_-14px_rgb(226_168_75/0.8)] group-hover:before:[clip-path:inset(0_0_0_0)] isolate">
                     Apply
-                    <Arrow className="transition-transform duration-500 group-hover:translate-x-1.5" />
+                    <Arrow className="transition-transform duration-500 group-hover:translate-x-1" />
                   </span>
                 </Link>
               </Reveal>
