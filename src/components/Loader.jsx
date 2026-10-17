@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import { INTRO_KEY, introWillPlay, setIntroPhase } from '../lib/intro'
+import { prefersReducedMotion } from '../lib/gsap'
 import { site } from '../data/site'
-import Logo from './Logo'
 
+const KEY = 'boa-intro-seen'
 const LOAD = 1700 // the aperture ring clicks through its stops
 const OPEN = 1100 // the iris opens onto the site
 const LINES = ['Loading film', 'Pulling focus', 'Opening shutter']
@@ -32,10 +32,17 @@ function bladePoints(d) {
     .join(' ')
 }
 
+function shouldPlay() {
+  try {
+    return !sessionStorage.getItem(KEY) && !prefersReducedMotion()
+  } catch {
+    return false
+  }
+}
 
 // Camera aperture intro, shown once per browser session.
 export default function Loader() {
-  const [show, setShow] = useState(introWillPlay)
+  const [show, setShow] = useState(shouldPlay)
   const [t, setT] = useState(0)
 
   useEffect(() => {
@@ -44,19 +51,16 @@ export default function Loader() {
     let raf = 0
     const tick = (now) => {
       const elapsed = now - start
-      if (elapsed >= LOAD) setIntroPhase('opening')
       if (elapsed < LOAD + OPEN) {
         setT(elapsed)
         raf = requestAnimationFrame(tick)
       } else {
         try {
-          sessionStorage.setItem(INTRO_KEY, '1')
+          sessionStorage.setItem(KEY, '1')
         } catch {
           /* private mode */
         }
-        // Unmount first, then tell the page: atmosphere waits for a clean frame.
         setShow(false)
-        requestAnimationFrame(() => setIntroPhase('done'))
       }
     }
     raf = requestAnimationFrame(tick)
@@ -122,7 +126,12 @@ export default function Loader() {
             </g>
             <path d="M0 -95.5l-2.6 -5h5.2z" className="fill-gold" />
           </svg>
-          <Logo title={site.longName} className="w-[42%]" />
+          <div className="flex flex-col items-center gap-3 text-center">
+            <span className="block text-5xl font-semibold leading-none tracking-[-0.06em] sm:text-6xl">BOA</span>
+            <span className="block whitespace-nowrap font-mono text-[0.625rem] uppercase leading-none tracking-[0.22em] text-hud/80 sm:text-[0.6875rem]">
+              {site.longName}
+            </span>
+          </div>
         </div>
         <div className="absolute inset-x-6 bottom-8 flex items-end justify-between sm:inset-x-12 sm:bottom-12">
           <span className="hud-label">{opening ? LINES[2] : LINES[load < 0.6 ? 0 : 1]}</span>

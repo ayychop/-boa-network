@@ -35,18 +35,18 @@ export default function TalentProfile() {
                 person
                 priority
                 label="Headshot · 4:5"
-                className="glow-border rounded-sm"
+                className="glow-border rounded-2xl"
               >
                 <HudCorners inset="inset-4" />
               </CinematicImage>
             </Reveal>
 
             <div className="flex flex-col justify-end">
+              <Reveal as="p" className="hud-label mb-5" y={16}>
+                {person.discipline} · {person.base}
+              </Reveal>
               <Reveal as="h1" className="display-lg" delay={0.05}>
                 {person.name}
-              </Reveal>
-              <Reveal as="p" className="hud-label mt-6" y={16}>
-                {person.discipline} · {person.base}
               </Reveal>
               <Reveal as="p" className="lede mt-8 max-w-xl" delay={0.12}>
                 {person.bio}

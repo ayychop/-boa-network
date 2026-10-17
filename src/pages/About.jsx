@@ -1,5 +1,5 @@
 import CinematicImage from '../components/CinematicImage'
-import { ClosingCTA, HudCorners, PageHeader, Reveal } from '../components/ui'
+import { ClosingCTA, HudCorners, PageHeader, Reveal, SectionLabel } from '../components/ui'
 import { founders } from '../data/site'
 
 const principles = [
@@ -26,6 +26,8 @@ export default function About() {
         content="The story of BOA Network, Best Of All Networks, founded by Joseph Boat and David O to open the screen industry to overlooked talent."
       />
       <PageHeader
+        index="01"
+        label="About"
         title={
           <>
             Best of all. <span className="accent">Open to all.</span>
@@ -36,7 +38,7 @@ export default function About() {
 
       <section className="container-x">
         <Reveal>
-          <CinematicImage tone="amber" parallax label="About still · 2.39:1" className="rounded-sm sm:rounded-sm">
+          <CinematicImage tone="amber" parallax label="About still · 2.39:1" className="rounded-xl sm:rounded-2xl">
             <HudCorners inset="inset-3 sm:inset-5" />
           </CinematicImage>
         </Reveal>
@@ -45,6 +47,7 @@ export default function About() {
       <section className="section">
         <div className="container-x grid gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-24">
           <div>
+            <SectionLabel index="02">The story</SectionLabel>
             <Reveal as="h2" className="display-md">
               The industry has a <span className="accent">door problem.</span>
             </Reveal>
@@ -68,6 +71,7 @@ export default function About() {
 
       <section className="section border-y border-white/[0.07] bg-ink">
         <div className="container-x">
+          <SectionLabel index="03">The founders</SectionLabel>
           <div className="grid gap-16 md:grid-cols-2 lg:gap-24">
             {founders.map((f, i) => (
               <Reveal key={f.name} as="article" delay={i * 0.12}>
@@ -78,12 +82,12 @@ export default function About() {
                   tone={f.tone}
                   person
                   label="Portrait · 4:5"
-                  className="glow-border rounded-sm"
+                  className="glow-border rounded-2xl"
                 />
-                <h3 className="mt-8 text-5xl sm:text-6xl">{f.name}</h3>
-                <p className="hud-label mt-3 !text-gold">{f.role}</p>
+                <p className="hud-label mt-8 !text-gold">{f.role}</p>
+                <h3 className="mt-3 text-5xl font-semibold tracking-[-0.045em] sm:text-6xl">{f.name}</h3>
                 <p className="mt-6 max-w-lg text-lg leading-relaxed text-bone/75">{f.bio}</p>
-                <p className="accent mt-6 max-w-md font-display text-3xl leading-snug sm:text-4xl">“{f.line}”</p>
+                <p className="accent mt-6 max-w-md text-2xl leading-snug sm:text-3xl">“{f.line}”</p>
               </Reveal>
             ))}
           </div>
@@ -92,12 +96,14 @@ export default function About() {
 
       <section className="section">
         <div className="container-x">
+          <SectionLabel index="04">Why it exists</SectionLabel>
           <Reveal as="h2" className="display-lg max-w-[14ch]">
             A door opener, <span className="accent">not a gatekeeper.</span>
           </Reveal>
           <div className="mt-16 grid gap-6 sm:mt-24 md:grid-cols-3">
             {principles.map((p, i) => (
-              <Reveal key={p.title} delay={i * 0.1} className="glass glow-border rounded-sm p-7 pt-20 sm:p-9 sm:pt-28">
+              <Reveal key={p.title} delay={i * 0.1} className="glass glow-border rounded-2xl p-7 sm:p-9">
+                <p className="hud-label mb-14 sm:mb-20">Principle · 0{i + 1}</p>
                 <h3 className="text-3xl font-semibold tracking-[-0.035em]">{p.title}</h3>
                 <p className="mt-4 leading-relaxed text-mist">{p.body}</p>
               </Reveal>

@@ -3,96 +3,86 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import CinematicImage from '../components/CinematicImage'
 import Showreel from '../components/Showreel'
-import VideoFacade from '../components/VideoFacade'
 import { FogBank, LightBleed, Smoke, Spotlight } from '../components/Fog'
 import { ProductionCard, StatusBadge } from '../components/cards'
-import { Arrow, ClosingCTA, EASE_EXPO, HudCorners, MagneticButton, Reveal } from '../components/ui'
+import { Arrow, ClosingCTA, EASE_EXPO, HudCorners, MagneticButton, Reveal, SectionLabel } from '../components/ui'
 import { useScrollFx } from '../lib/gsap'
-import { useIntroPhase } from '../lib/intro'
 import { founders, site } from '../data/site'
 import { productionMeta, productions } from '../data/productions'
 import { barriers } from '../data/access'
 
-// Mind States UK, frame from the official trailer (letterbox bars cropped).
-const HERO_IMAGE = '/media/mind-states-uk-still.jpg'
+// Swap for a real still, e.g. '/media/hero.jpg'
+const HERO_IMAGE = null
 
 const EASE = EASE_EXPO
-
-// The tagline, set as two lines with the key word in gold italic.
-const TAGLINE = [
-  { key: 'door', content: 'The door' },
-  {
-    key: 'open',
-    content: (
-      <>
-        is <em className="hero-accent">open.</em>
-      </>
-    ),
-  },
-]
 const MISSION =
   'Talent is everywhere. Opportunity is not. BOA Network exists to close that gap with real roles, on real productions, for people who were never handed a way in.'
 
 function Hero() {
   const root = useRef(null)
-  // Entrances wait for the loader's iris, so they play into the reveal
-  // instead of finishing unseen behind it.
-  const go = useIntroPhase() !== 'pending'
 
-  // Scroll carries the camera further in and lets the tagline fall away.
+  // The headline is also capped by viewport height (19svh) so that on short
+  // desktop windows the copy stays clear of the fixed header.
+  // Scroll continues the slow camera push-in and lets the copy fall away.
   useScrollFx(root, (gsap) => {
     const scrollTrigger = { trigger: root.current, start: 'top top', end: 'bottom top', scrub: true }
-    gsap.to('.hero-media', { scale: 1.12, yPercent: 6, ease: 'none', scrollTrigger })
-    gsap.to('.hero-copy', { yPercent: -10, opacity: 0, ease: 'none', scrollTrigger })
+    gsap.to('.hero-media', { scale: 1.22, yPercent: 8, ease: 'none', scrollTrigger })
+    gsap.to('.hero-copy', { yPercent: -14, opacity: 0, ease: 'none', scrollTrigger })
   })
 
   return (
-    <section ref={root} className="relative h-[100svh] min-h-[640px] overflow-hidden bg-obsidian">
-      <motion.div
-        className="hero-media absolute inset-0 will-change-transform"
-        initial={{ opacity: 0, scale: 1.08 }}
-        animate={go ? { opacity: 1, scale: 1 } : undefined}
-        transition={{ duration: 2.4, ease: EASE }}
-      >
-        <div className="slow-zoom absolute inset-0">
-          <img
-            src={HERO_IMAGE}
-            alt=""
-            fetchPriority="high"
-            decoding="async"
-            className="h-full w-full object-cover object-[50%_30%] sm:object-[50%_35%]"
-          />
+    <section ref={root} className="relative h-[100svh] min-h-[640px] overflow-hidden">
+      <div className="hero-media absolute inset-0 will-change-transform">
+        <div className="push-in absolute inset-0">
+          <CinematicImage src={HERO_IMAGE} alt="" ratio="fill" tone="amber" priority className="h-full w-full" />
         </div>
-      </motion.div>
-
-      {/* Grade: crush the frame toward black at the edges so type owns it */}
-      <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/55 to-obsidian/35" />
-      <div className="absolute inset-0 bg-gradient-to-r from-obsidian/70 via-transparent to-transparent" />
+      </div>
+      <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/45 to-obsidian/70" />
+      <LightBleed className="-bottom-[35%] right-[-25%] h-[110vh] w-[130vw] sm:right-[-5%] sm:w-[70vw]" />
+      {/* A rig light falls on the copy; the smoke catches it on the way down. */}
+      <div aria-hidden="true" className="light-cone -top-[10%] left-[-30%] h-[120%] w-[130%] sm:left-[-35%] sm:w-[110%]" />
       <Smoke />
       <FogBank />
+
       <motion.div
         aria-hidden="true"
         className="absolute inset-0"
         initial={{ opacity: 0 }}
-        animate={go ? { opacity: 1 } : undefined}
-        transition={{ duration: 2.4, ease: EASE, delay: 0.3 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 2.4, ease: EASE, delay: 0.1 }}
       >
-        <Spotlight className="-left-[40%] bottom-[-25%] h-[80%] w-[160vw] opacity-70 sm:-left-[15%] sm:w-[90vw]" />
+        <Spotlight className="-left-[35%] bottom-[-15%] h-[95%] w-[150vw] sm:-left-[12%] sm:bottom-[-12%] sm:w-[85vw] lg:w-[72vw]" />
       </motion.div>
-      {/* Last layer before the copy: a long fade into the page so there is no seam */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-[38%] bg-gradient-to-t from-obsidian via-obsidian/80 to-transparent" />
+      {/* Last atmospheric layer: fade every light and smoke layer into the page below */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-[30%] bg-gradient-to-t from-obsidian via-obsidian/70 to-transparent" />
 
-      <div className="hero-copy above-fog container-x flex h-full flex-col justify-end pb-12 pt-28 sm:pb-16">
-        <h1 className="hero-title text-[length:clamp(3.5rem,min(12.5vw,19svh),10.5rem)]">
-          {TAGLINE.map((line, i) => (
-            <span key={line.key} className="block overflow-hidden pb-[0.08em]">
+      <HudCorners inset="inset-x-5 bottom-6 top-24 sm:inset-x-8 sm:top-28 lg:inset-x-14" />
+      <div aria-hidden="true" className="absolute right-5 top-28 hidden text-right sm:right-8 sm:top-36 md:block lg:right-20">
+        <p className="hud-label flex items-center justify-end gap-2">
+          <span className="hud-pulse h-1.5 w-1.5 rounded-full bg-gold" /> Scene 01 · Take 01
+        </p>
+        <p className="hud-label mt-2 !text-mist">2.39 : 1 · {site.location}</p>
+      </div>
+
+      <div className="hero-copy container-x relative flex h-full flex-col justify-end pb-20 sm:pb-24 lg:pb-28">
+        <motion.p
+          className="hud-label mb-6 sm:mb-8"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.4, ease: EASE, delay: 0.2 }}
+        >
+          {site.longName} — film · series · television
+        </motion.p>
+        <h1 className="hero-title text-[length:clamp(3.4rem,min(13.5vw,20svh),13.5rem)]">
+          {['The door', 'is open.'].map((line, i) => (
+            <span key={line} className="block overflow-hidden pb-[0.1em]">
               <motion.span
-                className="block"
-                initial={{ y: '110%' }}
-                animate={go ? { y: 0 } : undefined}
-                transition={{ duration: 1.5, ease: EASE, delay: 0.25 + i * 0.14 }}
+                className={`block ${i === 1 ? 'accent hero-accent' : ''}`}
+                initial={{ y: '110%', filter: 'blur(14px)' }}
+                animate={{ y: 0, filter: 'blur(0px)' }}
+                transition={{ duration: 1.6, ease: EASE, delay: 0.3 + i * 0.16 }}
               >
-                {line.content}
+                {line}
               </motion.span>
             </span>
           ))}
@@ -100,21 +90,14 @@ function Hero() {
         <motion.div
           className="mt-8 flex flex-col gap-8 sm:mt-10 lg:flex-row lg:items-end lg:justify-between"
           initial={{ opacity: 0, y: 24 }}
-          animate={go ? { opacity: 1, y: 0 } : undefined}
-          transition={{ duration: 1.4, ease: EASE, delay: 0.75 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.4, ease: EASE, delay: 0.9 }}
         >
-          <div className="max-w-lg">
-            <p className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[0.6875rem] font-bold uppercase tracking-[0.24em] text-gold">
-              <span className="whitespace-nowrap">{site.longName}</span>
-              <span aria-hidden="true" className="h-px w-8 bg-gold/60" />
-              <span className="whitespace-nowrap">film · series · television</span>
-            </p>
-            <p className="text-lg leading-relaxed text-bone/85 sm:text-xl">
+          <p className="lede max-w-xl !text-bone/80">
             BOA Networks is a UK production company dedicated to creating cinematic film and television while casting
             creative talent from all walks of life.
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-3 sm:gap-4">
+          </p>
+          <div className="flex flex-wrap gap-4">
             <MagneticButton to="/contact?form=talent">
               Get seen <Arrow />
             </MagneticButton>
@@ -148,6 +131,7 @@ function Mission() {
   return (
     <section ref={root} className="section">
       <div className="container-x">
+        <SectionLabel index="01">The mission</SectionLabel>
         <p className="mission-text display-md max-w-[22ch] sm:max-w-[24ch] lg:max-w-[26ch]">
           {MISSION.split(' ').map((word, i) => (
             <span key={i} className="mission-word">
@@ -156,10 +140,11 @@ function Mission() {
           ))}
         </p>
 
-        <div className="mt-20 grid gap-px overflow-hidden rounded-sm border border-white/[0.08] bg-white/[0.08] sm:mt-28 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-20 grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08] sm:mt-28 sm:grid-cols-2 lg:grid-cols-4">
           {barriers.map((b, i) => (
-            <Reveal key={b} delay={i * 0.08} className="bg-obsidian px-6 py-12 sm:px-8 sm:py-20">
-              <p className="font-display text-4xl italic text-bone/45 line-through decoration-gold decoration-2 sm:text-5xl">
+            <Reveal key={b} delay={i * 0.08} className="bg-obsidian p-6 sm:p-8">
+              <p className="hud-label mb-10 sm:mb-16">Not a barrier · 0{i + 1}</p>
+              <p className="text-3xl font-semibold tracking-[-0.04em] text-bone/40 line-through decoration-gold decoration-2 sm:text-4xl">
                 {b}
               </p>
             </Reveal>
@@ -180,10 +165,12 @@ function Reel() {
   return (
     <section id="showreel" className="section scroll-mt-10 !pt-0">
       <div className="container-x">
+        <SectionLabel index="02">Showreel</SectionLabel>
         <div className="space-y-16 sm:space-y-24">
           {site.showreel.map((video) => (
             <Reveal key={video.url}>
-              <Showreel url={video.url} title={video.title} poster={video.poster} />
+              <p className="hud-label mb-4 !text-gold sm:mb-5">{video.label}</p>
+              <Showreel url={video.url} title={video.title} />
             </Reveal>
           ))}
         </div>
@@ -198,6 +185,7 @@ function Featured() {
   return (
     <section className="section relative !pt-0">
       <div className="container-x">
+        <SectionLabel index="03">Featured productions</SectionLabel>
         <div className="mb-14 flex flex-col gap-6 sm:mb-20 lg:flex-row lg:items-end lg:justify-between">
           <Reveal as="h2" className="display-lg max-w-[12ch]">
             Stories worth <span className="accent">the big screen.</span>
@@ -210,10 +198,24 @@ function Featured() {
         </div>
 
         <div className="space-y-16 sm:space-y-28">
-          {featured.map((p) => (
+          {featured.map((p, i) => (
             <Reveal key={p.slug} as="article">
               {p.video && (
-                <VideoFacade {...p.video} ratio="2.39 / 1" />
+                <div
+                  className="glow-border relative overflow-hidden rounded-xl bg-black sm:rounded-2xl"
+                  style={{ aspectRatio: '2.39 / 1' }}
+                >
+                  <iframe
+                    src={p.video.url}
+                    title={p.video.title}
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    loading="lazy"
+                    style={{ width: '100%', height: '100%', border: 0 }}
+                  />
+                  <HudCorners inset="inset-3 sm:inset-5" />
+                </div>
               )}
               <Link to="/productions" className="group block" aria-label={`${p.title} — view productions`}>
                 {!p.video && (
@@ -223,7 +225,7 @@ function Featured() {
                     tone={p.tone}
                     parallax
                     label="Still · 2.39:1"
-                    className="rounded-sm sm:rounded-sm"
+                    className="rounded-xl sm:rounded-2xl"
                   >
                     <div className="absolute inset-0 bg-gradient-to-t from-obsidian/85 via-transparent to-transparent" />
                     <HudCorners inset="inset-3 sm:inset-5" />
@@ -234,12 +236,13 @@ function Featured() {
                     )}
                   </CinematicImage>
                 )}
-                <div className="mt-6 grid gap-4 sm:mt-8 lg:grid-cols-[1fr_1fr] lg:items-baseline lg:gap-12">
-                  <h3 className="text-5xl transition-colors duration-500 group-hover:text-gold sm:text-7xl">
+                <div className="mt-6 grid gap-4 sm:mt-8 lg:grid-cols-[auto_1fr_1fr] lg:items-baseline lg:gap-12">
+                  <span className="hud-label">0{i + 1}</span>
+                  <h3 className="text-4xl font-semibold tracking-[-0.045em] transition-colors duration-500 group-hover:text-gold sm:text-6xl">
                     {p.title}
                   </h3>
                   <div>
-                    <p className="mb-3 font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-mist">{productionMeta(p)}</p>
+                    <p className="hud-label mb-3 !text-mist">{productionMeta(p)}</p>
                     <p className="max-w-md text-lg leading-relaxed text-bone/75">{p.logline}</p>
                   </div>
                 </div>
@@ -248,20 +251,12 @@ function Featured() {
           ))}
         </div>
 
-        <div className="mt-16 grid gap-6 sm:mt-28 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-          {upcoming.map((p, i) => {
-            // With an odd count, the last tile spans both columns below lg.
-            const wide = upcoming.length % 2 === 1 && i === upcoming.length - 1
-            return (
-              <Reveal key={p.slug} delay={i * 0.08} className={wide ? 'sm:col-span-2 lg:col-span-1' : ''}>
-                <ProductionCard
-                  production={p}
-                  ratio="fill"
-                  imageClassName={wide ? 'aspect-[2/3] sm:max-lg:aspect-[16/8]' : 'aspect-[2/3]'}
-                />
-              </Reveal>
-            )
-          })}
+        <div className="mt-16 grid gap-6 sm:mt-28 sm:grid-cols-3 lg:gap-8">
+          {upcoming.map((p, i) => (
+            <Reveal key={p.slug} delay={i * 0.08}>
+              <ProductionCard production={p} />
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>
@@ -273,7 +268,8 @@ function Founders() {
     <section className="section relative overflow-hidden border-y border-white/[0.07] bg-ink">
       <LightBleed className="-left-[30%] top-[10%] h-[80vh] w-[90vw] sm:w-[55vw]" />
       <div className="container-x relative">
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-20">
+        <SectionLabel index="04">The founders</SectionLabel>
+        <div className="grid gap-12 md:grid-cols-2 lg:gap-20">
           {founders.map((f, i) => (
             <Reveal key={f.name} delay={i * 0.12} className="grid grid-cols-[minmax(0,7.5rem)_1fr] gap-6 sm:grid-cols-[minmax(0,11rem)_1fr] sm:gap-8">
               <CinematicImage
@@ -282,10 +278,10 @@ function Founders() {
                 ratio="portrait"
                 tone={f.tone}
                 person
-                className="rounded-sm"
+                className="rounded-xl"
               />
               <div className="flex flex-col justify-between gap-6">
-                <p className="font-display text-3xl italic leading-tight sm:text-4xl lg:text-[2.75rem]">
+                <p className="text-2xl font-medium leading-tight tracking-[-0.03em] sm:text-3xl lg:text-4xl">
                   “{f.line}”
                 </p>
                 <div>

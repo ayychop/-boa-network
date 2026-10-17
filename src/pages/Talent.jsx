@@ -50,6 +50,8 @@ export default function Talent() {
       <title>Talent — BOA Network</title>
       <meta name="description" content="The BOA Network roster: actors and models discovered through open access, not connections." />
       <PageHeader
+        index="03"
+        label="Talent"
         title={
           <>
             The <span className="accent">roster.</span>
