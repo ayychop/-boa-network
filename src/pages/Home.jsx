@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import CinematicImage from '../components/CinematicImage'
 import Showreel from '../components/Showreel'
 import { FogBank, LightBleed, LightCone, Smoke, Spotlight } from '../components/Fog'
@@ -118,13 +118,48 @@ function Hero() {
   )
 }
 
+const MISSION_WORDS = MISSION.split(' ')
+const DIM = 0.3 // resting brightness: dim grey on the dark ground, never invisible
+const RAMP = 0.22 // share of the scroll range each word takes to reach white
+
+/** One word, brightening as the reader's scroll reaches it. */
+function LitWord({ progress, index, count, children }) {
+  const start = (index / count) * (1 - RAMP)
+  const opacity = useTransform(progress, [start, start + RAMP], [DIM, 1], { clamp: true })
+  return <motion.span style={{ opacity }}>{children}</motion.span>
+}
+
+/**
+ * The mission, illuminated as you read it. Scroll progress runs from the
+ * paragraph's top entering the bottom of the screen (every word dim) to its
+ * centre reaching the centre of the screen (every word white). Past that it
+ * stays white; scrolling back up dims it again. Words never go below 30%.
+ */
+function MissionStatement() {
+  const ref = useRef(null)
+  const reduced = useReducedMotion()
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'center center'] })
+  return (
+    <p ref={ref} className="mission-statement max-w-[20ch] text-bone">
+      {reduced
+        ? MISSION
+        : MISSION_WORDS.map((word, i) => (
+            <LitWord key={i} progress={scrollYProgress} index={i} count={MISSION_WORDS.length}>
+              {word}
+              {i < MISSION_WORDS.length - 1 ? ' ' : ''}
+            </LitWord>
+          ))}
+    </p>
+  )
+}
+
 function Mission() {
   return (
     <section className="section">
       <div className="container-x">
         <SectionLabel index="01">The mission</SectionLabel>
-        {/* Set once, at full strength: no scroll scrub, nothing left dim. */}
-        <p className="mission-statement max-w-[20ch] text-bone">{MISSION}</p>
+        {/* Lights up word by word as it scrolls into the centre of the screen. */}
+        <MissionStatement />
 
         <div className="mt-20 grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08] sm:mt-28 sm:grid-cols-2 lg:grid-cols-4">
           {barriers.map((b, i) => (
