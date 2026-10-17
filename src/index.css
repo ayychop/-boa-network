@@ -1,19 +1,21 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-obsidian: #050506;
-  --color-ink: #0a0a0c;
-  --color-charcoal: #121215;
-  --color-graphite: #1b1b20;
-  --color-gold: #e2a84b;
-  --color-amber: #f5c878;
-  --color-ember: #b9772a;
-  --color-hud: #d9d4c8;
-  --color-bone: #f3efe8;
-  --color-mist: #a6a29b;
+  /* Label house style: near-black ground, one deep gold, stark white type */
+  --color-obsidian: #0a0a0a;
+  --color-ink: #101010;
+  --color-charcoal: #161616;
+  --color-graphite: #222222;
+  --color-gold: #e8b31a;
+  --color-amber: #f6c83a;
+  --color-ember: #a87f0c;
+  --color-hud: #e6e6e6;
+  --color-bone: #ffffff;
+  --color-mist: #b5b5b5;
 
   --font-sans: 'Manrope Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-serif: 'Instrument Serif', 'Iowan Old Style', Georgia, serif;
+  --font-display: 'Anton', 'Oswald', 'Arial Narrow', sans-serif;
+  --font-serif: var(--font-display);
   --font-mono: 'JetBrains Mono Variable', ui-monospace, 'SF Mono', Menlo, monospace;
 
   --ease-cine: cubic-bezier(0.16, 1, 0.3, 1);
@@ -43,7 +45,7 @@
     outline-offset: 3px;
   }
   html {
-    scrollbar-color: rgb(226 168 75 / 0.45) var(--color-obsidian);
+    scrollbar-color: rgb(232 179 26 / 0.45) var(--color-obsidian);
     caret-color: var(--color-gold);
   }
   a {
@@ -53,6 +55,8 @@
   h2,
   h3 {
     text-wrap: balance;
+    font-family: var(--font-display);
+    text-transform: uppercase;
   }
   p {
     text-wrap: pretty;
@@ -94,48 +98,33 @@ html.lenis body {
     padding-block: clamp(5rem, 14vw, 13rem);
   }
 
-  /* Type scale: huge, tight, restrained */
+  /* Type scale: poster caps. Anton has one weight; size and colour do the work. */
   .display-xl {
-    font-size: clamp(3.25rem, 13vw, 13rem);
-    line-height: 0.88;
-    letter-spacing: -0.05em;
-    font-weight: 600;
-  }
-  /* Hero headline: tighter optical setting than display-xl, a lighter weight
-     so the serif line carries the drama, and a warm halo so it lifts off the smoke. */
-  .hero-title {
+    font-size: clamp(3.75rem, 15vw, 15rem);
     line-height: 0.86;
-    letter-spacing: -0.045em;
-    font-weight: 500;
-    text-shadow: 0 0 80px rgb(226 168 75 / 0.18), 0 2px 30px rgb(0 0 0 / 0.5);
+  }
+  /* Poster tagline: the biggest type on the site */
+  .hero-title {
+    line-height: 0.84;
   }
   .hero-accent {
-    letter-spacing: -0.03em;
-    padding-left: 0.04em;
-    text-shadow: 0 0 60px rgb(245 200 120 / 0.45), 0 0 140px rgb(226 168 75 / 0.3);
+    color: var(--color-gold);
   }
   .display-lg {
-    font-size: clamp(2.6rem, 8vw, 7.5rem);
-    line-height: 0.94;
-    letter-spacing: -0.045em;
-    font-weight: 600;
+    font-size: clamp(3rem, 9.5vw, 9rem);
+    line-height: 0.88;
   }
   .display-md {
-    font-size: clamp(2rem, 4.6vw, 4.25rem);
-    line-height: 1.02;
-    letter-spacing: -0.035em;
-    font-weight: 500;
+    font-size: clamp(2.25rem, 5.4vw, 5rem);
+    line-height: 0.92;
   }
   .lede {
     font-size: clamp(1.125rem, 1.6vw, 1.5rem);
     line-height: 1.5;
     color: var(--color-mist);
   }
+  /* Accent words inside a headline turn gold; same face, no italics. */
   .accent {
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-weight: 400;
-    letter-spacing: -0.02em;
     color: var(--color-gold);
   }
 
@@ -166,14 +155,11 @@ html.lenis body {
   }
 
   /* Glass */
+  /* Solid panel: a slab of near-black with a hairline, not frosted glass */
   .glass {
-    background: linear-gradient(160deg, rgb(255 255 255 / 0.06), rgb(255 255 255 / 0.015));
-    border: 1px solid rgb(255 255 255 / 0.09);
-    backdrop-filter: blur(18px) saturate(140%);
-    -webkit-backdrop-filter: blur(18px) saturate(140%);
-    box-shadow:
-      inset 0 1px 0 rgb(255 255 255 / 0.07),
-      0 30px 80px -40px rgb(0 0 0 / 0.9);
+    background: var(--color-ink);
+    border: 1px solid rgb(255 255 255 / 0.08);
+    box-shadow: 0 40px 80px -50px rgb(0 0 0 / 0.95);
   }
   .glow-border {
     position: relative;
@@ -187,10 +173,9 @@ html.lenis body {
     padding: 1px;
     background: linear-gradient(
       140deg,
-      color-mix(in srgb, var(--color-gold) 75%, transparent),
-      transparent 35%,
-      transparent 65%,
-      color-mix(in srgb, var(--color-hud) 55%, transparent)
+      var(--color-gold),
+      transparent 30%,
+      transparent 100%
     );
     mask:
       linear-gradient(#000 0 0) content-box,
@@ -217,12 +202,13 @@ html.lenis body {
     align-items: center;
     justify-content: center;
     gap: 0.75rem;
-    min-height: 3.25rem;
-    padding: 0.875rem 1.75rem;
-    border-radius: 999px;
-    font-size: 0.9375rem;
-    font-weight: 600;
-    letter-spacing: -0.01em;
+    min-height: 3.5rem;
+    padding: 1rem 2rem;
+    border-radius: 2px;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
     white-space: nowrap;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
@@ -255,10 +241,8 @@ html.lenis body {
   }
   .btn-primary {
     background: var(--color-gold);
-    color: var(--color-obsidian);
-    box-shadow:
-      0 0 0 1px rgb(245 200 120 / 0.5),
-      0 10px 40px -10px rgb(226 168 75 / 0.55);
+    color: #000;
+    box-shadow: 0 14px 40px -18px rgb(232 179 26 / 0.7);
   }
   .btn-primary::after {
     background: linear-gradient(105deg, transparent 30%, rgb(255 248 230 / 0.7) 50%, transparent 70%);
@@ -267,10 +251,7 @@ html.lenis body {
   }
   .btn-primary:hover {
     background: var(--color-amber);
-    box-shadow:
-      0 0 0 1px rgb(245 200 120 / 0.9),
-      0 18px 60px -12px rgb(226 168 75 / 0.85),
-      0 0 90px -20px rgb(245 200 120 / 0.6);
+    box-shadow: 0 22px 60px -18px rgb(232 179 26 / 0.9);
   }
   .btn-primary:hover::after {
     transform: translateX(120%);
@@ -278,23 +259,20 @@ html.lenis body {
   }
   .btn-ghost {
     color: var(--color-bone);
-    border: 1px solid rgb(255 255 255 / 0.16);
-    background: rgb(255 255 255 / 0.03);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgb(255 255 255 / 0.55);
+    background: rgb(0 0 0 / 0.25);
   }
   .btn-ghost::after {
-    background: var(--color-gold);
-    clip-path: inset(100% 0 0 0 round 999px);
+    background: var(--color-bone);
+    clip-path: inset(100% 0 0 0);
     transition: clip-path 0.55s var(--ease-cine);
   }
   .btn-ghost:hover {
-    border-color: var(--color-gold);
-    color: var(--color-obsidian);
-    box-shadow: 0 16px 50px -16px rgb(226 168 75 / 0.7);
+    border-color: var(--color-bone);
+    color: #000;
   }
   .btn-ghost:hover::after {
-    clip-path: inset(0 0 0 0 round 999px);
+    clip-path: inset(0 0 0 0);
   }
   .btn:disabled {
     opacity: 0.55;
@@ -309,12 +287,14 @@ html.lenis body {
     position: relative;
     overflow: hidden;
     isolation: isolate;
-    border-radius: 999px;
-    border: 1px solid rgb(255 255 255 / 0.15);
-    padding: 0.7rem 1.3rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: rgb(243 239 232 / 0.75);
+    border-radius: 2px;
+    border: 1px solid rgb(255 255 255 / 0.2);
+    padding: 0.75rem 1.3rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgb(255 255 255 / 0.8);
     transition:
       color 0.45s var(--ease-cine),
       border-color 0.45s var(--ease-cine),
@@ -330,7 +310,7 @@ html.lenis body {
     transition: clip-path 0.5s var(--ease-cine);
   }
   .chip:hover {
-    border-color: rgb(226 168 75 / 0.6);
+    border-color: rgb(232 179 26 / 0.6);
     color: var(--color-bone);
   }
   .chip:active {
@@ -371,8 +351,8 @@ html.lenis body {
     width: 100%;
     min-height: 3.5rem;
     padding: 1rem 1.15rem;
-    border-radius: 0.9rem;
-    background: linear-gradient(170deg, rgb(255 255 255 / 0.055), rgb(255 255 255 / 0.015)), rgb(8 8 10 / 0.55);
+    border-radius: 2px;
+    background: linear-gradient(170deg, rgb(255 255 255 / 0.055), rgb(255 255 255 / 0.015)), rgb(10 10 10 / 0.6);
     border: 1px solid rgb(255 255 255 / 0.1);
     color: var(--color-bone);
     font-size: 1rem;
@@ -394,12 +374,12 @@ html.lenis body {
   }
   .input:focus {
     outline: none;
-    border-color: rgb(245 200 120 / 0.85);
+    border-color: rgb(246 200 58 / 0.85);
     box-shadow:
       inset 0 1px 0 rgb(255 255 255 / 0.06),
-      0 0 0 4px rgb(226 168 75 / 0.12),
-      0 0 32px -4px rgb(226 168 75 / 0.45),
-      0 18px 40px -24px rgb(226 168 75 / 0.6);
+      0 0 0 4px rgb(232 179 26 / 0.12),
+      0 0 32px -4px rgb(232 179 26 / 0.45),
+      0 18px 40px -24px rgb(232 179 26 / 0.6);
   }
   .input:user-invalid {
     border-color: rgb(252 165 165 / 0.7);
@@ -408,7 +388,7 @@ html.lenis body {
     appearance: none;
     padding-right: 3rem;
     background-image:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e2a84b' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e8b31a' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"),
       linear-gradient(170deg, rgb(255 255 255 / 0.055), rgb(255 255 255 / 0.015));
     background-repeat: no-repeat;
     background-position:
@@ -431,8 +411,8 @@ html.lenis body {
     width: 1.25rem;
     height: 1.25rem;
     margin-top: 0.15rem;
-    border-radius: 0.35rem;
-    border: 1px solid rgb(255 255 255 / 0.25);
+    border-radius: 2px;
+    border: 1px solid rgb(255 255 255 / 0.3);
     background: rgb(8 8 10 / 0.55);
     cursor: pointer;
     transition:
@@ -452,21 +432,20 @@ html.lenis body {
   .check:checked {
     background: var(--color-gold);
     border-color: var(--color-gold);
-    box-shadow: 0 0 20px -4px rgb(226 168 75 / 0.6);
+    box-shadow: 0 0 20px -4px rgb(232 179 26 / 0.6);
   }
   .check:checked::after {
     transform: translateY(-1px) rotate(-45deg) scale(1);
   }
   .check:focus-visible {
-    box-shadow: 0 0 0 4px rgb(226 168 75 / 0.2);
+    box-shadow: 0 0 0 4px rgb(232 179 26 / 0.2);
   }
 
   /* Massive serif for titles on the slate */
   .title-serif {
-    font-family: var(--font-serif);
-    font-weight: 400;
-    letter-spacing: -0.025em;
-    line-height: 0.9;
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    line-height: 0.88;
   }
 }
 
@@ -530,7 +509,7 @@ html.lenis body {
   background-size: 160vw 160vh;
   background-position: 30% 60%;
   mix-blend-mode: screen;
-  opacity: 0.04;
+  opacity: 0.06;
 }
 /* Layer 2: drifting plumes, denser low in the frame */
 .fog-plumes {
@@ -574,15 +553,15 @@ html.lenis body {
   width: calc(280vw + 80px);
   background-size: 170vw var(--fog-tile-h, 100vh);
   background-position: 40vw 30vh;
-  opacity: 0.08;
+  opacity: 0.12;
   animation-duration: 78s;
 }
 @media (min-width: 768px) {
   .fog-haze {
-    opacity: 0.07;
+    opacity: 0.1;
   }
   .fog-plume-a {
-    opacity: 0.13;
+    opacity: 0.17;
   }
   .fog-plume-b {
     display: block;
@@ -615,7 +594,7 @@ html.lenis body {
 }
 @media (min-width: 768px) {
   .fog-bank > div {
-    opacity: 0.45;
+    opacity: 0.55;
   }
 }
 
@@ -626,8 +605,8 @@ html.lenis body {
   mix-blend-mode: screen;
   background: radial-gradient(
     closest-side,
-    rgb(245 200 120 / 0.34),
-    rgb(226 168 75 / 0.16) 45%,
+    rgb(246 200 58 / 0.34),
+    rgb(232 179 26 / 0.16) 45%,
     transparent 100%
   );
   animation: bleed-breathe 14s ease-in-out infinite;
@@ -694,7 +673,7 @@ html.lenis body {
   top: -10%;
   height: 90%;
   background-size: 140vw 100%;
-  opacity: 0.11;
+  opacity: 0.15;
   animation: fog-drift 120s linear infinite;
   -webkit-mask-image: linear-gradient(to bottom, transparent, #000 40%, #000 70%, transparent);
   mask-image: linear-gradient(to bottom, transparent, #000 40%, #000 70%, transparent);
@@ -705,7 +684,7 @@ html.lenis body {
   height: 80%;
   background-size: 110vw 100%;
   background-position: 30vw 0;
-  opacity: 0.22;
+  opacity: 0.3;
   animation: fog-drift-back 86s linear infinite;
   -webkit-mask-image: linear-gradient(to bottom, transparent, #000 35%, #000 75%, transparent);
   mask-image: linear-gradient(to bottom, transparent, #000 35%, #000 75%, transparent);
@@ -715,7 +694,7 @@ html.lenis body {
   bottom: -8%;
   height: 60%;
   background-size: 80vw 100%;
-  opacity: 0.42;
+  opacity: 0.5;
   animation: fog-drift 54s linear infinite;
   -webkit-mask-image: linear-gradient(to top, #000 30%, transparent);
   mask-image: linear-gradient(to top, #000 30%, transparent);
@@ -746,8 +725,8 @@ html.lenis body {
   pointer-events: none;
   mix-blend-mode: screen;
   background:
-    radial-gradient(closest-side, rgb(255 214 150 / 0.32), rgb(245 200 120 / 0.12) 40%, transparent 72%),
-    radial-gradient(closest-side, rgb(226 168 75 / 0.35), rgb(185 119 42 / 0.12) 55%, transparent 100%);
+    radial-gradient(closest-side, rgb(255 214 150 / 0.32), rgb(246 200 58 / 0.12) 40%, transparent 72%),
+    radial-gradient(closest-side, rgb(232 179 26 / 0.35), rgb(185 119 42 / 0.12) 55%, transparent 100%);
   background-size:
     55% 55%,
     100% 100%;
@@ -763,13 +742,32 @@ html.lenis body {
   background: conic-gradient(
     from 180deg at 50% 0%,
     transparent 160deg,
-    rgb(245 200 120 / 0.09) 172deg,
+    rgb(246 200 58 / 0.09) 172deg,
     rgb(255 228 180 / 0.14) 180deg,
-    rgb(245 200 120 / 0.09) 188deg,
+    rgb(246 200 58 / 0.09) 188deg,
     transparent 200deg
   );
   -webkit-mask-image: linear-gradient(to bottom, #000, transparent 85%);
   mask-image: linear-gradient(to bottom, #000, transparent 85%);
+}
+
+/* Halo behind the gold play disc: a slow outward pulse */
+@keyframes play-halo {
+  0% { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(1.7); opacity: 0; }
+}
+.play-halo {
+  animation: play-halo 2.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+/* Living still: 1.00 to 1.05 over 20s, back and forth, forever */
+@keyframes slow-zoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.05); }
+}
+.slow-zoom {
+  animation: slow-zoom 20s ease-in-out infinite alternate;
+  will-change: transform;
 }
 
 /* Slate rail: posters in a horizontal track that grow on hover */
@@ -792,15 +790,34 @@ html.lenis body {
   flex: none;
 }
 
-/* Grain + vignette: one fixed layer */
+/* Vignette, plus film grain that re-rolls a few times a second like a
+   projected print. The grain tile is oversized and only translated in steps,
+   so it never repaints. */
+@keyframes grain-roll {
+  0% { transform: translate3d(0, 0, 0); }
+  17% { transform: translate3d(-8%, 6%, 0); }
+  33% { transform: translate3d(5%, -9%, 0); }
+  50% { transform: translate3d(-4%, -3%, 0); }
+  67% { transform: translate3d(9%, 4%, 0); }
+  83% { transform: translate3d(-6%, 9%, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
 .atmos {
   position: fixed;
   inset: 0;
   z-index: 45;
   pointer-events: none;
+  overflow: hidden;
+  background: radial-gradient(ellipse at center, transparent 50%, rgb(0 0 0 / 0.6) 100%);
+}
+.atmos::before {
+  content: '';
+  position: absolute;
+  inset: -20%;
+  opacity: 0.55;
+  animation: grain-roll 0.9s steps(1) infinite;
   background:
-    radial-gradient(ellipse at center, transparent 52%, rgb(0 0 0 / 0.5) 100%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .13 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .2 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 .push-in {
@@ -812,6 +829,9 @@ html.lenis body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .atmos::before,
+  .slow-zoom,
+  .play-halo,
   .fog-plume,
   .fog-bank > div,
   .smoke-depth,
@@ -828,4 +848,12 @@ html.lenis body {
   .btn-primary:hover::after {
     transition: none;
   }
+}
+
+/* Anton ships one weight; never let a utility fake-bold or squeeze it. */
+h1,
+h2,
+h3 {
+  font-weight: 400 !important;
+  letter-spacing: 0.01em !important;
 }

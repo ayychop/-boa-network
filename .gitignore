@@ -11,3 +11,10 @@ dist
 # Impeccable skill binary (21 MB per copy); the launcher downloads it on first run
 .claude/skills/*/scripts/bin/
 .agents/skills/*/scripts/bin/
+
+# Impeccable: review captures are working files; surface briefs are kept
+.impeccable/review/
+.impeccable/mocks/
+.impeccable/build/
+.impeccable/config.local.json
+.impeccable/hook.cache.json

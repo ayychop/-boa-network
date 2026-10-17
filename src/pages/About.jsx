@@ -38,7 +38,7 @@ export default function About() {
 
       <section className="container-x">
         <Reveal>
-          <CinematicImage tone="amber" parallax label="About still · 2.39:1" className="rounded-xl sm:rounded-2xl">
+          <CinematicImage tone="amber" parallax label="About still · 2.39:1" className="rounded-sm sm:rounded-sm">
             <HudCorners inset="inset-3 sm:inset-5" />
           </CinematicImage>
         </Reveal>
@@ -82,7 +82,7 @@ export default function About() {
                   tone={f.tone}
                   person
                   label="Portrait · 4:5"
-                  className="glow-border rounded-2xl"
+                  className="glow-border rounded-sm"
                 />
                 <p className="hud-label mt-8 !text-gold">{f.role}</p>
                 <h3 className="mt-3 text-5xl font-semibold tracking-[-0.045em] sm:text-6xl">{f.name}</h3>
@@ -102,7 +102,7 @@ export default function About() {
           </Reveal>
           <div className="mt-16 grid gap-6 sm:mt-24 md:grid-cols-3">
             {principles.map((p, i) => (
-              <Reveal key={p.title} delay={i * 0.1} className="glass glow-border rounded-2xl p-7 sm:p-9">
+              <Reveal key={p.title} delay={i * 0.1} className="glass glow-border rounded-sm p-7 sm:p-9">
                 <p className="hud-label mb-14 sm:mb-20">Principle · 0{i + 1}</p>
                 <h3 className="text-3xl font-semibold tracking-[-0.035em]">{p.title}</h3>
                 <p className="mt-4 leading-relaxed text-mist">{p.body}</p>

@@ -13,7 +13,7 @@ const STATUS_STYLE = {
 export function StatusBadge({ status }) {
   return (
     <span
-      className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-[0.625rem] uppercase tracking-[0.16em] backdrop-blur-md ${STATUS_STYLE[status]}`}
+      className={`inline-flex items-center gap-2 rounded-sm border px-3 py-1 font-mono text-[0.625rem] uppercase tracking-[0.16em] backdrop-blur-md ${STATUS_STYLE[status]}`}
     >
       {status === 'production' && <span className="hud-pulse h-1.5 w-1.5 rounded-full bg-hud" />}
       {STATUS[status]}
@@ -21,35 +21,43 @@ export function StatusBadge({ status }) {
   )
 }
 
-export function ProductionCard({ production: p }) {
+/**
+ * Production tile for the slate. The frame is the whole tile: on hover the
+ * image pushes in to 1.05x, the frame darkens, and "View Project" fades up.
+ */
+export function ProductionCard({ production: p, ratio = 'poster', className = '' }) {
   const meta = productionMeta(p)
   return (
-    <article className="group glow-border glass flex h-full flex-col overflow-hidden rounded-2xl">
+    <Link
+      to={`/productions/${p.slug}`}
+      className={`group relative block overflow-hidden rounded-sm bg-charcoal outline-none focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-gold ${className}`}
+      aria-label={`${p.title}${meta ? `, ${meta}` : ''}. View project`}
+    >
       <CinematicImage
-        src={p.image}
-        alt={`${p.title} poster`}
-        ratio="poster"
+        src={p.image ?? p.still}
+        alt=""
+        ratio={ratio}
         tone={p.tone}
-        label="Poster · 2:3"
-        className="transition-transform duration-[1.4s] ease-[var(--ease-cine)] group-hover:scale-[1.03]"
-      >
-        <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/10 to-transparent" />
-        {p.status && (
-          <div className="absolute right-4 top-4">
-            <StatusBadge status={p.status} />
-          </div>
-        )}
-        <h3 className="absolute inset-x-5 bottom-5 text-3xl font-semibold leading-none tracking-[-0.04em] sm:text-4xl">
-          {p.title}
-        </h3>
-      </CinematicImage>
-      {(meta || p.logline) && (
-        <div className="relative flex flex-1 flex-col gap-4 p-5">
-          {meta && <p className="hud-label !text-mist">{meta}</p>}
-          {p.logline && <p className="leading-relaxed text-bone/80">{p.logline}</p>}
+        className="transition-transform duration-[1.1s] ease-[var(--ease-cine)] will-change-transform group-hover:scale-105 group-focus-visible:scale-105"
+      />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 via-45% to-transparent" />
+      <div className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-700 ease-[var(--ease-cine)] group-hover:bg-black/45 group-focus-visible:bg-black/45" />
+      {p.status && (
+        <div className="absolute right-4 top-4">
+          <StatusBadge status={p.status} />
         </div>
       )}
-    </article>
+      <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7">
+        {meta && <p className="mb-3 text-[0.6875rem] font-bold uppercase tracking-[0.2em] text-gold">{meta}</p>}
+        <h3 className="text-[clamp(2.5rem,5vw,4.5rem)] leading-[0.9]">{p.title}</h3>
+        <span
+          aria-hidden="true"
+          className="mt-5 inline-flex translate-y-3 items-center gap-3 bg-gold px-5 py-3 text-xs font-bold uppercase tracking-[0.16em] text-black opacity-0 transition-[opacity,transform] duration-500 ease-[var(--ease-cine)] group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 [@media(hover:none)]:translate-y-0 [@media(hover:none)]:opacity-100"
+        >
+          View Project <Arrow />
+        </span>
+      </div>
+    </Link>
   )
 }
 

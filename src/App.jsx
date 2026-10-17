@@ -10,6 +10,7 @@ import Home from './pages/Home'
 
 const About = lazy(() => import('./pages/About'))
 const Productions = lazy(() => import('./pages/Productions'))
+const ProductionDetail = lazy(() => import('./pages/ProductionDetail'))
 const Talent = lazy(() => import('./pages/Talent'))
 const TalentProfile = lazy(() => import('./pages/TalentProfile'))
 const Access = lazy(() => import('./pages/Access'))
@@ -32,6 +33,7 @@ function Pages() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/productions" element={<Productions />} />
+          <Route path="/productions/:slug" element={<ProductionDetail />} />
           <Route path="/talent" element={<Talent />} />
           <Route path="/talent/:slug" element={<TalentProfile />} />
           <Route path="/access" element={<Access />} />

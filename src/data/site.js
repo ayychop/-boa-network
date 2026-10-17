@@ -13,6 +13,7 @@ export const site = {
     {
       label: '01 - Trailer',
       title: 'Mind States UK - Official Trailer',
+      poster: '/media/mind-states-uk-still.jpg',
       // TODO: Replace this EP1 trailer with the EP2 trailer when ready.
       url: 'https://www.youtube-nocookie.com/embed/1Luf9F3wl-k',
     },

@@ -35,7 +35,7 @@ export default function TalentProfile() {
                 person
                 priority
                 label="Headshot · 4:5"
-                className="glow-border rounded-2xl"
+                className="glow-border rounded-sm"
               >
                 <HudCorners inset="inset-4" />
               </CinematicImage>

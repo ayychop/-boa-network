@@ -74,7 +74,7 @@ export default function Access() {
         <SectionLabel index="01">Pathways</SectionLabel>
         <div className="grid gap-5 md:grid-cols-2 lg:gap-8">
           {pathways.map((p, i) => (
-            <Reveal key={p.code} delay={(i % 2) * 0.1} className="glass glow-border rounded-2xl p-7 sm:p-12 lg:p-14">
+            <Reveal key={p.code} delay={(i % 2) * 0.1} className="glass glow-border rounded-sm p-7 sm:p-12 lg:p-14">
               <div className="mb-16 flex items-center justify-between sm:mb-28">
                 <span className="hud-label">{p.code}</span>
                 <span className="hud-label !text-mist">Pathway</span>
