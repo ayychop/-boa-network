@@ -5,8 +5,8 @@ export const site = {
   longName: 'Best Of All Networks',
   location: 'United Kingdom',
   // PLACEHOLDER — replace with your real inboxes.
-  email: 'hello@boanetwork.co.uk',
-  castingEmail: 'casting@boanetwork.co.uk',
+  email: 'hello@boanetworks.com',
+  castingEmail: 'casting@boanetworks.com',
   // Showreel videos, shown top to bottom in this order.
   // url is a YouTube embed URL: https://www.youtube-nocookie.com/embed/VIDEO_ID
   showreel: [
