@@ -1,12 +1,13 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import CinematicImage from '../components/CinematicImage'
 import Showreel from '../components/Showreel'
-import { FogBank, LightBleed, Smoke, Spotlight } from '../components/Fog'
+import { FogBank, LightBleed, LightCone, Smoke, Spotlight } from '../components/Fog'
 import { ProductionCard, StatusBadge } from '../components/cards'
 import { Arrow, ClosingCTA, EASE_EXPO, HudCorners, MagneticButton, Reveal, SectionLabel } from '../components/ui'
 import { useScrollFx } from '../lib/gsap'
+import { isLiteDevice, useIntroPhase } from '../lib/intro'
 import { founders, site } from '../data/site'
 import { productionMeta, productions } from '../data/productions'
 import { barriers } from '../data/access'
@@ -20,6 +21,12 @@ const MISSION =
 
 function Hero() {
   const root = useRef(null)
+  // Entrances wait for the loader's iris, so they play into the reveal
+  // instead of finishing unseen behind it.
+  const go = useIntroPhase() !== 'pending'
+  // Animating a blur filter on headline-sized text is costly on phone GPUs:
+  // touch screens get the same rise without it.
+  const [lite] = useState(isLiteDevice)
 
   // The headline is also capped by viewport height (19svh) so that on short
   // desktop windows the copy stays clear of the fixed header.
@@ -40,7 +47,7 @@ function Hero() {
       <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/45 to-obsidian/70" />
       <LightBleed className="-bottom-[35%] right-[-25%] h-[110vh] w-[130vw] sm:right-[-5%] sm:w-[70vw]" />
       {/* A rig light falls on the copy; the smoke catches it on the way down. */}
-      <div aria-hidden="true" className="light-cone -top-[10%] left-[-30%] h-[120%] w-[130%] sm:left-[-35%] sm:w-[110%]" />
+      <LightCone className="-top-[10%] left-[-30%] h-[120%] w-[130%] sm:left-[-35%] sm:w-[110%]" />
       <Smoke />
       <FogBank />
 
@@ -48,7 +55,7 @@ function Hero() {
         aria-hidden="true"
         className="absolute inset-0"
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+        animate={go ? { opacity: 1 } : undefined}
         transition={{ duration: 2.4, ease: EASE, delay: 0.1 }}
       >
         <Spotlight className="-left-[35%] bottom-[-15%] h-[95%] w-[150vw] sm:-left-[12%] sm:bottom-[-12%] sm:w-[85vw] lg:w-[72vw]" />
@@ -68,7 +75,7 @@ function Hero() {
         <motion.p
           className="hud-label mb-6 sm:mb-8"
           initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
+          animate={go ? { opacity: 1, y: 0 } : undefined}
           transition={{ duration: 1.4, ease: EASE, delay: 0.2 }}
         >
           {site.longName} — film · series · television
@@ -78,8 +85,8 @@ function Hero() {
             <span key={line} className="block overflow-hidden pb-[0.1em]">
               <motion.span
                 className={`block ${i === 1 ? 'accent hero-accent' : ''}`}
-                initial={{ y: '110%', filter: 'blur(14px)' }}
-                animate={{ y: 0, filter: 'blur(0px)' }}
+                initial={lite ? { y: '110%' } : { y: '110%', filter: 'blur(14px)' }}
+                animate={go ? (lite ? { y: 0 } : { y: 0, filter: 'blur(0px)' }) : undefined}
                 transition={{ duration: 1.6, ease: EASE, delay: 0.3 + i * 0.16 }}
               >
                 {line}
@@ -90,8 +97,8 @@ function Hero() {
         <motion.div
           className="mt-8 flex flex-col gap-8 sm:mt-10 lg:flex-row lg:items-end lg:justify-between"
           initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.4, ease: EASE, delay: 0.9 }}
+          animate={go ? { opacity: 1, y: 0 } : undefined}
+          transition={{ duration: 1.4, ease: EASE, delay: 0.75 }}
         >
           <p className="lede max-w-xl !text-bone/80">
             BOA Networks is a UK production company dedicated to creating cinematic film and television while casting

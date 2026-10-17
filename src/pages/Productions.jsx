@@ -5,6 +5,7 @@ import { StatusBadge } from '../components/cards'
 import { LightBleed, Smoke, Spotlight } from '../components/Fog'
 import { Arrow, ClosingCTA, EASE_EXPO, HudCorners, MagneticButton, Reveal } from '../components/ui'
 import { STATUS, productionMeta, productions } from '../data/productions'
+import { useIntroPhase } from '../lib/intro'
 
 // Re-exported for anything still importing it from here.
 export { FilterBar } from '../components/ui'
@@ -19,6 +20,8 @@ function PlayIcon() {
 
 /** Full-bleed featured title. The episode loads only when asked for. */
 function FeaturedHero({ production: p }) {
+  // Entrances wait for the loader's iris (a direct visit here also plays it).
+  const go = useIntroPhase() !== 'pending'
   const [playing, setPlaying] = useState(false)
   const meta = productionMeta(p)
 
@@ -28,7 +31,7 @@ function FeaturedHero({ production: p }) {
         <motion.div
           className="absolute inset-0"
           initial={{ scale: 1.15, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
+          animate={go ? { scale: 1, opacity: 1 } : undefined}
           transition={{ duration: 2.2, ease: EASE_EXPO }}
         >
           <div className="push-in absolute inset-0">
@@ -48,7 +51,7 @@ function FeaturedHero({ production: p }) {
           <motion.div
             className="mb-6 flex flex-wrap items-center gap-3 sm:mb-8"
             initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={go ? { opacity: 1, y: 0 } : undefined}
             transition={{ duration: 1.3, ease: EASE_EXPO, delay: 0.4 }}
           >
             <span className="hud-label !text-gold">Featured</span>
@@ -62,7 +65,7 @@ function FeaturedHero({ production: p }) {
               <motion.span
                 className="block"
                 initial={{ y: '110%' }}
-                animate={{ y: 0 }}
+                animate={go ? { y: 0 } : undefined}
                 transition={{ duration: 1.6, ease: EASE_EXPO, delay: 0.5 }}
               >
                 {p.title}
@@ -73,7 +76,7 @@ function FeaturedHero({ production: p }) {
           <motion.div
             className="mt-6 grid gap-8 sm:mt-8 lg:grid-cols-[minmax(0,38rem)_auto] lg:items-end lg:justify-between"
             initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={go ? { opacity: 1, y: 0 } : undefined}
             transition={{ duration: 1.4, ease: EASE_EXPO, delay: 0.85 }}
           >
             {p.logline && <p className="lede !text-bone/80">{p.logline}</p>}

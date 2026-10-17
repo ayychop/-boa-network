@@ -1,30 +1,39 @@
 import { useEffect, useRef, useState } from 'react'
-import { createFogTexture } from '../lib/fogTexture'
 import { prefersReducedMotion } from '../lib/gsap'
+import { useAtmosphereReady } from '../lib/intro'
+
+// The smoke tile is baked once to a static PNG (public/media/fog.png) and
+// shared through --fog-tex in index.css. Nothing is generated on the phone.
+const FOG_TEX = '/media/fog.png'
 
 // Site-wide volumetric fog.
 //   1. .fog-haze   — static base haze
 //   2. .fog-plume  — slow plumes on one wind direction (CSS transform loops),
-//                    nudged by the pointer and lagging behind scroll
-//   3. .light-bleed / .fog-bank — placed per section (see LightBleed, FogBank)
-// The texture is shared with section-level fog through the --fog-tex variable.
+//                    nudged by the pointer and lagging behind scroll on desktop
+//   3. .light-bleed / .fog-bank / .smoke — placed per section
+// Every layer waits until the loader is gone and the browser is idle, then
+// fades in, so the iris never competes with the atmosphere for frames.
 export default function Fog() {
+  const ready = useAtmosphereReady(2)
   const root = useRef(null)
   const lag = useRef(null)
-  const [ready, setReady] = useState(false)
+  const [shown, setShown] = useState(false)
 
   useEffect(() => {
-    const build = () => {
-      document.documentElement.style.setProperty('--fog-tex', `url(${createFogTexture()})`)
-      setReady(true)
-    }
-    const idle = window.requestIdleCallback
-    const id = idle ? idle(build, { timeout: 600 }) : setTimeout(build, 80)
-    return () => (idle ? window.cancelIdleCallback(id) : clearTimeout(id))
-  }, [])
+    if (!ready) return
+    const img = new Image()
+    img.src = FOG_TEX
+    img
+      .decode()
+      .catch(() => {})
+      .then(() => setShown(true))
+  }, [ready])
 
+  // Pointer drift and scroll lag are desktop-only: on touch screens the loop
+  // would cost a composite every frame for an effect nobody can steer.
   useEffect(() => {
-    if (!ready || prefersReducedMotion()) return
+    if (!shown || prefersReducedMotion()) return
+    if (!window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 1025px)').matches) return
     const tileH = Math.max(window.innerHeight, 600)
     root.current.style.setProperty('--fog-tile-h', `${tileH}px`)
 
@@ -58,10 +67,11 @@ export default function Fog() {
       window.removeEventListener('pointermove', onMove)
       cancelAnimationFrame(raf)
     }
-  }, [ready])
+  }, [shown])
 
+  if (!ready) return null
   return (
-    <div ref={root} className={`fog ${ready ? 'is-ready' : ''}`} aria-hidden="true">
+    <div ref={root} className={`fog ${shown ? 'is-ready' : ''}`} aria-hidden="true">
       <div className="fog-haze" />
       <div className="fog-plumes">
         <div ref={lag} className="fog-lag">
@@ -75,13 +85,22 @@ export default function Fog() {
 
 /** Gold-amber light bleeding through the fog. Position with className. */
 export function LightBleed({ className = '' }) {
-  return <div aria-hidden="true" className={`light-bleed ${className}`} />
+  const ready = useAtmosphereReady(1)
+  return ready ? <div aria-hidden="true" className={`light-bleed atmos-in ${className}`} /> : null
+}
+
+/** Light falling from the rig onto the copy. Position with className. */
+export function LightCone({ className = '' }) {
+  const ready = useAtmosphereReady(1)
+  return ready ? <div aria-hidden="true" className={`light-cone atmos-in ${className}`} /> : null
 }
 
 /** Low-lying fog bank for a section: dense at the floor, thinning upward. */
 export function FogBank({ className = '' }) {
+  const ready = useAtmosphereReady(1)
+  if (!ready) return null
   return (
-    <div aria-hidden="true" className={`fog-bank ${className}`}>
+    <div aria-hidden="true" className={`fog-bank atmos-in ${className}`}>
       <div />
     </div>
   )
@@ -99,8 +118,10 @@ const PLUMES = [
 ]
 
 export function Smoke({ className = '' }) {
+  const ready = useAtmosphereReady(0)
+  if (!ready) return null
   return (
-    <div aria-hidden="true" className={`smoke ${className}`}>
+    <div aria-hidden="true" className={`smoke atmos-in ${className}`}>
       <div className="smoke-depth smoke-far" />
       <div className="smoke-depth smoke-mid" />
       {PLUMES.map((p) => (
@@ -113,5 +134,6 @@ export function Smoke({ className = '' }) {
 
 /** Warm key light, sized and placed with className. */
 export function Spotlight({ className = '' }) {
-  return <div aria-hidden="true" className={`spotlight ${className}`} />
+  const ready = useAtmosphereReady(1)
+  return ready ? <div aria-hidden="true" className={`spotlight atmos-in ${className}`} /> : null
 }
