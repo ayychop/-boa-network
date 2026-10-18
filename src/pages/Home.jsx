@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import CinematicImage from '../components/CinematicImage'
 import Showreel from '../components/Showreel'
 import { FogBank, LightBleed, LightCone, Smoke, Spotlight } from '../components/Fog'
+import { LogoWatermark } from '../components/Logo'
 import { ProductionCard, StatusBadge } from '../components/cards'
 import {
   Arrow,
@@ -54,6 +55,8 @@ function Hero() {
           <CinematicImage src={HERO_IMAGE} alt="" ratio="fill" tone="amber" priority className="h-full w-full" />
         </div>
       </div>
+      {/* Part of the scene, not the copy: the grade and smoke settle over it. */}
+      <LogoWatermark className="-right-[30%] top-[16%] w-[130vw] md:-right-[6%] md:top-[14%] md:w-[62vw]" opacity={0.06} />
       <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/45 to-obsidian/70" />
       <LightBleed className="-bottom-[35%] right-[-25%] h-[110vh] w-[130vw] sm:right-[-5%] sm:w-[70vw]" />
       {/* A rig light falls on the copy; the smoke catches it on the way down. */}

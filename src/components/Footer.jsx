@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom'
 import { nav, site, founders } from '../data/site'
+import { LogoWatermark } from './Logo'
 
 export default function Footer() {
   return (
-    <footer className="relative border-t border-white/[0.07] bg-ink">
+    <footer className="relative overflow-hidden border-t border-white/[0.07] bg-ink">
       <div className="hud-line absolute inset-x-0 top-0" />
       <div className="container-x py-16 sm:py-24">
         <div className="grid gap-14 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
@@ -60,12 +61,9 @@ export default function Footer() {
           </div>
         </div>
 
-        <p
-          aria-hidden="true"
-          className="mt-20 select-none text-[clamp(4rem,23vw,24rem)] font-semibold leading-[0.8] tracking-[-0.07em] text-white/[0.045]"
-        >
-          BOA
-        </p>
+        <div aria-hidden="true" className="relative mt-20 aspect-[1398/826] w-full max-w-[56rem]">
+          <LogoWatermark className="inset-0" />
+        </div>
 
         <div className="mt-10 flex flex-col gap-3 border-t border-white/[0.07] pt-6 text-xs text-mist sm:flex-row sm:items-center sm:justify-between">
           <p>

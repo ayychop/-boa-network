@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { INTRO_KEY, introWillPlay, setIntroPhase } from '../lib/intro'
+import { motion } from 'framer-motion'
 import { site } from '../data/site'
+import Logo from './Logo'
 
 const LOAD = 1700 // the aperture ring clicks through its stops
 const OPEN = 1100 // the iris opens onto the site
@@ -134,7 +136,14 @@ export default function Loader() {
             <path d="M0 -95.5l-2.6 -5h5.2z" className="fill-gold" />
           </svg>
           <div className="flex flex-col items-center gap-3 text-center">
-            <span className="block text-5xl font-semibold leading-none tracking-[-0.06em] sm:text-6xl">BOA</span>
+            <motion.span
+              className="block"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <Logo className="block h-auto w-[8.5rem] text-gold sm:w-[10.5rem]" />
+            </motion.span>
             <span className="block whitespace-nowrap font-mono text-[0.625rem] uppercase leading-none tracking-[0.22em] text-hud/80 sm:text-[0.6875rem]">
               {site.longName}
             </span>

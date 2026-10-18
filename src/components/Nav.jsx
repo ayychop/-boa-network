@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
+import Logo from './Logo'
 import { nav, site } from '../data/site'
 import { lockScroll } from './SmoothScroll'
 import { EASE_EXPO, MagneticButton } from './ui'
@@ -10,7 +11,7 @@ import { EASE_EXPO, MagneticButton } from './ui'
 export function Wordmark({ className = '' }) {
   return (
     <span className={`inline-flex flex-col items-start gap-1.5 whitespace-nowrap ${className}`}>
-      <span className="block text-[2.125rem] font-semibold leading-none tracking-[-0.06em] sm:text-[2.75rem]">BOA</span>
+      <Logo className="block h-9 w-auto text-gold sm:h-11" />
       <span className="block font-mono text-[0.625rem] uppercase leading-none tracking-[0.24em] text-gold sm:text-[0.75rem]">
         {site.longName}
       </span>
