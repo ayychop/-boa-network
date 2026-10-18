@@ -1,5 +1,6 @@
 import CinematicImage from '../components/CinematicImage'
-import { ClosingCTA, HudCorners, PageHeader, Reveal, SectionLabel } from '../components/ui'
+import CinematicPlaceholder from '../components/CinematicPlaceholder'
+import { ClosingCTA, PageHeader, Reveal, SectionLabel } from '../components/ui'
 import { founders } from '../data/site'
 
 const principles = [
@@ -38,9 +39,8 @@ export default function About() {
 
       <section className="container-x">
         <Reveal>
-          <CinematicImage tone="amber" parallax label="About still · 2.39:1" className="rounded-xl sm:rounded-2xl">
-            <HudCorners inset="inset-3 sm:inset-5" />
-          </CinematicImage>
+          {/* Stand-in until the reel is ready: swap for a <video> */}
+          <CinematicPlaceholder label="About still · 2.39:1" className="rounded-xl sm:rounded-2xl" />
         </Reveal>
       </section>
 

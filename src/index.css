@@ -946,3 +946,29 @@ html.lenis body {
     animation: none;
   }
 }
+
+/* About page stand-in for the showreel (CinematicPlaceholder) */
+.cine-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .13 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  opacity: 0.55;
+  mix-blend-mode: overlay;
+}
+/* A soft gold glint, angled like light crossing glass */
+.cine-sweep {
+  background: linear-gradient(
+    105deg,
+    /* Clear for the outer quarter each side: the 15deg slant must fade out
+       before it reaches the beam's own vertical edges, or they show as seams. */
+    transparent 25%,
+    rgb(226 168 75 / 0.04) 32%,
+    rgb(226 168 75 / 0.1) 40%,
+    rgb(245 200 120 / 0.17) 47%,
+    rgb(255 232 190 / 0.22) 50%,
+    rgb(245 200 120 / 0.17) 53%,
+    rgb(226 168 75 / 0.1) 60%,
+    rgb(226 168 75 / 0.04) 68%,
+    transparent 75%
+  );
+  mix-blend-mode: screen;
+}
