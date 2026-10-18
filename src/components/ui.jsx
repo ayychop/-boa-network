@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import { LightBleed } from './Fog'
+import { LogoWatermark } from './Logo'
 
 // easeInOutExpo. Every entrance on the site runs on this curve: it holds,
 // commits, then settles, which reads as deliberate rather than snappy.
@@ -145,6 +146,7 @@ export function PageHeader({ index, label, title, lede, children }) {
   return (
     <header className="relative overflow-hidden pb-16 pt-40 sm:pb-24 sm:pt-52 lg:pt-64">
       <LightBleed className="-right-[20%] -top-[30%] h-[90vh] w-[90vw] sm:w-[60vw]" />
+      <LogoWatermark className="-right-[22%] top-24 w-[88vw] sm:-right-[8%] sm:top-28 sm:w-[60vw] lg:-right-[4%] lg:w-[42vw]" opacity={0.03} />
       <div className="container-x relative">
         <Reveal y={20}>
           <SectionLabel index={index}>{label}</SectionLabel>
