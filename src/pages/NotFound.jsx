@@ -2,7 +2,7 @@ import { Arrow, MagneticButton } from '../components/ui'
 
 export default function NotFound() {
   return (
-    <section className="container-x grid min-h-screen place-items-center py-40 text-center">
+    <section className="container-x grid min-h-viewport place-items-center py-40 text-center">
       <title>Not found — BOA Network</title>
       <div>
         <p className="hud-label mb-6">Error · 404</p>

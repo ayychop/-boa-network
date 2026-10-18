@@ -80,6 +80,17 @@ html.lenis body {
 }
 
 @layer components {
+  /* Fills the screen whether or not the mobile address bar is showing. */
+  .min-h-viewport {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+  @media (min-width: 768px) {
+    .md\:min-h-viewport {
+      min-height: 100vh;
+      min-height: 100dvh;
+    }
+  }
   .container-x {
     width: 100%;
     max-width: 1920px;
@@ -556,7 +567,14 @@ html.lenis body {
 
 .fog {
   position: fixed;
-  inset: 0;
+  /* Sized to the largest viewport, not inset: 0. On phones the address bar
+     hides on scroll and the screen grows; an inset layer lags behind that and
+     leaves a flat black strip along the bottom. */
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  height: 100lvh;
   z-index: 40;
   overflow: hidden;
   pointer-events: none;
@@ -841,7 +859,12 @@ html.lenis body {
 /* Grain + vignette: one fixed layer */
 .atmos {
   position: fixed;
-  inset: 0;
+  /* Same full-viewport sizing as .fog */
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  height: 100lvh;
   z-index: 45;
   pointer-events: none;
   background:

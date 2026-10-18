@@ -25,9 +25,9 @@ function Pages() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.9, ease: [0.87, 0, 0.13, 1] }}
-      className="min-h-screen overflow-x-clip"
+      className="min-h-viewport overflow-x-clip"
     >
-      <Suspense fallback={<div className="min-h-screen" />}>
+      <Suspense fallback={<div className="min-h-viewport" />}>
         <Routes location={location}>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
