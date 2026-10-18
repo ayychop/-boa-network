@@ -97,9 +97,11 @@ html.lenis body {
     padding-block: clamp(5rem, 14vw, 13rem);
   }
   /* The mission follows straight on from the hero and runs straight into the
-     reel (which has no top padding of its own): short padding both ends. */
+     reel (which has no top padding of its own): short padding both ends, and
+     shorter still below, where its access link already closes it off. */
   .section.mission-section {
-    padding-block: clamp(2.5rem, 5vw, 4.5rem);
+    padding-top: clamp(2.5rem, 5vw, 4.5rem);
+    padding-bottom: clamp(2rem, 4vw, 3.5rem);
   }
 
   /* Type scale: huge, tight, restrained */
