@@ -38,7 +38,8 @@ function masonry(people, cols) {
 export default function Talent() {
   const [filter, setFilter] = useState('All')
   const cols = useColumns()
-  const options = ['All', ...DISCIPLINES]
+  // Only offer disciplines someone on the roster actually has.
+  const options = ['All', ...DISCIPLINES.filter((d) => talent.some((t) => t.discipline === d))]
   const counts = Object.fromEntries(
     options.map((o) => [o, o === 'All' ? talent.length : talent.filter((t) => t.discipline === o).length]),
   )
@@ -72,14 +73,16 @@ export default function Talent() {
         <div key={`${filter}-${cols}`} className="flex gap-[3px] sm:gap-1">
           {columns.map((col, c) => (
             <div key={c} className="flex min-w-0 flex-1 flex-col gap-[3px] sm:gap-1">
-              {col.items.map(({ person, ratio, order }) => (
+              {col.items.map(({ person, ratio, order }, i) => (
                 <motion.div
                   key={person.slug}
+                  // The last portrait in each column stretches, so every column ends level.
+                  className={i === col.items.length - 1 ? 'flex flex-1 flex-col' : undefined}
                   initial={{ clipPath: 'inset(100% 0 0 0)' }}
                   animate={{ clipPath: 'inset(0% 0 0 0)' }}
                   transition={{ duration: 1.3, ease: EASE_EXPO, delay: 0.1 + order * 0.07 }}
                 >
-                  <TalentPortrait person={person} ratio={ratio} priority={order < cols} />
+                  <TalentPortrait person={person} ratio={ratio} priority={order < cols} grow={i === col.items.length - 1} />
                 </motion.div>
               ))}
             </div>

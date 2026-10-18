@@ -13,7 +13,7 @@ export default function TalentProfile() {
   const person = talent.find((t) => t.slug === slug)
   if (!person) return <NotFound />
 
-  const credits = person.credits.map((c) => productions.find((p) => p.slug === c)).filter(Boolean)
+  const credits = (person.credits ?? []).map((c) => productions.find((p) => p.slug === c)).filter(Boolean)
   const enquiry = `/contact?subject=${encodeURIComponent(`Booking enquiry: ${person.name}`)}`
 
   return (
@@ -49,14 +49,16 @@ export default function TalentProfile() {
 
             <div className="flex flex-col justify-end">
               <Reveal as="p" className="hud-label mb-5" y={16}>
-                {person.discipline} · {person.base}
+                {[person.discipline, person.base].filter(Boolean).join(' · ')}
               </Reveal>
               <Reveal as="h1" className="display-lg" delay={0.05}>
                 {person.name}
               </Reveal>
-              <Reveal as="p" className="lede mt-8 max-w-xl" delay={0.12}>
-                {person.bio}
-              </Reveal>
+              {person.bio && (
+                <Reveal as="p" className="lede mt-8 max-w-xl" delay={0.12}>
+                  {person.bio}
+                </Reveal>
+              )}
 
               {credits.length > 0 && (
                 <Reveal className="mt-12" delay={0.18}>

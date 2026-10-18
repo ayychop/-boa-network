@@ -1,59 +1,62 @@
-// PLACEHOLDER roster — these are invented names, not real people.
-// Replace with your signed talent. image: headshot (4:5), e.g. '/media/talent/amara.jpg'
+// The roster. Only `slug`, `name` and `discipline` are required; the cards and
+// profile hide whatever is missing, so add `base`, `bio` and `credits` (production
+// slugs) only once they are confirmed.
+// image: headshot (4:5), e.g. '/media/talent/sabeian-gilzene.jpg'. Leave it null
+// to keep the generated gradient portrait.
 
 export const DISCIPLINES = ['Actor', 'Model', 'Actor & Model']
 
 export const talent = [
   {
-    slug: 'amara-osei',
-    name: 'Amara Osei',
+    slug: 'sabeian-gilzene',
+    name: 'Sabeian Gilzene',
     discipline: 'Actor',
-    base: 'Manchester',
     tone: 'amber',
     image: null,
-    bio: 'Came to BOA through an open call with no agent and no showreel. Now leading her first feature.',
-    credits: ['salt-and-ember', 'the-quiet-hours'],
   },
   {
-    slug: 'kai-bennett',
-    name: 'Kai Bennett',
-    discipline: 'Model',
-    base: 'Birmingham',
+    slug: 'ngor-yel',
+    name: 'Ngor Yel',
+    discipline: 'Actor & Model',
     tone: 'bone',
     image: null,
-    bio: 'Editorial and movement model with a background in street dance.',
-    credits: ['borrowed-light'],
   },
   {
-    slug: 'zainab-rahimi',
-    name: 'Zainab Rahimi',
+    slug: 'chan-yel',
+    name: 'Chan Yel',
     discipline: 'Actor & Model',
-    base: 'London',
     tone: 'rose',
     image: null,
-    bio: 'Trained on stage, hungry for the screen. Equally at home in a two person scene and a campaign.',
-    credits: ['paper-crowns', 'borrowed-light'],
   },
   {
-    slug: 'luca-moreno',
-    name: 'Luca Moreno',
+    slug: 'rebecca-soper',
+    name: 'Rebecca Soper',
     discipline: 'Actor',
-    base: 'Glasgow',
-    tone: 'smoke',
+    tone: 'amber',
     image: null,
-    bio: 'Self taught, relentlessly watchable, and the quietest person on any set until the camera rolls.',
-    credits: ['northern-line', 'low-tide'],
   },
   {
-    slug: 'priya-nair',
-    name: 'Priya Nair',
+    slug: 'prince-boamah',
+    name: 'Prince Boamah',
     discipline: 'Actor',
-    base: 'Leicester',
     tone: 'crimson',
     image: null,
-    bio: 'Comic timing you cannot teach, with dramatic range to match.',
-    credits: ['kingsland'],
   },
+  {
+    slug: 'jeremy-owusu',
+    name: 'Jeremy Owusu',
+    discipline: 'Actor & Model',
+    tone: 'bone',
+    image: null,
+  },
+  {
+    slug: 'aaron-russell',
+    name: 'Aaron Russell',
+    discipline: 'Actor',
+    tone: 'smoke',
+    image: null,
+  },
+  // PLACEHOLDER: an invented person, kept so the grid stays at eight.
   {
     slug: 'tobi-adeyemi',
     name: 'Tobi Adeyemi',
@@ -63,25 +66,5 @@ export const talent = [
     image: null,
     bio: 'Found at a community casting day. Signed the same afternoon.',
     credits: ['open-call', 'salt-and-ember'],
-  },
-  {
-    slug: 'mei-lin-chow',
-    name: 'Mei Lin Chow',
-    discipline: 'Model',
-    base: 'Liverpool',
-    tone: 'smoke',
-    image: null,
-    bio: 'Fashion and beauty model with a still, cinematic presence.',
-    credits: ['afterglow'],
-  },
-  {
-    slug: 'callum-reid',
-    name: 'Callum Reid',
-    discipline: 'Actor',
-    base: 'Newcastle',
-    tone: 'bone',
-    image: null,
-    bio: 'Former apprentice electrician. First screen role came from a self tape filmed on a borrowed phone.',
-    credits: ['low-tide', 'the-quiet-hours'],
   },
 ]
