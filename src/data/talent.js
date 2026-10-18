@@ -62,7 +62,7 @@ export const talent = [
   {
     slug: 'tobi-adeyemi',
     name: 'Tobi Adeyemi',
-    discipline: 'Actor & Model',
+    discipline: 'Model',
     base: 'London',
     tone: 'moss',
     image: null,
