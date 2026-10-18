@@ -2,6 +2,7 @@ import { Link, useParams } from 'react-router-dom'
 import CinematicImage from '../components/CinematicImage'
 import { StatusBadge } from '../components/cards'
 import { LightBleed } from '../components/Fog'
+import { LogoWatermark } from '../components/Logo'
 import { Arrow, HudCorners, MagneticButton, Reveal } from '../components/ui'
 import { talent } from '../data/talent'
 import { productions } from '../data/productions'
@@ -26,20 +27,25 @@ export default function TalentProfile() {
             All talent
           </Link>
           <div className="grid gap-10 lg:grid-cols-[minmax(0,0.8fr)_1fr] lg:gap-20">
-            <Reveal>
-              <CinematicImage
-                src={person.image}
-                alt={person.image ? `${person.name} headshot` : ''}
-                ratio="portrait"
-                tone={person.tone}
-                person
-                priority
-                label="Headshot · 4:5"
-                className="glow-border rounded-2xl"
-              >
-                <HudCorners inset="inset-4" />
-              </CinematicImage>
-            </Reveal>
+            <div className="relative">
+              {/* Desktop only: the lockup sits behind the headshot and peeks out
+                  below and to the left, leaving the reading column clean. */}
+              <LogoWatermark className="hidden -bottom-[22%] -left-[30%] w-[140%] lg:block" opacity={0.035} />
+              <Reveal>
+                <CinematicImage
+                  src={person.image}
+                  alt={person.image ? `${person.name} headshot` : ''}
+                  ratio="portrait"
+                  tone={person.tone}
+                  person
+                  priority
+                  label="Headshot · 4:5"
+                  className="glow-border rounded-2xl"
+                >
+                  <HudCorners inset="inset-4" />
+                </CinematicImage>
+              </Reveal>
+            </div>
 
             <div className="flex flex-col justify-end">
               <Reveal as="p" className="hud-label mb-5" y={16}>
