@@ -947,28 +947,116 @@ html.lenis body {
   }
 }
 
-/* About page stand-in for the showreel (CinematicPlaceholder) */
+/* ───────── CinematicPlaceholder: the stand-in for missing media ─────────
+   Sized from its own box with container query units, so the same art fits
+   2.39:1, 16:9, 2:3 and 1:1. Opacity and transform only; paused off screen. */
+.cine-art {
+  background: #0a0a0a;
+}
+.cine-art.is-paused * {
+  animation-play-state: paused;
+}
+/* A faint pool of warm light behind the mark */
+.cine-pool {
+  background: radial-gradient(45% 70% at 50% 50%, rgb(226 168 75 / 0.09), transparent 70%);
+}
+.cine-stage {
+  container-type: size;
+}
+/* The lockup is 1398:826. It takes at most 60% of the width and 47% of the
+   height (80cqh of width), whichever is tighter. */
+.cine-mark {
+  width: min(60cqw, 80cqh);
+}
+.cine-pulse {
+  animation: cine-pulse 4s ease-in-out infinite alternate;
+  will-change: opacity, transform;
+}
+@keyframes cine-pulse {
+  from {
+    opacity: 0.1;
+    transform: scale(0.985);
+  }
+  to {
+    opacity: 0.3;
+    transform: scale(1.015);
+  }
+}
+/* About 0.032 of the lockup's width, so the line spans its middle two thirds */
+.cine-tagline {
+  position: absolute;
+  inset-inline: 0;
+  top: 63%;
+  transform: translateY(-50%);
+  margin: 0;
+  padding-left: 0.42em;
+  text-align: center;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: min(1.92cqw, 2.56cqh);
+  letter-spacing: 0.42em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: rgb(243 239 232 / 0.9);
+  text-shadow: 0 0 18px rgb(0 0 0 / 0.9);
+}
+/* Too small to read on a small card: let the lockup stand alone */
+@container (max-width: 300px) or (max-height: 180px) {
+  .cine-tagline {
+    display: none;
+  }
+}
+/* A soft gold glint, like light crossing glass. The beam is a tall strip
+   tilted 15deg, so its soft edges run along its own sides and never show as
+   seams, whatever the box's shape. 1.8s from edge to edge, then 3.2s of
+   rest: one pass every 5s. */
+.cine-sweep {
+  position: absolute;
+  top: -50%;
+  left: 0;
+  width: 60%;
+  height: 200%;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent 15%,
+    rgb(226 168 75 / 0.04) 26%,
+    rgb(226 168 75 / 0.1) 37%,
+    rgb(245 200 120 / 0.17) 46%,
+    rgb(255 232 190 / 0.22) 50%,
+    rgb(245 200 120 / 0.17) 54%,
+    rgb(226 168 75 / 0.1) 63%,
+    rgb(226 168 75 / 0.04) 74%,
+    transparent 85%
+  );
+  mix-blend-mode: screen;
+  transform: translateX(-85%) rotate(15deg);
+  animation: cine-sweep 5s 1s infinite;
+  will-change: transform;
+}
+@keyframes cine-sweep {
+  0% {
+    transform: translateX(-85%) rotate(15deg);
+    animation-timing-function: cubic-bezier(0.45, 0, 0.25, 1);
+  }
+  36%,
+  100% {
+    transform: translateX(150%) rotate(15deg);
+  }
+}
 .cine-grain {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .13 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 180px 180px;
   opacity: 0.55;
   mix-blend-mode: overlay;
+  pointer-events: none;
 }
-/* A soft gold glint, angled like light crossing glass */
-.cine-sweep {
-  background: linear-gradient(
-    105deg,
-    /* Clear for the outer quarter each side: the 15deg slant must fade out
-       before it reaches the beam's own vertical edges, or they show as seams. */
-    transparent 25%,
-    rgb(226 168 75 / 0.04) 32%,
-    rgb(226 168 75 / 0.1) 40%,
-    rgb(245 200 120 / 0.17) 47%,
-    rgb(255 232 190 / 0.22) 50%,
-    rgb(245 200 120 / 0.17) 53%,
-    rgb(226 168 75 / 0.1) 60%,
-    rgb(226 168 75 / 0.04) 68%,
-    transparent 75%
-  );
-  mix-blend-mode: screen;
+@media (prefers-reduced-motion: reduce) {
+  .cine-pulse {
+    animation: none;
+    opacity: 0.2;
+  }
+  .cine-sweep {
+    display: none;
+  }
 }

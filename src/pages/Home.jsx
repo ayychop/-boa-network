@@ -251,7 +251,7 @@ function Featured() {
                     alt=""
                     tone={p.tone}
                     parallax
-                    label="Still · 2.39:1"
+                    label="Production still · 2.39:1"
                     className="rounded-xl sm:rounded-2xl"
                   >
                     <div className="absolute inset-0 bg-gradient-to-t from-obsidian/85 via-transparent to-transparent" />

@@ -1,4 +1,5 @@
 import { HudCorners } from './ui'
+import { PlaceholderArt } from './CinematicPlaceholder'
 
 // Standard YouTube iframe embed inside the cinematic frame.
 export default function Showreel({ url, title }) {
@@ -15,7 +16,10 @@ export default function Showreel({ url, title }) {
           allowFullScreen
         />
       ) : (
-        <span className="hud-label absolute inset-x-5 bottom-4 sm:inset-x-9 sm:bottom-8">Showreel · coming soon</span>
+        <>
+          <PlaceholderArt />
+          <span className="hud-label absolute left-4 top-4 !text-[0.5625rem] !text-white/40">Showreel · coming soon</span>
+        </>
       )}
       <HudCorners inset="inset-4 sm:inset-6" />
     </div>

@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { useScrollFx } from '../lib/gsap'
+import { PlaceholderArt } from './CinematicPlaceholder'
 
 const TONES = {
   amber: ['#e2a84b', '#3a1f0a'],
@@ -45,7 +46,8 @@ function Silhouette({ tone }) {
 }
 
 /**
- * Image slot with a generated cinematic placeholder.
+ * Image slot with a generated cinematic placeholder: a toned silhouette for
+ * people, the animated BOA lockup (PlaceholderArt) for everything else.
  * Pass `src` (e.g. '/media/still.jpg') to replace the placeholder with a
  * real, lazy-loaded image — nothing else needs to change.
  */
@@ -97,6 +99,8 @@ export default function CinematicImage({
             decoding="async"
             className="h-full w-full object-cover"
           />
+        ) : !person ? (
+          <PlaceholderArt backdrop={ratio === 'fill'} />
         ) : (
           <div
             role={alt ? 'img' : undefined}
@@ -104,7 +108,7 @@ export default function CinematicImage({
             className="absolute inset-0"
             style={{ backgroundImage: placeholderArt(tone) }}
           >
-            {person && <Silhouette tone={tone} />}
+            <Silhouette tone={tone} />
           </div>
         )}
       </div>
