@@ -61,6 +61,35 @@ export function useAtmosphereReady(stage = 0) {
   return ready
 }
 
+/** The baked fog tile every fog layer draws with. */
+export const FOG_TEX = '/media/fog.png'
+
+/**
+ * True once the hero's titles may play: the loader has unmounted, every
+ * atmosphere layer has mounted, the fog texture is decoded, the webfonts are
+ * in, and two frames have painted. The titles then reveal over a finished
+ * frame instead of one still assembling around them.
+ */
+export function useEntranceCue() {
+  const atmosphere = useAtmosphereReady(2)
+  const [cue, setCue] = useState(false)
+  useEffect(() => {
+    if (!atmosphere) return
+    let live = true
+    let raf = 0
+    const tex = new Image()
+    tex.src = FOG_TEX
+    Promise.all([document.fonts?.ready, tex.decode().catch(() => {})]).then(() => {
+      raf = requestAnimationFrame(() => (raf = requestAnimationFrame(() => live && setCue(true))))
+    })
+    return () => {
+      live = false
+      cancelAnimationFrame(raf)
+    }
+  }, [atmosphere])
+  return cue
+}
+
 /** Touch screens and tablet widths get the lighter atmosphere and entrances. */
 export const isLiteDevice = () =>
   typeof window !== 'undefined' && window.matchMedia('(max-width: 1024px), (pointer: coarse)').matches

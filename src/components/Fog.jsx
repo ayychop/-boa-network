@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { prefersReducedMotion } from '../lib/gsap'
-import { useAtmosphereReady } from '../lib/intro'
+import { FOG_TEX, useAtmosphereReady } from '../lib/intro'
 
-// The smoke tile is baked once to a static PNG (public/media/fog.png) and
-// shared through --fog-tex in index.css. Nothing is generated on the phone.
-const FOG_TEX = '/media/fog.png'
+// The smoke tile (FOG_TEX) is baked once to a static PNG and shared through
+// --fog-tex in index.css. Nothing is generated on the phone.
 
 // Site-wide volumetric fog.
 //   1. .fog-haze   — static base haze

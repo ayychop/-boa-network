@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import CinematicImage from '../components/CinematicImage'
@@ -7,7 +7,7 @@ import { FogBank, LightBleed, LightCone, Smoke, Spotlight } from '../components/
 import { ProductionCard, StatusBadge } from '../components/cards'
 import { Arrow, ClosingCTA, EASE_EXPO, HudCorners, MagneticButton, Reveal, SectionLabel } from '../components/ui'
 import { useScrollFx } from '../lib/gsap'
-import { isLiteDevice, useIntroPhase } from '../lib/intro'
+import { useEntranceCue, useIntroPhase } from '../lib/intro'
 import { founders, site } from '../data/site'
 import { productionMeta, productions } from '../data/productions'
 import { barriers } from '../data/access'
@@ -19,14 +19,23 @@ const EASE = EASE_EXPO
 const MISSION =
   'Talent is everywhere. Opportunity is not. BOA Network exists to close that gap with real roles, on real productions, for people who were never handed a way in.'
 
+// Hero entrance: a quick fade and a short rise, eased out so it lands
+// crisply. Each piece follows the last by 100ms.
+const EASE_OUT_EXPO = [0.16, 1, 0.3, 1]
+const enter = (delay) => ({
+  opacity: { duration: 0.4, ease: 'linear', delay },
+  y: { duration: 0.9, ease: EASE_OUT_EXPO, delay },
+})
+const HIDDEN = { opacity: 0, y: 20 }
+const SHOWN = { opacity: 1, y: 0 }
+
 function Hero() {
   const root = useRef(null)
-  // Entrances wait for the loader's iris, so they play into the reveal
-  // instead of finishing unseen behind it.
+  // The spotlight warms up as the loader's iris opens.
   const go = useIntroPhase() !== 'pending'
-  // Animating a blur filter on headline-sized text is costly on phone GPUs:
-  // touch screens get the same rise without it.
-  const [lite] = useState(isLiteDevice)
+  // The titles wait for the loader to unmount and the atmosphere to finish
+  // assembling, so they reveal over a settled, sharp frame.
+  const cue = useEntranceCue()
 
   // The headline is also capped by viewport height (19svh) so that on short
   // desktop windows the copy stays clear of the fixed header.
@@ -74,45 +83,39 @@ function Hero() {
       <div className="hero-copy container-x relative flex min-h-[100svh] flex-col justify-end pb-10 pt-36 sm:pb-12 sm:pt-44 lg:pb-14">
         <motion.p
           className="hud-label mb-6 sm:mb-8"
-          initial={{ opacity: 0, y: 12 }}
-          animate={go ? { opacity: 1, y: 0 } : undefined}
-          transition={{ duration: 1.4, ease: EASE, delay: 0.2 }}
+          initial={HIDDEN}
+          animate={cue ? SHOWN : undefined}
+          transition={enter(0.1)}
         >
           Film · Series · Television
         </motion.p>
         <h1 className="hero-title text-[length:clamp(3.4rem,min(13.5vw,20svh),13.5rem)]">
           {['The door', 'is open.'].map((line, i) => (
-            <span key={line} className="block overflow-hidden pb-[0.1em]">
-              <motion.span
-                className={`block ${i === 1 ? 'accent hero-accent' : ''}`}
-                initial={lite ? { y: '110%' } : { y: '110%', filter: 'blur(14px)' }}
-                animate={go ? (lite ? { y: 0 } : { y: 0, filter: 'blur(0px)' }) : undefined}
-                transition={{ duration: 1.6, ease: EASE, delay: 0.3 + i * 0.16 }}
-              >
-                {line}
-              </motion.span>
-            </span>
+            <motion.span
+              key={line}
+              className={`block pb-[0.1em] ${i === 1 ? 'accent hero-accent' : ''}`}
+              initial={HIDDEN}
+              animate={cue ? SHOWN : undefined}
+              transition={enter(0.2)}
+            >
+              {line}
+            </motion.span>
           ))}
         </h1>
-        <motion.div
-          className="mt-8 flex flex-col gap-8 sm:mt-10 lg:flex-row lg:items-end lg:justify-between"
-          initial={{ opacity: 0, y: 24 }}
-          animate={go ? { opacity: 1, y: 0 } : undefined}
-          transition={{ duration: 1.4, ease: EASE, delay: 0.75 }}
-        >
-          <p className="lede max-w-xl !text-bone/80">
+        <div className="mt-8 flex flex-col gap-8 sm:mt-10 lg:flex-row lg:items-end lg:justify-between">
+          <motion.p className="lede max-w-xl !text-bone/80" initial={HIDDEN} animate={cue ? SHOWN : undefined} transition={enter(0.3)}>
             BOA Networks is a UK production company dedicated to creating cinematic film and television while casting
             creative talent from all walks of life.
-          </p>
-          <div className="flex flex-wrap gap-4">
+          </motion.p>
+          <motion.div className="flex flex-wrap gap-4" initial={HIDDEN} animate={cue ? SHOWN : undefined} transition={enter(0.4)}>
             <MagneticButton to="/contact?form=talent">
               Get seen <Arrow />
             </MagneticButton>
             <MagneticButton href="#showreel" variant="ghost">
               Watch the reel
             </MagneticButton>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
       </div>
     </section>
   )
