@@ -63,7 +63,7 @@ function Hero() {
       {/* Last atmospheric layer: fade every light and smoke layer into the page below */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-[30%] bg-gradient-to-t from-obsidian via-obsidian/70 to-transparent" />
 
-      <HudCorners inset="inset-x-2 bottom-6 top-28 sm:inset-x-3 sm:top-32 lg:inset-x-5" />
+      <HudCorners inset="inset-x-2 bottom-2 top-28 sm:inset-x-3 sm:top-32 lg:inset-x-5" />
       <div aria-hidden="true" className="absolute right-5 top-28 hidden text-right sm:right-10 sm:top-48 md:block lg:right-16">
         <p className="hud-label flex items-center justify-end gap-2">
           <span className="hud-pulse h-1.5 w-1.5 rounded-full bg-gold" /> Scene 01 · Take 01
@@ -71,7 +71,7 @@ function Hero() {
         <p className="hud-label mt-2 !text-mist">2.39 : 1 · {site.location}</p>
       </div>
 
-      <div className="hero-copy container-x relative flex min-h-[100svh] flex-col justify-end pb-14 pt-36 sm:pb-16 sm:pt-44 lg:pb-[4.5rem]">
+      <div className="hero-copy container-x relative flex min-h-[100svh] flex-col justify-end pb-10 pt-36 sm:pb-12 sm:pt-44 lg:pb-14">
         <motion.p
           className="hud-label mb-6 sm:mb-8"
           initial={{ opacity: 0, y: 12 }}
