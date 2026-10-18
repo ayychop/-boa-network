@@ -1,6 +1,7 @@
 // The roster. Only `slug`, `name` and `discipline` are required; the cards and
 // profile hide whatever is missing, so add `base`, `bio` and `credits` (production
-// slugs) only once they are confirmed.
+// slugs) only once they are confirmed. `discipline` drives the filter; set
+// `title` to show different wording on the card and profile (e.g. 'Actress & Model').
 // image: headshot (4:5), e.g. '/media/talent/sabeian-gilzene.jpg'. Leave it null
 // to keep the generated gradient portrait.
 
@@ -10,7 +11,7 @@ export const talent = [
   {
     slug: 'sabeian-gilzene',
     name: 'Sabeian Gilzene',
-    discipline: 'Actor',
+    discipline: 'Actor & Model',
     tone: 'amber',
     image: null,
   },
@@ -31,14 +32,15 @@ export const talent = [
   {
     slug: 'rebecca-soper',
     name: 'Rebecca Soper',
-    discipline: 'Actor',
+    discipline: 'Actor & Model',
+    title: 'Actress & Model',
     tone: 'amber',
     image: null,
   },
   {
     slug: 'prince-boamah',
     name: 'Prince Boamah',
-    discipline: 'Actor',
+    discipline: 'Actor & Model',
     tone: 'crimson',
     image: null,
   },
@@ -52,7 +54,7 @@ export const talent = [
   {
     slug: 'aaron-russell',
     name: 'Aaron Russell',
-    discipline: 'Actor',
+    discipline: 'Actor & Model',
     tone: 'smoke',
     image: null,
   },

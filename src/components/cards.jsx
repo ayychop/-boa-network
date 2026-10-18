@@ -64,7 +64,7 @@ export function TalentPortrait({ person: t, ratio = '4 / 5', priority = false, g
     <Link
       to={`/talent/${t.slug}`}
       className={`group relative ${grow ? 'flex flex-1 flex-col' : 'block'} overflow-hidden bg-charcoal outline-none focus-visible:outline focus-visible:outline-1 focus-visible:-outline-offset-4 focus-visible:outline-gold`}
-      aria-label={`${t.name}, ${t.discipline}. View profile`}
+      aria-label={`${t.name}, ${t.title ?? t.discipline}. View profile`}
     >
       <CinematicImage
         src={t.image}
@@ -80,7 +80,7 @@ export function TalentPortrait({ person: t, ratio = '4 / 5', priority = false, g
 
       <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-4 sm:p-6 lg:p-7">
         <div className="min-w-0">
-          <p className="hud-label mb-2 !text-gold sm:mb-3">{t.discipline}</p>
+          <p className="hud-label mb-2 !text-gold sm:mb-3">{t.title ?? t.discipline}</p>
           <h2 className="text-[clamp(1.35rem,2.6vw,2.5rem)] font-semibold leading-[0.95] tracking-[-0.04em]">{t.name}</h2>
         </div>
         <span

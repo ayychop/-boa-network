@@ -49,7 +49,7 @@ export default function TalentProfile() {
 
             <div className="flex flex-col justify-end">
               <Reveal as="p" className="hud-label mb-5" y={16}>
-                {[person.discipline, person.base].filter(Boolean).join(' · ')}
+                {[person.title ?? person.discipline, person.base].filter(Boolean).join(' · ')}
               </Reveal>
               <Reveal as="h1" className="display-lg" delay={0.05}>
                 {person.name}
