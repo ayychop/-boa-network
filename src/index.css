@@ -96,6 +96,12 @@ html.lenis body {
     position: relative;
     padding-block: clamp(5rem, 14vw, 13rem);
   }
+  /* The mission follows straight on from the hero, whose own bottom padding
+     already gives it room: a short lead-in, a moderate tail. */
+  .section.mission-section {
+    padding-top: clamp(2.5rem, 5vw, 4.5rem);
+    padding-bottom: clamp(4rem, 9vw, 8rem);
+  }
 
   /* Type scale: huge, tight, restrained */
   .display-xl {

@@ -119,26 +119,27 @@ function Hero() {
 }
 
 const MISSION_WORDS = MISSION.split(' ')
-const DIM = 0.2 // resting brightness: dim grey on the dark ground, never invisible
-const RAMP = 0.22 // share of the scroll range each word takes to reach white
+const DIM = '#333333' // resting colour: dark grey on the dark ground, never invisible
+const LIT = '#f3efe8' // bone, the site's white
+const RAMP = 0.12 // share of the scroll range each word takes to light: short, so it reads as a wave
 
-/** One word, brightening as the reader's scroll reaches it. Opacity only, so no layout work. */
+/** One word, lighting up as the reader's scroll reaches it. Colour only, so no layout work. */
 function LitWord({ progress, index, count, children }) {
   const start = (index / count) * (1 - RAMP)
-  const opacity = useTransform(progress, [start, start + RAMP], [DIM, 1], { clamp: true })
-  return <motion.span style={{ opacity }}>{children}</motion.span>
+  const color = useTransform(progress, [start, start + RAMP], [DIM, LIT], { clamp: true })
+  return <motion.span style={{ color }}>{children}</motion.span>
 }
 
 /**
- * The mission, illuminated as you read it. Scroll progress runs from the
- * paragraph's top reaching the middle of the screen (every word dim) to it
- * reaching the top, just under the header (every word white). Past that it
- * stays white; scrolling back up dims it again. Words never go below 20%.
- * It runs on every device: it is a brightness change, not movement.
+ * The mission, lit as you read it. Lighting starts as soon as the paragraph's
+ * top crosses into the bottom of the screen (90% down) and the last word
+ * lights as the paragraph's end reaches 40% down. Past that it stays lit;
+ * scrolling back up dims it again. It runs on every device: it is a colour
+ * change, not movement.
  */
 function MissionStatement() {
   const ref = useRef(null)
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start center', 'start 0.15'] })
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start 0.9', 'end 0.4'] })
   return (
     <p ref={ref} className="mission-statement text-bone">
       {MISSION_WORDS.map((word, i) => (
@@ -153,7 +154,7 @@ function MissionStatement() {
 
 function Mission() {
   return (
-    <section className="section">
+    <section className="section mission-section">
       <div className="container-x">
         <SectionLabel index="01">The mission</SectionLabel>
         {/* Lights up word by word as it scrolls into the centre of the screen. */}
