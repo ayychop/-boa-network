@@ -71,7 +71,7 @@ function Hero() {
         <p className="hud-label mt-2 !text-mist">2.39 : 1 · {site.location}</p>
       </div>
 
-      <div className="hero-copy container-x relative flex min-h-[100svh] flex-col justify-end pb-20 pt-36 sm:pb-24 sm:pt-44 lg:pb-28">
+      <div className="hero-copy container-x relative flex min-h-[100svh] flex-col justify-end pb-14 pt-36 sm:pb-16 sm:pt-44 lg:pb-[4.5rem]">
         <motion.p
           className="hud-label mb-6 sm:mb-8"
           initial={{ opacity: 0, y: 12 }}
