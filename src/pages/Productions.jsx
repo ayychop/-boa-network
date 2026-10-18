@@ -3,9 +3,19 @@ import { AnimatePresence, motion } from 'framer-motion'
 import CinematicImage from '../components/CinematicImage'
 import { StatusBadge } from '../components/cards'
 import { LightBleed, Smoke, Spotlight } from '../components/Fog'
-import { Arrow, ClosingCTA, EASE_EXPO, HudCorners, MagneticButton, Reveal } from '../components/ui'
+import {
+  Arrow,
+  ClosingCTA,
+  EASE_EXPO,
+  HERO_HIDDEN as HIDDEN,
+  HERO_SHOWN as SHOWN,
+  HudCorners,
+  MagneticButton,
+  Reveal,
+  heroEnter as enter,
+} from '../components/ui'
 import { STATUS, productionMeta, productions } from '../data/productions'
-import { useIntroPhase } from '../lib/intro'
+import { useEntranceCue, useIntroPhase } from '../lib/intro'
 
 // Re-exported for anything still importing it from here.
 export { FilterBar } from '../components/ui'
@@ -20,8 +30,10 @@ function PlayIcon() {
 
 /** Full-bleed featured title. The episode loads only when asked for. */
 function FeaturedHero({ production: p }) {
-  // Entrances wait for the loader's iris (a direct visit here also plays it).
+  // The still settles in as the loader's iris opens (a direct visit here also
+  // plays it); the titles wait for the loader to unmount and the smoke.
   const go = useIntroPhase() !== 'pending'
+  const cue = useEntranceCue()
   const [playing, setPlaying] = useState(false)
   const meta = productionMeta(p)
 
@@ -50,9 +62,9 @@ function FeaturedHero({ production: p }) {
         <div className="container-x relative flex min-h-[min(92svh,60rem)] flex-col justify-end pb-16 pt-44 sm:pb-24 sm:pt-52">
           <motion.div
             className="mb-6 flex flex-wrap items-center gap-3 sm:mb-8"
-            initial={{ opacity: 0, y: 16 }}
-            animate={go ? { opacity: 1, y: 0 } : undefined}
-            transition={{ duration: 1.3, ease: EASE_EXPO, delay: 0.4 }}
+            initial={HIDDEN}
+            animate={cue ? SHOWN : undefined}
+            transition={enter(0.1)}
           >
             <span className="hud-label !text-gold">Featured</span>
             <span className="hud-line w-12" />
@@ -60,34 +72,30 @@ function FeaturedHero({ production: p }) {
             {p.status && <StatusBadge status={p.status} />}
           </motion.div>
 
-          <h2 id={`title-${p.slug}`} className="title-serif max-w-[11ch] text-[clamp(4rem,14vw,14rem)]">
-            <span className="block overflow-hidden pb-[0.12em]">
-              <motion.span
-                className="block"
-                initial={{ y: '110%' }}
-                animate={go ? { y: 0 } : undefined}
-                transition={{ duration: 1.6, ease: EASE_EXPO, delay: 0.5 }}
-              >
-                {p.title}
-              </motion.span>
-            </span>
-          </h2>
-
-          <motion.div
-            className="mt-6 grid gap-8 sm:mt-8 lg:grid-cols-[minmax(0,38rem)_auto] lg:items-end lg:justify-between"
-            initial={{ opacity: 0, y: 24 }}
-            animate={go ? { opacity: 1, y: 0 } : undefined}
-            transition={{ duration: 1.4, ease: EASE_EXPO, delay: 0.85 }}
+          <motion.h2
+            id={`title-${p.slug}`}
+            className="title-serif max-w-[11ch] pb-[0.12em] text-[clamp(4rem,14vw,14rem)]"
+            initial={HIDDEN}
+            animate={cue ? SHOWN : undefined}
+            transition={enter(0.2)}
           >
-            {p.logline && <p className="lede !text-bone/80">{p.logline}</p>}
+            {p.title}
+          </motion.h2>
+
+          <div className="mt-6 grid gap-8 sm:mt-8 lg:grid-cols-[minmax(0,38rem)_auto] lg:items-end lg:justify-between">
+            {p.logline && (
+              <motion.p className="lede !text-bone/80" initial={HIDDEN} animate={cue ? SHOWN : undefined} transition={enter(0.3)}>
+                {p.logline}
+              </motion.p>
+            )}
             {p.video && (
-              <div className="flex flex-wrap gap-4">
+              <motion.div className="flex flex-wrap gap-4" initial={HIDDEN} animate={cue ? SHOWN : undefined} transition={enter(0.4)}>
                 <MagneticButton type="button" onClick={() => setPlaying(true)} aria-controls={`player-${p.slug}`}>
                   <PlayIcon /> Play {p.video.title.split(' - ').pop()}
                 </MagneticButton>
-              </div>
+              </motion.div>
             )}
-          </motion.div>
+          </div>
         </div>
       </div>
 

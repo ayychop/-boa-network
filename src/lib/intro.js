@@ -65,28 +65,36 @@ export function useAtmosphereReady(stage = 0) {
 export const FOG_TEX = '/media/fog.png'
 
 /**
- * True once the hero's titles may play: the loader has unmounted, every
- * atmosphere layer has mounted, the fog texture is decoded, the webfonts are
- * in, and two frames have painted. The titles then reveal over a finished
- * frame instead of one still assembling around them.
+ * True once a hero's titles may play: the loader has unmounted, the hero's
+ * own smoke (stage 0) has mounted, the webfonts are in and two frames have
+ * painted. The site-wide fog is not waited for; it finishes behind the
+ * titles. CUE_CAP bounds the wait, so the titles never sit out a slow idle
+ * callback or font request.
  */
+const CUE_CAP = 150
+
 export function useEntranceCue() {
-  const atmosphere = useAtmosphereReady(2)
+  const intro = useIntroPhase()
+  const smoke = useAtmosphereReady(0)
   const [cue, setCue] = useState(false)
+  // The cap counts from the loader's exit, whatever else is still loading.
   useEffect(() => {
-    if (!atmosphere) return
+    if (intro !== 'done') return
+    const timer = setTimeout(() => setCue(true), CUE_CAP)
+    return () => clearTimeout(timer)
+  }, [intro])
+  useEffect(() => {
+    if (!smoke) return
     let live = true
     let raf = 0
-    const tex = new Image()
-    tex.src = FOG_TEX
-    Promise.all([document.fonts?.ready, tex.decode().catch(() => {})]).then(() => {
+    Promise.resolve(document.fonts?.ready).then(() => {
       raf = requestAnimationFrame(() => (raf = requestAnimationFrame(() => live && setCue(true))))
     })
     return () => {
       live = false
       cancelAnimationFrame(raf)
     }
-  }, [atmosphere])
+  }, [smoke])
   return cue
 }
 

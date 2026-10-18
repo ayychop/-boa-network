@@ -8,6 +8,17 @@ import { LightBleed } from './Fog'
 export const EASE_EXPO = [0.87, 0, 0.13, 1]
 const EASE = EASE_EXPO
 
+// Hero title entrances are the exception: a quick fade and a short rise on
+// easeOutExpo, so they land crisply the moment the frame is ready. Pieces
+// follow each other by 100ms via `heroEnter(delay)`.
+export const EASE_OUT_EXPO = [0.16, 1, 0.3, 1]
+export const HERO_HIDDEN = { opacity: 0, y: 20 }
+export const HERO_SHOWN = { opacity: 1, y: 0 }
+export const heroEnter = (delay) => ({
+  opacity: { duration: 0.4, ease: 'linear', delay },
+  y: { duration: 0.9, ease: EASE_OUT_EXPO, delay },
+})
+
 /** Fade-and-rise on scroll into view. */
 export function Reveal({ as = 'div', delay = 0, y = 44, className = '', children, ...rest }) {
   const Tag = motion[as] ?? motion.div

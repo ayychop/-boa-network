@@ -5,7 +5,18 @@ import CinematicImage from '../components/CinematicImage'
 import Showreel from '../components/Showreel'
 import { FogBank, LightBleed, LightCone, Smoke, Spotlight } from '../components/Fog'
 import { ProductionCard, StatusBadge } from '../components/cards'
-import { Arrow, ClosingCTA, EASE_EXPO, HudCorners, MagneticButton, Reveal, SectionLabel } from '../components/ui'
+import {
+  Arrow,
+  ClosingCTA,
+  EASE_EXPO,
+  HERO_HIDDEN as HIDDEN,
+  HERO_SHOWN as SHOWN,
+  HudCorners,
+  MagneticButton,
+  Reveal,
+  SectionLabel,
+  heroEnter as enter,
+} from '../components/ui'
 import { useScrollFx } from '../lib/gsap'
 import { useEntranceCue, useIntroPhase } from '../lib/intro'
 import { founders, site } from '../data/site'
@@ -19,22 +30,12 @@ const EASE = EASE_EXPO
 const MISSION =
   'Talent is everywhere. Opportunity is not. BOA Network exists to close that gap with real roles, on real productions, for people who were never handed a way in.'
 
-// Hero entrance: a quick fade and a short rise, eased out so it lands
-// crisply. Each piece follows the last by 100ms.
-const EASE_OUT_EXPO = [0.16, 1, 0.3, 1]
-const enter = (delay) => ({
-  opacity: { duration: 0.4, ease: 'linear', delay },
-  y: { duration: 0.9, ease: EASE_OUT_EXPO, delay },
-})
-const HIDDEN = { opacity: 0, y: 20 }
-const SHOWN = { opacity: 1, y: 0 }
-
 function Hero() {
   const root = useRef(null)
   // The spotlight warms up as the loader's iris opens.
   const go = useIntroPhase() !== 'pending'
-  // The titles wait for the loader to unmount and the atmosphere to finish
-  // assembling, so they reveal over a settled, sharp frame.
+  // The titles wait for the loader to unmount and the hero's own smoke, then
+  // reveal over a settled frame; the site-wide fog finishes behind them.
   const cue = useEntranceCue()
 
   // The headline is also capped by viewport height (19svh) so that on short
