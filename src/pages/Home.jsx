@@ -48,7 +48,7 @@ function Hero() {
   })
 
   return (
-    <section ref={root} className="relative min-h-[100svh] overflow-hidden">
+    <section ref={root} className="relative overflow-hidden md:min-h-[100svh]">
       <div className="hero-media absolute inset-0 will-change-transform">
         <div className="push-in absolute inset-0">
           <CinematicImage src={HERO_IMAGE} alt="" ratio="fill" tone="amber" priority className="h-full w-full" />
@@ -81,7 +81,7 @@ function Hero() {
         <p className="hud-label mt-2 !text-mist">2.39 : 1 · {site.location}</p>
       </div>
 
-      <div className="hero-copy container-x relative flex min-h-[100svh] flex-col justify-end pb-10 pt-36 sm:pb-12 sm:pt-44 lg:pb-14">
+      <div className="hero-copy container-x relative flex flex-col pb-12 pt-36 md:min-h-[100svh] md:justify-end md:pt-44 lg:pb-14">
         <motion.p
           className="hud-label mb-6 sm:mb-8"
           initial={HIDDEN}
