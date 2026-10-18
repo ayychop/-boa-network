@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import CinematicImage from '../components/CinematicImage'
 import Showreel from '../components/Showreel'
 import { FogBank, LightBleed, LightCone, Smoke, Spotlight } from '../components/Fog'
@@ -119,10 +119,10 @@ function Hero() {
 }
 
 const MISSION_WORDS = MISSION.split(' ')
-const DIM = 0.3 // resting brightness: dim grey on the dark ground, never invisible
+const DIM = 0.2 // resting brightness: dim grey on the dark ground, never invisible
 const RAMP = 0.22 // share of the scroll range each word takes to reach white
 
-/** One word, brightening as the reader's scroll reaches it. */
+/** One word, brightening as the reader's scroll reaches it. Opacity only, so no layout work. */
 function LitWord({ progress, index, count, children }) {
   const start = (index / count) * (1 - RAMP)
   const opacity = useTransform(progress, [start, start + RAMP], [DIM, 1], { clamp: true })
@@ -131,24 +131,22 @@ function LitWord({ progress, index, count, children }) {
 
 /**
  * The mission, illuminated as you read it. Scroll progress runs from the
- * paragraph's top entering the bottom of the screen (every word dim) to its
- * centre reaching the centre of the screen (every word white). Past that it
- * stays white; scrolling back up dims it again. Words never go below 30%.
+ * paragraph's top reaching the middle of the screen (every word dim) to it
+ * reaching the top, just under the header (every word white). Past that it
+ * stays white; scrolling back up dims it again. Words never go below 20%.
+ * It runs on every device: it is a brightness change, not movement.
  */
 function MissionStatement() {
   const ref = useRef(null)
-  const reduced = useReducedMotion()
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'center center'] })
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start center', 'start 0.15'] })
   return (
-    <p ref={ref} className="mission-statement max-w-[20ch] text-bone">
-      {reduced
-        ? MISSION
-        : MISSION_WORDS.map((word, i) => (
-            <LitWord key={i} progress={scrollYProgress} index={i} count={MISSION_WORDS.length}>
-              {word}
-              {i < MISSION_WORDS.length - 1 ? ' ' : ''}
-            </LitWord>
-          ))}
+    <p ref={ref} className="mission-statement text-bone">
+      {MISSION_WORDS.map((word, i) => (
+        <LitWord key={i} progress={scrollYProgress} index={i} count={MISSION_WORDS.length}>
+          {word}
+          {i < MISSION_WORDS.length - 1 ? ' ' : ''}
+        </LitWord>
+      ))}
     </p>
   )
 }

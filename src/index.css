@@ -37,7 +37,10 @@
   body {
     font-family: var(--font-sans);
     background: var(--color-obsidian);
+    /* No sideways scroll or wiggle at any width. `clip` where supported,
+       since it never turns the body into a scroll container. */
     overflow-x: hidden;
+    overflow-x: clip;
   }
   ::selection {
     background: var(--color-gold);
@@ -81,12 +84,7 @@ html.lenis body {
     width: 100%;
     max-width: 1920px;
     margin-inline: auto;
-    padding-inline: 1rem;
-  }
-  @media (min-width: 640px) {
-    .container-x {
-      padding-inline: 1.5rem;
-    }
+    padding-inline: 1.5rem;
   }
   @media (min-width: 1024px) {
     .container-x {
@@ -136,14 +134,17 @@ html.lenis body {
     letter-spacing: -0.035em;
     font-weight: 500;
   }
-  /* The mission: the second-largest type on the site after the hero, close to
-     full width on phones and towering on desktop. */
+  /* The mission: large and impactful, but always inside its container. It
+     wraps between words; a word that still can't fit (a very narrow screen,
+     a wide fallback font, or text zoom) breaks rather than leaving the screen. */
   .mission-statement {
+    max-width: min(20ch, 100%);
+    overflow-wrap: break-word;
     /* Above the fixed vignette (z 45), which would grey the lines nearest
        the screen edges; only the header (z 50) sits over it. */
     position: relative;
     z-index: 46;
-    font-size: clamp(2.75rem, 8.6vw, 9.5rem);
+    font-size: clamp(2.5rem, 5vw, 6rem);
     line-height: 0.98;
     letter-spacing: -0.045em;
     font-weight: 600;
