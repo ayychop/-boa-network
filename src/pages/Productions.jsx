@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import CinematicImage from '../components/CinematicImage'
 import { StatusBadge } from '../components/cards'
 import { LightBleed, Smoke, Spotlight } from '../components/Fog'
+import { LogoWatermark } from '../components/Logo'
 import {
   Arrow,
   ClosingCTA,
@@ -50,6 +51,8 @@ function FeaturedHero({ production: p }) {
             <CinematicImage src={p.still} alt="" ratio="fill" tone={p.tone} priority className="h-full w-full" />
           </div>
         </motion.div>
+        {/* Part of the scene, not the copy: the scrims and smoke settle over it. */}
+        <LogoWatermark className="-right-[30%] top-[16%] w-[120vw] md:-right-[6%] md:top-[14%] md:w-[52vw]" opacity={0.04} />
         {/* Two scrims: one lifts the copy off the frame, one hands over to the rail */}
         <div className="absolute inset-0 bg-gradient-to-r from-obsidian via-obsidian/60 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/20 to-obsidian/50" />
