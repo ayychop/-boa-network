@@ -58,15 +58,11 @@ export const talent = [
     tone: 'smoke',
     image: null,
   },
-  // PLACEHOLDER: an invented person, kept so the grid stays at eight.
   {
-    slug: 'tobi-adeyemi',
-    name: 'Tobi Adeyemi',
+    slug: 'jeremy-benson',
+    name: 'Jeremy Benson',
     discipline: 'Model',
-    base: 'London',
     tone: 'moss',
     image: null,
-    bio: 'Found at a community casting day. Signed the same afternoon.',
-    credits: ['open-call', 'salt-and-ember'],
   },
 ]
