@@ -62,7 +62,9 @@ export const talent = [
     slug: 'jeremy-benson',
     name: 'Jeremy Benson',
     discipline: 'Model',
+    base: 'London',
     tone: 'moss',
     image: null,
+    bio: 'London-based actor and model, appearing in the BOA Original series Mind States UK.',
   },
 ]
