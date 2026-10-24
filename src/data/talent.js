@@ -65,6 +65,7 @@ export const talent = [
     base: 'London',
     tone: 'moss',
     image: null,
-    bio: 'London-based actor and model, appearing in the BOA Original series Mind States UK.',
+    bio: 'London-based actor and model, cast in a key role in the upcoming second episode of the BOA Original series Mind States UK.',
+    credits: ['mind-states-ep2'],
   },
 ]
