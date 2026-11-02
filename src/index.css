@@ -1051,6 +1051,29 @@ html.lenis body {
   mix-blend-mode: overlay;
   pointer-events: none;
 }
+/* A person with no photo yet: their initials in gold, lit from above. */
+.portrait-blank {
+  container-type: size;
+  background:
+    radial-gradient(70% 55% at 50% 30%, rgb(226 168 75 / 0.16), transparent 70%),
+    linear-gradient(165deg, #17161a, #08080a 75%);
+}
+.portrait-monogram {
+  position: absolute;
+  inset: 0 0 14%;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-serif);
+  font-size: min(52cqw, 34cqh);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: transparent;
+  background: linear-gradient(170deg, var(--color-amber), var(--color-ember) 70%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  opacity: 0.8;
+}
+
 /* Talent cards: a band of light crosses the photograph, above the image and below the text.
    The layer is three times the card's size so its edges never show; 33.33% is one card. */
 .talent-sheen {

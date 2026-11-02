@@ -2,15 +2,6 @@ import { useRef } from 'react'
 import { useScrollFx } from '../lib/gsap'
 import { PlaceholderArt } from './CinematicPlaceholder'
 
-const TONES = {
-  amber: ['#e2a84b', '#3a1f0a'],
-  bone: ['#d9d4c8', '#1c1a17'],
-  crimson: ['#d1513f', '#2a0a0c'],
-  smoke: ['#a6a29b', '#141312'],
-  moss: ['#9bb36a', '#141c0c'],
-  rose: ['#e08aa0', '#2b0f1a'],
-}
-
 const RATIOS = {
   scope: '2.39 / 1', // anamorphic letterbox
   poster: '2 / 3',
@@ -20,34 +11,17 @@ const RATIOS = {
 // Any other value is used as a raw CSS aspect-ratio, e.g. '3 / 4'.
 const aspect = (ratio) => (ratio in RATIOS ? RATIOS[ratio] : ratio)
 
-function placeholderArt(tone) {
-  const [a, b] = TONES[tone] ?? TONES.amber
-  return `radial-gradient(90% 70% at 72% 22%, ${a}66, transparent 60%),
-    radial-gradient(70% 60% at 12% 100%, ${a}38, transparent 65%),
-    linear-gradient(165deg, ${b} 0%, #08080a 78%)`
-}
-
-function Silhouette({ tone }) {
-  const [a] = TONES[tone] ?? TONES.amber
-  return (
-    <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMax slice" className="absolute inset-0 h-full w-full">
-      <defs>
-        <linearGradient id={`rim-${tone}`} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#060607" />
-          <stop offset="1" stopColor={a} stopOpacity="0.35" />
-        </linearGradient>
-      </defs>
-      <g fill={`url(#rim-${tone})`} stroke={a} strokeOpacity="0.35" strokeWidth="1">
-        <ellipse cx="200" cy="190" rx="68" ry="84" />
-        <path d="M40 500c0-110 62-168 160-168s160 58 160 168z" />
-      </g>
-    </svg>
-  )
-}
+// Up to two initials, so "David O" reads DO and a long name stays balanced.
+const initials = (name = '') =>
+  name
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((word) => word[0])
+    .join('')
 
 /**
- * Image slot with a generated cinematic placeholder: a toned silhouette for
- * people, the animated BOA lockup (PlaceholderArt) for everything else.
+ * Image slot with a generated cinematic placeholder: a gold monogram of `name`
+ * for people, the animated BOA lockup (PlaceholderArt) for everything else.
  * Pass `src` (e.g. '/media/still.jpg') to replace the placeholder with a
  * real, lazy-loaded image — nothing else needs to change.
  */
@@ -55,7 +29,7 @@ export default function CinematicImage({
   src,
   alt = '',
   ratio = 'scope',
-  tone = 'amber',
+  name,
   label,
   person = false,
   parallax = false,
@@ -105,13 +79,9 @@ export default function CinematicImage({
         ) : !person ? (
           <PlaceholderArt backdrop={ratio === 'fill'} />
         ) : (
-          <div
-            role={alt ? 'img' : undefined}
-            aria-label={alt || undefined}
-            className="absolute inset-0"
-            style={{ backgroundImage: placeholderArt(tone) }}
-          >
-            <Silhouette tone={tone} />
+          <div aria-hidden="true" className="portrait-blank absolute inset-0">
+            <span className="portrait-monogram">{initials(name)}</span>
+            <div className="cine-grain absolute inset-0" />
           </div>
         )}
       </div>

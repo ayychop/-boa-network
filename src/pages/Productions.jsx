@@ -48,7 +48,7 @@ function FeaturedHero({ production: p }) {
           transition={{ duration: 2.2, ease: EASE_EXPO }}
         >
           <div className="push-in absolute inset-0">
-            <CinematicImage src={p.still} alt="" ratio="fill" tone={p.tone} priority className="h-full w-full" />
+            <CinematicImage src={p.still} alt="" ratio="fill" priority className="h-full w-full" />
           </div>
         </motion.div>
         {/* Part of the scene, not the copy: the scrims and smoke settle over it. */}
@@ -149,7 +149,6 @@ function Poster({ production: p, index }) {
           src={p.image}
           alt=""
           ratio="poster"
-          tone={p.tone}
           label="Poster · 2:3"
           className="rounded-xl sm:rounded-2xl"
         >

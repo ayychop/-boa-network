@@ -35,11 +35,10 @@ export default function TalentProfile() {
                 <CinematicImage
                   src={person.image}
                   alt={person.image ? `${person.name} headshot` : ''}
+                  name={person.name}
                   ratio="portrait"
-                  tone={person.tone}
                   person
                   priority
-                  label="Headshot · 4:5"
                   className="glow-border rounded-2xl"
                 >
                   <HudCorners inset="inset-4" />

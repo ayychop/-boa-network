@@ -30,7 +30,6 @@ export function ProductionCard({ production: p }) {
         src={p.image}
         alt={`${p.title} poster`}
         ratio="poster"
-        tone={p.tone}
         label="Poster · 2:3"
         className="transition-transform duration-[1.4s] ease-[var(--ease-cine)] group-hover:scale-[1.03]"
       >
@@ -72,18 +71,21 @@ export function TalentPortrait({ person: t, ratio = '4 / 5', priority = false, g
       <CinematicImage
         src={t.image}
         alt=""
+        name={t.name}
         ratio={ratio}
-        tone={t.tone}
         person
         priority={priority}
-        className={`transition-transform duration-[1.2s] ease-[var(--ease-cine)] will-change-transform group-hover:scale-105 group-focus-visible:scale-105 ${grow ? 'flex-1' : ''}`}
+        className={`saturate-[.88] transition-[transform,filter] duration-[1.2s] ease-[var(--ease-cine)] will-change-transform group-hover:scale-105 group-hover:saturate-100 group-focus-visible:scale-105 group-focus-visible:saturate-100 ${grow ? 'flex-1' : ''}`}
       />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 via-40% to-transparent" />
       <div className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-700 group-hover:bg-black/15" />
       {sheen}
 
+      <div className="pointer-events-none absolute inset-2 border border-white/10 transition-colors duration-700 group-hover:border-gold/50 group-focus-visible:border-gold/50 sm:inset-3" />
+
       <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-4 sm:p-6 lg:p-7">
         <div className="min-w-0">
+          <span className="mb-3 block h-px w-6 bg-gold transition-[width] duration-700 ease-[var(--ease-cine)] group-hover:w-14 group-focus-visible:w-14 sm:mb-4" />
           <p className="hud-label mb-2 !text-gold sm:mb-3">{t.title ?? t.discipline}</p>
           <h2 className="text-[clamp(1.35rem,2.6vw,2.5rem)] font-semibold leading-[0.95] tracking-[-0.04em]">{t.name}</h2>
         </div>
@@ -111,8 +113,8 @@ export function FounderPortrait({ founder: f, className = '', children }) {
     <CinematicImage
       src={f.image}
       alt={f.image ? f.name : ''}
+      name={f.name}
       ratio="portrait"
-      tone={f.tone}
       person
       className={className}
       {...triggers}

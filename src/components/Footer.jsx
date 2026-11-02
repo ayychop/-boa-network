@@ -8,7 +8,7 @@ function FounderAvatar({ founder: f }) {
   const { triggers, sheen } = useSheen()
   return (
     <li className="flex items-center gap-3" {...triggers}>
-      <CinematicImage src={f.avatar} ratio="1 / 1" tone={f.tone} person className="h-11 w-11 shrink-0 rounded-full ring-1 ring-white/15">
+      <CinematicImage src={f.avatar} name={f.name} ratio="1 / 1" person className="h-11 w-11 shrink-0 rounded-full ring-1 ring-white/15">
         {sheen}
       </CinematicImage>
       {f.name}

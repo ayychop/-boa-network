@@ -52,7 +52,7 @@ function Hero() {
     <section ref={root} className="relative overflow-hidden md:min-h-viewport">
       <div className="hero-media absolute inset-0 will-change-transform">
         <div className="push-in absolute inset-0">
-          <CinematicImage src={HERO_IMAGE} alt="" ratio="fill" tone="amber" priority className="h-full w-full" />
+          <CinematicImage src={HERO_IMAGE} alt="" ratio="fill" priority className="h-full w-full" />
         </div>
       </div>
       {/* Part of the scene, not the copy: the grade and smoke settle over it. */}
@@ -249,7 +249,6 @@ function Featured() {
                   <CinematicImage
                     src={p.still}
                     alt=""
-                    tone={p.tone}
                     parallax
                     label="Production still · 2.39:1"
                     className="rounded-xl sm:rounded-2xl"
