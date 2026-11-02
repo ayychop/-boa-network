@@ -2,7 +2,7 @@
 // profile hide whatever is missing, so add `base`, `bio` and `credits` (production
 // slugs) only once they are confirmed. `discipline` drives the filter; set
 // `title` to show different wording on the card and profile (e.g. 'Actress & Model').
-// image: headshot (4:5), e.g. '/media/talent/sabeian-gilzene.jpg'. Leave it null
+// image: headshot, e.g. '/media/Phillip-Quartey.jpg'. Leave it null
 // to keep the generated gradient portrait.
 
 export const DISCIPLINES = ['Actor', 'Model', 'Actor & Model']
@@ -13,14 +13,14 @@ export const talent = [
     name: 'Sabeian Gilzene',
     discipline: 'Actor & Model',
     tone: 'amber',
-    image: null,
+    image: '/media/Sabeian-Gilzene.jpg',
   },
   {
     slug: 'ngor-yel',
     name: 'Ngor Yel',
     discipline: 'Actor & Model',
     tone: 'bone',
-    image: null,
+    image: '/media/Ngor-Yel.jpg',
   },
   {
     slug: 'chan-yel',
@@ -35,28 +35,28 @@ export const talent = [
     discipline: 'Actor & Model',
     title: 'Actress & Model',
     tone: 'amber',
-    image: null,
+    image: '/media/Rebecca-Soper.jpg',
   },
   {
     slug: 'prince-boamah',
     name: 'Prince Boamah',
     discipline: 'Actor & Model',
     tone: 'crimson',
-    image: null,
+    image: '/media/Prince-Boamah.jpg',
   },
   {
     slug: 'jeremy-owusu',
     name: 'Jeremy Owusu',
     discipline: 'Actor & Model',
     tone: 'bone',
-    image: null,
+    image: '/media/Jeremy-Owusu.jpg',
   },
   {
-    slug: 'aaron-russell',
-    name: 'Aaron Russell',
+    slug: 'phillip-quartey',
+    name: 'Phillip Quartey',
     discipline: 'Actor & Model',
     tone: 'smoke',
-    image: null,
+    image: '/media/Phillip-Quartey.jpg',
   },
   {
     slug: 'jeremy-benson',

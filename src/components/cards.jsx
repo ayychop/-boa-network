@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import CinematicImage from './CinematicImage'
 import { Arrow } from './ui'
@@ -55,14 +56,19 @@ export function ProductionCard({ production: p }) {
 
 /**
  * Editorial portrait: the photograph is the whole tile. Name and discipline sit
- * on a dark gradient at the bottom left; hover pushes the frame in and brings
- * up the profile button.
+ * on a dark gradient at the bottom left; hover pushes the frame in, runs a sheen
+ * across the photograph and brings up the profile button.
  */
 // `grow` lets the portrait stretch past its ratio to fill the space it is given.
 export function TalentPortrait({ person: t, ratio = '4 / 5', priority = false, grow = false }) {
+  // Held until the animation ends, so leaving the card mid-sweep doesn't cut the sheen off.
+  const [sheen, setSheen] = useState(false)
+  const startSheen = () => setSheen(true)
   return (
     <Link
       to={`/talent/${t.slug}`}
+      onMouseEnter={startSheen}
+      onFocus={startSheen}
       className={`group relative ${grow ? 'flex flex-1 flex-col' : 'block'} overflow-hidden bg-charcoal outline-none focus-visible:outline focus-visible:outline-1 focus-visible:-outline-offset-4 focus-visible:outline-gold`}
       aria-label={`${t.name}, ${t.title ?? t.discipline}. View profile`}
     >
@@ -77,6 +83,11 @@ export function TalentPortrait({ person: t, ratio = '4 / 5', priority = false, g
       />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 via-40% to-transparent" />
       <div className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-700 group-hover:bg-black/15" />
+      <div
+        aria-hidden="true"
+        className={`talent-sheen ${sheen ? 'is-sweeping' : ''}`}
+        onAnimationEnd={() => setSheen(false)}
+      />
 
       <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-4 sm:p-6 lg:p-7">
         <div className="min-w-0">

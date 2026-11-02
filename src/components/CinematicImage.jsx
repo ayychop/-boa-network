@@ -97,7 +97,8 @@ export default function CinematicImage({
             loading={priority ? 'eager' : 'lazy'}
             fetchPriority={priority ? 'high' : undefined}
             decoding="async"
-            className="h-full w-full object-cover"
+            // Headshots crop from near the top, so a tall frame never loses the head.
+            className={`h-full w-full object-cover ${person ? 'object-[50%_20%]' : ''}`}
           />
         ) : !person ? (
           <PlaceholderArt backdrop={ratio === 'fill'} />

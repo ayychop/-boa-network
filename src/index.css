@@ -1051,7 +1051,32 @@ html.lenis body {
   mix-blend-mode: overlay;
   pointer-events: none;
 }
+/* Talent cards: a band of light crosses the photograph, above the image and below the text.
+   The layer is three times the card's size so its edges never show; 33.33% is one card. */
+.talent-sheen {
+  position: absolute;
+  inset: -100%;
+  pointer-events: none;
+  background: linear-gradient(135deg, transparent 43.33%, rgb(255 255 255 / 0.4) 50%, transparent 56.67%);
+  transform: translate(-33.33%, -33.33%);
+}
+.talent-sheen.is-sweeping {
+  animation: talent-sheen 1.5s cubic-bezier(0.37, 0, 0.63, 1) both;
+  will-change: transform;
+}
+@keyframes talent-sheen {
+  from {
+    transform: translate(-33.33%, -33.33%);
+  }
+  to {
+    transform: translate(33.33%, 33.33%);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .talent-sheen {
+    display: none;
+  }
   .cine-pulse {
     animation: none;
     opacity: 0.2;
