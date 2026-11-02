@@ -5,7 +5,7 @@ import CinematicImage from '../components/CinematicImage'
 import Showreel from '../components/Showreel'
 import { FogBank, LightBleed, LightCone, Smoke, Spotlight } from '../components/Fog'
 import { LogoWatermark } from '../components/Logo'
-import { ProductionCard, StatusBadge } from '../components/cards'
+import { FounderPortrait, ProductionCard, StatusBadge } from '../components/cards'
 import {
   Arrow,
   ClosingCTA,
@@ -299,14 +299,7 @@ function Founders() {
         <div className="grid gap-12 md:grid-cols-2 lg:gap-20">
           {founders.map((f, i) => (
             <Reveal key={f.name} delay={i * 0.12} className="grid grid-cols-[minmax(0,7.5rem)_1fr] gap-6 sm:grid-cols-[minmax(0,11rem)_1fr] sm:gap-8">
-              <CinematicImage
-                src={f.image}
-                alt={f.image ? f.name : ''}
-                ratio="portrait"
-                tone={f.tone}
-                person
-                className="rounded-xl"
-              />
+              <FounderPortrait founder={f} className="rounded-xl" />
               <div className="flex flex-col justify-between gap-6">
                 <p className="text-2xl font-medium leading-tight tracking-[-0.03em] sm:text-3xl lg:text-4xl">
                   “{f.line}”

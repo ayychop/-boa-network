@@ -34,7 +34,8 @@ export const founders = [
   {
     name: 'Joseph Boat',
     role: 'Co-founder',
-    image: null, // e.g. '/media/joseph-boat.jpg'
+    image: '/media/Joseph-Boat.jpg',
+    avatar: '/media/Joseph-Boat-avatar.jpg', // face crop for the footer
     tone: 'amber',
     line: 'Talent was never the problem. Access was.',
     bio: 'Joseph cofounded BOA Network to build the kind of company he wanted to exist: one where the work is cinematic, the standards are high, and the casting room is open to people who have never been let near one.',
@@ -42,7 +43,8 @@ export const founders = [
   {
     name: 'David O',
     role: 'Co-founder',
-    image: null, // e.g. '/media/david-o.jpg'
+    image: '/media/David-O.jpg',
+    avatar: '/media/David-O-avatar.jpg', // face crop for the footer
     tone: 'bone',
     line: 'We are not here to guard the door. We are here to hold it open.',
     bio: 'David cofounded BOA Network on a simple conviction: who you know, what you look like and what you can afford should have nothing to do with whether you get seen.',

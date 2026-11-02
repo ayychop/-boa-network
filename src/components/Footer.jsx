@@ -1,6 +1,20 @@
 import { Link } from 'react-router-dom'
 import { nav, site, founders } from '../data/site'
+import CinematicImage from './CinematicImage'
 import { LogoWatermark } from './Logo'
+import { useSheen } from './Sheen'
+
+function FounderAvatar({ founder: f }) {
+  const { triggers, sheen } = useSheen()
+  return (
+    <li className="flex items-center gap-3" {...triggers}>
+      <CinematicImage src={f.avatar} ratio="1 / 1" tone={f.tone} person className="h-11 w-11 shrink-0 rounded-full ring-1 ring-white/15">
+        {sheen}
+      </CinematicImage>
+      {f.name}
+    </li>
+  )
+}
 
 export default function Footer() {
   return (
@@ -55,7 +69,7 @@ export default function Footer() {
             <p className="hud-label mb-5 !text-mist">Founders</p>
             <ul className="space-y-3 text-bone/80">
               {founders.map((f) => (
-                <li key={f.name}>{f.name}</li>
+                <FounderAvatar key={f.name} founder={f} />
               ))}
             </ul>
           </div>

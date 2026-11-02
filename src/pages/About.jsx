@@ -1,4 +1,4 @@
-import CinematicImage from '../components/CinematicImage'
+import { FounderPortrait } from '../components/cards'
 import CinematicPlaceholder from '../components/CinematicPlaceholder'
 import { ClosingCTA, PageHeader, Reveal, SectionLabel } from '../components/ui'
 import { founders } from '../data/site'
@@ -75,18 +75,13 @@ export default function About() {
           <div className="grid gap-16 md:grid-cols-2 lg:gap-24">
             {founders.map((f, i) => (
               <Reveal key={f.name} as="article" delay={i * 0.12}>
-                <CinematicImage
-                  src={f.image}
-                  alt={f.image ? f.name : ''}
-                  ratio="portrait"
-                  tone={f.tone}
-                  person
-                  label="Portrait · 4:5"
-                  className="glow-border rounded-2xl"
-                />
-                <p className="hud-label mt-8 !text-gold">{f.role}</p>
-                <h3 className="mt-3 text-5xl font-semibold tracking-[-0.045em] sm:text-6xl">{f.name}</h3>
-                <p className="mt-6 max-w-lg text-lg leading-relaxed text-bone/75">{f.bio}</p>
+                <FounderPortrait founder={f} className="glow-border rounded-2xl">
+                  <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7">
+                    <p className="hud-label !text-gold">{f.role}</p>
+                    <h3 className="mt-3 text-5xl font-semibold leading-[0.95] tracking-[-0.045em] sm:text-6xl">{f.name}</h3>
+                  </div>
+                </FounderPortrait>
+                <p className="mt-8 max-w-lg text-lg leading-relaxed text-bone/75">{f.bio}</p>
                 <p className="accent mt-6 max-w-md text-2xl leading-snug sm:text-3xl">“{f.line}”</p>
               </Reveal>
             ))}

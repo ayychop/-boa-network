@@ -62,6 +62,7 @@ export default function CinematicImage({
   priority = false,
   className = '',
   children,
+  ...rest
 }) {
   const wrap = useRef(null)
   const inner = useRef(null)
@@ -88,6 +89,7 @@ export default function CinematicImage({
       ref={wrap}
       className={`relative overflow-hidden bg-charcoal ${className}`}
       style={aspect(ratio) ? { aspectRatio: aspect(ratio) } : undefined}
+      {...rest}
     >
       <div ref={inner} className={`absolute inset-x-0 ${parallax ? '-inset-y-[9%]' : 'inset-y-0'}`}>
         {src ? (
