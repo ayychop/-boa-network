@@ -628,7 +628,7 @@ html.lenis body {
   width: calc(220vw + 80px);
   background-size: 110vw var(--fog-tile-h, 100vh);
   opacity: 0.07;
-  animation-duration: 52s;
+  animation-duration: 32s;
 }
 .fog-plume-b {
   --drift: 170vw;
@@ -638,7 +638,7 @@ html.lenis body {
   background-size: 170vw var(--fog-tile-h, 100vh);
   background-position: 40vw 30vh;
   opacity: 0.08;
-  animation-duration: 78s;
+  animation-duration: 46s;
 }
 @media (min-width: 768px) {
   .fog-haze {
@@ -676,7 +676,7 @@ html.lenis body {
   background-size: 130vw 100%;
   opacity: 0.3;
   will-change: transform;
-  animation: fog-drift 64s linear infinite;
+  animation: fog-drift 40s linear infinite;
 }
 @media (min-width: 768px) {
   .fog-bank > div {
@@ -759,7 +759,7 @@ html.lenis body {
   height: 90%;
   background-size: 140vw 100%;
   opacity: 0.11;
-  animation: fog-drift 120s linear infinite;
+  animation: fog-drift 72s linear infinite;
   -webkit-mask-image: linear-gradient(to bottom, transparent, #000 40%, #000 70%, transparent);
   mask-image: linear-gradient(to bottom, transparent, #000 40%, #000 70%, transparent);
 }
@@ -770,7 +770,7 @@ html.lenis body {
   background-size: 110vw 100%;
   background-position: 30vw 0;
   opacity: 0.22;
-  animation: fog-drift-back 86s linear infinite;
+  animation: fog-drift-back 52s linear infinite;
   -webkit-mask-image: linear-gradient(to bottom, transparent, #000 35%, #000 75%, transparent);
   mask-image: linear-gradient(to bottom, transparent, #000 35%, #000 75%, transparent);
 }
@@ -780,7 +780,7 @@ html.lenis body {
   height: 60%;
   background-size: 80vw 100%;
   opacity: 0.42;
-  animation: fog-drift 54s linear infinite;
+  animation: fog-drift 34s linear infinite;
   -webkit-mask-image: linear-gradient(to top, #000 30%, transparent);
   mask-image: linear-gradient(to top, #000 30%, transparent);
 }
