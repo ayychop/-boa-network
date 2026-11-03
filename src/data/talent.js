@@ -13,7 +13,7 @@ const roster = [
     name: 'Sabeian Gilzene',
     discipline: 'Actor & Model',
     image: '/media/Sabeian-Gilzene.jpg',
-    bio: 'Sabeian Gilzene is a 6ft5 Actor and model from the UK with Caribbean roots. He is an amazing model and Actor, very professional on set, and looks to one day make his own TV shows and movies.',
+    bio: 'Sabeian Gilzene is a 6ft5 Actor and model from the UK with Caribbean roots. He is an amazing model and Actor, very professional on set.',
   },
   {
     slug: 'ngor-yel',
