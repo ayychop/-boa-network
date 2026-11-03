@@ -29,7 +29,7 @@ export const nav = [
   { to: '/contact', label: 'Contact' },
 ]
 
-// PLACEHOLDER bios — written from the brief, replace with the founders' own words.
+// Founders' own words.
 export const founders = [
   {
     name: 'Joseph Boat',
@@ -37,7 +37,7 @@ export const founders = [
     image: '/media/Joseph-Boat.jpg',
     avatar: '/media/Joseph-Boat-avatar.jpg', // face crop for the footer
     line: 'Talent was never the problem. Access was.',
-    bio: 'Joseph cofounded BOA Network to build the kind of company he wanted to exist: one where the work is cinematic, the standards are high, and the casting room is open to people who have never been let near one.',
+    bio: 'A confident leader who is always looking for ways for all of us to win. My goal is to create chances and opportunities for people who the door has been closed on and not given a chance, yet they are talented and have what it takes, they just need exposure. Profile is charismatic and a people’s person, great at networking in any environment. Inside I am shy, but on the outside I portray a very confident, assertive demeanour. Overall, walk with love.',
   },
   {
     name: 'David O',
@@ -45,6 +45,6 @@ export const founders = [
     image: '/media/David-O.jpg',
     avatar: '/media/David-O-avatar.jpg', // face crop for the footer
     line: 'We are not here to guard the door. We are here to hold it open.',
-    bio: 'David cofounded BOA Network on a simple conviction: who you know, what you look like and what you can afford should have nothing to do with whether you get seen.',
+    bio: 'Very observant, quiet and reserved in profile, yet very thoughtful and one of the most helpful, outgoing people you’ll meet. He is technically and creatively up to date, good with all equipment and setup. He has done everything creatively from a camera and editing standpoint, so he is well experienced.',
   },
 ]

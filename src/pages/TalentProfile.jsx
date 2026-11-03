@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import CinematicImage from '../components/CinematicImage'
 import { StatusBadge } from '../components/cards'
@@ -7,6 +8,28 @@ import { Arrow, HudCorners, MagneticButton, Reveal } from '../components/ui'
 import { talent } from '../data/talent'
 import { productions } from '../data/productions'
 import NotFound from './NotFound'
+
+// Long bios are clamped on mobile with a Read more / Read less toggle; on
+// larger screens (sm+) the full bio always shows and the button is hidden.
+function Bio({ text }) {
+  const [expanded, setExpanded] = useState(false)
+  const isLong = text.length > 360
+  return (
+    <>
+      <p className={`lede ${isLong && !expanded ? 'line-clamp-6 sm:line-clamp-none' : ''}`}>{text}</p>
+      {isLong && (
+        <button
+          type="button"
+          onClick={() => setExpanded((v) => !v)}
+          aria-expanded={expanded}
+          className="mt-4 text-sm tracking-wide text-gold transition-colors hover:text-bone sm:hidden"
+        >
+          {expanded ? 'Read less' : 'Read more'}
+        </button>
+      )}
+    </>
+  )
+}
 
 export default function TalentProfile() {
   const { slug } = useParams()
@@ -54,8 +77,8 @@ export default function TalentProfile() {
                 {person.name}
               </Reveal>
               {person.bio && (
-                <Reveal as="p" className="lede mt-8 max-w-xl" delay={0.12}>
-                  {person.bio}
+                <Reveal className="mt-8 max-w-xl" delay={0.12}>
+                  <Bio text={person.bio} />
                 </Reveal>
               )}
 
