@@ -20,7 +20,7 @@ const roster = [
     name: 'Ngor Yel',
     discipline: 'Actor & Model',
     image: '/media/Ngor-Yel.jpg',
-    bio: 'Ngor Yel is an Actor and model who is professional on set and ready to do whatever it takes to make sure the scene is right. A great basketball player and athlete, he is also a daytime teacher, making him excellent at code-switching.',
+    bio: 'Ngor Yel is an Actor and model who is professional on set and ready to do whatever it takes to make sure the scene is right. A great basketball player and athlete, he is also a daytime teacher, making him excellent at code switching.',
   },
   {
     slug: 'chan-yel',
@@ -35,7 +35,7 @@ const roster = [
     discipline: 'Actor & Model',
     title: 'Actress & Model',
     image: '/media/Rebecca-Soper.jpg',
-    bio: 'Rebecca Soper is a London-based actor, drama facilitator and Youth Violence Intervention Specialist. She trained at Intermission Youth Theatre, Identity Drama School, the National Youth Theatre and London School of Dramatic Arts. Her acting credits include Shakespeare’s Globe, the Royal Court Theatre, film and voiceover work, including Netflix productions. Alongside acting, Rebecca uses drama and storytelling to raise awareness of youth violence, exploitation, identity and belonging, working with young people across schools, youth theatres and prison settings to inspire meaningful change.',
+    bio: 'Rebecca Soper is a London based actor, drama facilitator and Youth Violence Intervention Specialist. She trained at Intermission Youth Theatre, Identity Drama School, the National Youth Theatre and London School of Dramatic Arts. Her acting credits include Shakespeare’s Globe, the Royal Court Theatre, film and voiceover work, including Netflix productions. Alongside acting, Rebecca uses drama and storytelling to raise awareness of youth violence, exploitation, identity and belonging, working with young people across schools, youth theatres and prison settings to inspire meaningful change.',
   },
   {
     slug: 'prince-boamah',
@@ -49,7 +49,7 @@ const roster = [
     name: 'Jeremy Owusu',
     discipline: 'Actor & Model',
     image: '/media/Jeremy-Owusu.jpg',
-    bio: 'Jeremy Owusu is an Actor and model who is confident, a comedian, and brings joy and good energy into the room. He still has a quiet, cool, observant profile about himself. He enjoys football a lot, is excellent at code-switching, and showcases this on camera.',
+    bio: 'Jeremy Owusu is an Actor and model who is confident, a comedian, and brings joy and good energy into the room. He still has a quiet, cool, observant profile about himself. He enjoys football a lot, is excellent at code switching, and showcases this on camera.',
   },
   {
     slug: 'phillip-quartey',
