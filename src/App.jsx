@@ -15,6 +15,9 @@ const TalentProfile = lazy(() => import('./pages/TalentProfile'))
 const Access = lazy(() => import('./pages/Access'))
 const Contact = lazy(() => import('./pages/Contact'))
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'))
+const Terms = lazy(() => import('./pages/Terms'))
+const CommunityGuidelines = lazy(() => import('./pages/CommunityGuidelines'))
+const DeleteAccount = lazy(() => import('./pages/DeleteAccount'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
 function Pages() {
@@ -38,6 +41,9 @@ function Pages() {
           <Route path="/access" element={<Access />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/community-guidelines" element={<CommunityGuidelines />} />
+          <Route path="/delete-account" element={<DeleteAccount />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

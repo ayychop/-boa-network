@@ -87,6 +87,15 @@ export default function Footer() {
             <Link to="/privacy-policy" className="transition-colors hover:text-gold">
               Privacy Policy
             </Link>
+            <Link to="/terms" className="transition-colors hover:text-gold">
+              Terms
+            </Link>
+            <Link to="/community-guidelines" className="transition-colors hover:text-gold">
+              Community Guidelines
+            </Link>
+            <Link to="/delete-account" className="transition-colors hover:text-gold">
+              Delete Account
+            </Link>
             <p className="hud-label !text-mist">Made in the {site.location}</p>
           </div>
         </div>
