@@ -3,7 +3,7 @@ import { site } from '../data/site'
 
 // Contact address for privacy matters. Kept separate from site.email on
 // purpose: this is the inbox named in the policy text, not the general one.
-const PRIVACY_EMAIL = 'jo@boanetworks.com'
+const PRIVACY_EMAIL = 'info@boanetworks.com'
 const LAST_UPDATED = 'November 2026'
 
 // Heading used for each numbered clause. Sits a step below the page title but
