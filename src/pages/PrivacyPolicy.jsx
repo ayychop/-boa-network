@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { Arrow, MagneticButton, PageHeader, Reveal, SectionLabel } from '../components/ui'
 import { site } from '../data/site'
 
@@ -148,9 +149,13 @@ export default function PrivacyPolicy() {
               <Reveal as="article">
                 <ClauseTitle index="04">Data retention and deletion</ClauseTitle>
                 <p className="prose-body">
-                  You remain in control of your information, and you are never locked in. You can delete your account at
-                  any time, directly from the settings menu within the app — there is no form to fill in, no waiting
-                  period, and no need to ask our permission.
+                  You remain in control of your information, and you are never locked in. You can delete your account
+                  directly within the BOA HUB app settings, or by using the web deletion form at{' '}
+                  <Link to="/delete-account" className="prose-link">
+                    https://www.boanetworks.com/delete-account
+                  </Link>
+                  . Deleting from within the app takes effect straight away; requests made through the web form are
+                  completed within 24 hours. Either way, there is no need to ask our permission.
                 </p>
                 <p className="prose-body">
                   When you delete your account, we permanently delete your personal data, your photos, and your chat
