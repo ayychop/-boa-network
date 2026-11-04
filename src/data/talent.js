@@ -26,7 +26,7 @@ const roster = [
     slug: 'chan-yel',
     name: 'Chan Yel',
     discipline: 'Actor & Model',
-    image: null,
+    image: '/media/Chan-Yel.jpg',
     bio: 'Chan Yel is an amazing Actor and model who takes his craft seriously. He is very good at basketball, specialises in urban content, and would be great for thriller roles both inside and outside the urban scene. He is athletic and has the perfect muscular build, not too big and not too small.',
   },
   {
