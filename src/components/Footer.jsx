@@ -83,7 +83,12 @@ export default function Footer() {
           <p>
             © {new Date().getFullYear()} {site.name}. All rights reserved.
           </p>
-          <p className="hud-label !text-mist">Made in the {site.location}</p>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            <Link to="/privacy-policy" className="transition-colors hover:text-gold">
+              Privacy Policy
+            </Link>
+            <p className="hud-label !text-mist">Made in the {site.location}</p>
+          </div>
         </div>
       </div>
     </footer>

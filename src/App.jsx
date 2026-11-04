@@ -14,6 +14,7 @@ const Talent = lazy(() => import('./pages/Talent'))
 const TalentProfile = lazy(() => import('./pages/TalentProfile'))
 const Access = lazy(() => import('./pages/Access'))
 const Contact = lazy(() => import('./pages/Contact'))
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
 function Pages() {
@@ -36,6 +37,7 @@ function Pages() {
           <Route path="/talent/:slug" element={<TalentProfile />} />
           <Route path="/access" element={<Access />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

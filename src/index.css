@@ -513,6 +513,54 @@ html.lenis body {
     letter-spacing: -0.025em;
     line-height: 0.9;
   }
+
+  /* Long-form legal / policy prose: a calm, readable column that still speaks
+     in the site's voice — bone text, gold links, measured spacing. */
+  .prose-body {
+    font-size: clamp(1.0625rem, 1.2vw, 1.1875rem);
+    line-height: 1.7;
+    color: rgb(243 239 232 / 0.78);
+  }
+  .prose-body + .prose-body {
+    margin-top: 1.5rem;
+  }
+  .prose-list {
+    margin-top: 1.5rem;
+    display: grid;
+    gap: 1.25rem;
+    padding-left: 0;
+    list-style: none;
+  }
+  .prose-list > li {
+    position: relative;
+    padding-left: 1.75rem;
+    font-size: clamp(1.0625rem, 1.2vw, 1.1875rem);
+    line-height: 1.7;
+    color: rgb(243 239 232 / 0.78);
+  }
+  /* A small gold marker in place of a default bullet. */
+  .prose-list > li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.72em;
+    width: 0.5rem;
+    height: 1px;
+    background: var(--color-gold);
+  }
+  .prose-term {
+    color: var(--color-bone);
+    font-weight: 600;
+  }
+  .prose-link {
+    color: var(--color-gold);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    transition: color 0.4s var(--ease-cine);
+  }
+  .prose-link:hover {
+    color: var(--color-amber);
+  }
 }
 
 /* ───────────────────────── Atmosphere ─────────────────────────
