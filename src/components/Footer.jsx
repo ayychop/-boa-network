@@ -93,6 +93,9 @@ export default function Footer() {
             <Link to="/community-guidelines" className="transition-colors hover:text-gold">
               Community Guidelines
             </Link>
+            <Link to="/child-safety" className="transition-colors hover:text-gold">
+              Child Safety
+            </Link>
             <Link to="/delete-account" className="transition-colors hover:text-gold">
               Delete Account
             </Link>

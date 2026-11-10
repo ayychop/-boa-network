@@ -17,6 +17,7 @@ const Contact = lazy(() => import('./pages/Contact'))
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'))
 const Terms = lazy(() => import('./pages/Terms'))
 const CommunityGuidelines = lazy(() => import('./pages/CommunityGuidelines'))
+const ChildSafety = lazy(() => import('./pages/ChildSafety'))
 const DeleteAccount = lazy(() => import('./pages/DeleteAccount'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
@@ -43,6 +44,7 @@ function Pages() {
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/community-guidelines" element={<CommunityGuidelines />} />
+          <Route path="/child-safety" element={<ChildSafety />} />
           <Route path="/delete-account" element={<DeleteAccount />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
